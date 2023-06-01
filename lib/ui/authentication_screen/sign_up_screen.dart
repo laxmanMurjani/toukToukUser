@@ -141,18 +141,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       label: "First Name",
                       hint: "First Name",
                       textCapitalization: TextCapitalization.sentences,
+                      // inputFormatter: [
+                      //   FilteringTextInputFormatter.deny(
+                      //       RegExp(r'\s'))
+                      // ],
                     ),
                     SizedBox(height: 12.h),
                     CustomTextFiled(
                         controller: cont.lastNameController,
                         label: "last_name".tr,
                         hint: "last_name".tr,
-                        textCapitalization: TextCapitalization.sentences,),
+                        textCapitalization: TextCapitalization.sentences,
+                      // inputFormatter: [
+                      //   FilteringTextInputFormatter.deny(
+                      //       RegExp(r'\s'))
+                      // ],
+                    ),
                     SizedBox(height: 12.h),
                     CustomTextFiled(
                       controller: cont.emailController,
-                      hint: "email".tr,
-                      label: "email".tr,
+                      hint: "email(optional)".tr,
+                      label: "email(optional)".tr,
                       inputType: TextInputType.emailAddress,
                     ),
                     SizedBox(height: 12.h),

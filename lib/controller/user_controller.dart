@@ -239,14 +239,14 @@ class UserController extends BaseController {
   Future<void> registerUser() async {
     removeUnFocusManager();
     try {
-      if (emailController.text.isEmpty) {
-        Get.snackbar("Alert", "Please enter your Email address",
-            backgroundColor: Colors.redAccent.withOpacity(0.8),
-            colorText: Colors.white);
-        // showError(msg: "Please enter your Email address");
-        return;
-      }
-      if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$').hasMatch(emailController.text)) {
+      // if (emailController.text.isEmpty) {
+      //   Get.snackbar("Alert", "Please enter your Email address",
+      //       backgroundColor: Colors.redAccent.withOpacity(0.8),
+      //       colorText: Colors.white);
+      //   // showError(msg: "Please enter your Email address");
+      //   return;
+      // }
+      if (!RegExp(r'^$|^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$').hasMatch(emailController.text)) {
         Get.snackbar("Alert", "Please enter a valid email id",
             backgroundColor: Colors.redAccent.withOpacity(0.8),
             colorText: Colors.white);
@@ -310,11 +310,11 @@ class UserController extends BaseController {
         params["device_id"] = "aa0cd79f26dd98b8";
         params["device_token"] = token;
         params["mobile"] = phoneNumberController.text;
-        params["first_name"] = firstNameController.text;
-        params["last_name"] = lastNameController.text;
+        params["first_name"] = firstNameController.text.trim();
+        params["last_name"] = lastNameController.text.trim();
         params["device_type"] = ApiUrl.deviceType;
         params["login_by"] = "manual";
-        params["email"] = emailController.text;
+        params["email"] = emailController.text==''? null : emailController.text;
 
         await apiService.postRequest(
           url: ApiUrl.signUp,
@@ -367,6 +367,20 @@ class UserController extends BaseController {
     removeUnFocusManager();
 
     try {
+      if (phoneNumberController.text.isEmpty) {
+        Get.snackbar("Alert", "Please enter phone number",
+            backgroundColor: Colors.redAccent.withOpacity(0.8),
+            colorText: Colors.white);
+        // showError(msg: "Please enter your first name");
+        return;
+      }
+      if (passwordController.text.isEmpty) {
+        Get.snackbar("Alert", "Please enter password",
+            backgroundColor: Colors.redAccent.withOpacity(0.8),
+            colorText: Colors.white);
+        // showError(msg: "Please enter your first name");
+        return;
+      }
       showLoader();
       String? token = await FirebaseMessaging.instance.getToken();
 
@@ -378,7 +392,7 @@ class UserController extends BaseController {
       params["device_type"] = ApiUrl.deviceType;
       params["client_secret"] = ApiUrl.clientSecret;
       params["client_id"] = ApiUrl.clientId;
-      params["username"] = emailController.text;
+      params["mobile"] = phoneNumberController.text;
 
       await apiService.postRequest(
           url: ApiUrl.login,

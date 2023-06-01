@@ -280,7 +280,9 @@ class Languages extends Translations {
         "in_front_of_your_name": "in front of your name",
         "keep_Riding": "Keep Riding with us, We value your trust placed on us",
         "taxi": 'taxi',
-        "delivery": "delivery"
+        "delivery": "delivery",
+        "email(optional)": "Email (optional)",
+        "email id (not added)": "email id (not added)"
       },
       "hi_IN": {
         "Sorry_for_the_technical_Beakdown" :
@@ -1213,7 +1215,9 @@ class Languages extends Translations {
         "in_front_of_your_name": "امام اسمك",
         "keep_Riding": "استمر في القيادة معنا ، نحن نقدر ثقتكم بنا",
         "taxi": 'سيارة اجره',
-        "delivery": "توصيل"
+        "delivery": "توصيل",
+        "email(optional)": "البريد الإلكتروني اختياري)",
+        "email id (not added)": "معرف البريد الإلكتروني (غير مضاف)"
       },
       "hy_AM": {
         "language": "Armenian",
@@ -1459,7 +1463,9 @@ class Languages extends Translations {
         "in_front_of_your_name": "քո անվան դիմաց",
         "keep_Riding": "Շարունակեք վարել մեզ հետ, մենք գնահատում ենք ձեր վստահությունը, որը դրված է մեզ վրա",
         "taxi": "տաքսի",
-        "delivery": "առաքում"
+        "delivery": "առաքում",
+        "email(optional)": "Էլփոստ (ըստ ցանկության)",
+        "email id (not added)": "էլփոստի id (ավելացված չէ)"
 
       }
     };

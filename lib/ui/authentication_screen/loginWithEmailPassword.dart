@@ -183,10 +183,10 @@ class _LoginWithEmailPasswordState extends State<LoginWithEmailPassword> {
                         // ),
 
                         CustomTextFiled(
-                          controller: cont.emailController,
-                          hint: "email".tr,
-                          label: "email".tr,
-                          inputType: TextInputType.emailAddress,
+                          controller: cont.phoneNumberController,
+                          hint: "phone".tr,
+                          label: "phone".tr,
+                          inputType: TextInputType.number,
                         ),
                         SizedBox(height: 15.h),
                         CustomTextFiled(

@@ -43,8 +43,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _userController.userData.value.lastName ?? "";
     _userController.phoneNumberController.text =
         _userController.userData.value.mobile ?? "";
+    !_userController.userData.value.email!.contains('@instant.com')?
     _userController.emailController.text =
-        _userController.userData.value.email ?? "";
+        _userController.userData.value.email! : null;
     print("_userController.firstNameController.text====>${_userController.firstNameController.text}");
   }
 
@@ -152,8 +153,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     cont.lastNameController, "last_name".tr, "last_name".tr),
                 customAppTextFieldWidget(
                   cont.emailController,
+                  "email id (not added)".tr,
                   "email".tr,
-                  "email".tr,readOnly: true
+                  //readOnly: true
                 ),
                 SizedBox(
                   height: 15,
@@ -396,7 +398,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     borderSide: BorderSide(color: Colors.white, width: 3.0),
                   ),
                   filled: true,isDense: true,
-                  hintStyle: TextStyle(color: AppColors.white, height: 1),
+                  hintStyle: TextStyle(color: Colors.grey[400], height: 1),
                   hintText: hintText.tr,
                   fillColor: AppColors.white),
               style: TextStyle(color: AppColors.primaryColor),
