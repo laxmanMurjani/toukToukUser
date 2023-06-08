@@ -297,9 +297,10 @@ class UserController extends BaseController {
       }
       if (((phoneNumberController.text.length ==
           6 || phoneNumberController.text.length ==
-          8) &&
+          8 || phoneNumberController.text.length ==
+          7) &&
           countryCode == '+961') || phoneNumberController.text.length ==
-          10 && countryCode == '+91') {
+          10 && countryCode != '+961') {
         print('passed');
         showLoader();
         String? token = await FirebaseMessaging.instance.getToken();

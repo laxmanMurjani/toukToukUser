@@ -1430,16 +1430,16 @@ class _HomeScreenState extends State<HomeScreen>
                                       .isEmpty &&
                                   userCont.locationResponseModel.value.others
                                       .isEmpty)
-                              ? 0.38
-                              : 0.38,
+                              ? 0.34 //0.38
+                              : 0.34, //0.38,
                       minChildSize:
                           (userCont.locationResponseModel.value.home.isEmpty &&
                                   userCont.locationResponseModel.value.work
                                       .isEmpty &&
                                   userCont.locationResponseModel.value.others
                                       .isEmpty)
-                              ? 0.38
-                              : 0.38,
+                              ? 0.28 //0.38
+                              : 0.28, //0.38,
                       maxChildSize: .6,
                       builder: (BuildContext context,
                           ScrollController scrollController) {
@@ -1478,8 +1478,8 @@ class _HomeScreenState extends State<HomeScreen>
                                           .isEmpty &&
                                       userCont.locationResponseModel.value
                                           .others.isEmpty)
-                                  ? MediaQuery.of(context).size.height * 0.3
-                                  : MediaQuery.of(context).size.height * 0.3,
+                                  ? MediaQuery.of(context).size.height * 0.24 //0.3
+                                  : MediaQuery.of(context).size.height * 0.24, //0.3,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -1501,128 +1501,128 @@ class _HomeScreenState extends State<HomeScreen>
                                     //       MediaQuery.of(context).size.width * 0.3,
                                     //   thickness: 1,
                                     // ),
-                                    // Padding(
-                                    //   padding: const EdgeInsets.symmetric(
-                                    //       horizontal: 10, vertical: 20),
-                                    //   child: Text(
-                                    //     'where_would-you_like_to_go?'.tr,
-                                    //     style: TextStyle(
-                                    //         color: AppColors.primaryColor,
-                                    //         fontWeight: FontWeight.w500,
-                                    //         fontSize: 18),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 20),
+                                      child: Text(
+                                        'where_would-you_like_to_go?'.tr,
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 18),
+                                      ),
+                                    ),
+                                    // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
+                                    //   InkWell(
+                                    //     onTap: () {
+                                    //       print('tap other');
+                                    //       cont.isRideSelected.value = true;
+                                    //
+                                    //       Get.to(
+                                    //             () => LocationScreen(
+                                    //           isRideLocationUpdate: false,
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //     child: Card(
+                                    //       shape: RoundedRectangleBorder(
+                                    //           borderRadius:
+                                    //           BorderRadius.circular(10.r)),
+                                    //       child: Container(
+                                    //           padding: EdgeInsets.all(7),
+                                    //           height: 84.h,
+                                    //           width: 101.w,
+                                    //           decoration: BoxDecoration(
+                                    //               boxShadow: [
+                                    //                 BoxShadow(
+                                    //                     color:
+                                    //                     Color(0x25000000),
+                                    //                     offset: Offset(0, 4.h),
+                                    //                     blurRadius: 2),
+                                    //               ],
+                                    //               color: Colors.white,
+                                    //               borderRadius:
+                                    //               BorderRadius.circular(
+                                    //                   10)),
+                                    //           child: Column(
+                                    //             mainAxisAlignment:
+                                    //             MainAxisAlignment
+                                    //                 .spaceAround,
+                                    //             children: [
+                                    //               Image.asset(
+                                    //                 AppImage.ride_icon,
+                                    //                 height: 47.h,
+                                    //                 width: 38.w,
+                                    //                 // Icons.home,
+                                    //               ),
+                                    //               AutoSizeText(
+                                    //                 'ride'.tr,
+                                    //                 style: TextStyle(
+                                    //                     color: AppColors
+                                    //                         .primaryColor,
+                                    //                     fontSize: 14.sp),
+                                    //                 maxLines: 1,
+                                    //               )
+                                    //             ],
+                                    //           )),
+                                    //     ),
                                     //   ),
-                                    // ),
-                                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
-                                      InkWell(
-                                        onTap: () {
-                                          print('tap other');
-                                          cont.isRideSelected.value = true;
-
-                                          Get.to(
-                                                () => LocationScreen(
-                                              isRideLocationUpdate: false,
-                                            ),
-                                          );
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.circular(10.r)),
-                                          child: Container(
-                                              padding: EdgeInsets.all(7),
-                                              height: 84.h,
-                                              width: 101.w,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                        color:
-                                                        Color(0x25000000),
-                                                        offset: Offset(0, 4.h),
-                                                        blurRadius: 2),
-                                                  ],
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      10)),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceAround,
-                                                children: [
-                                                  Image.asset(
-                                                    AppImage.ride_icon,
-                                                    height: 47.h,
-                                                    width: 38.w,
-                                                    // Icons.home,
-                                                  ),
-                                                  AutoSizeText(
-                                                    'ride'.tr,
-                                                    style: TextStyle(
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                        fontSize: 14.sp),
-                                                    maxLines: 1,
-                                                  )
-                                                ],
-                                              )),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          print('tap other');
-                                          cont.isRideSelected.value = false;
-
-                                          Get.to(
-                                                () => LocationScreen(
-                                              isRideLocationUpdate: false,
-                                            ),
-                                          );
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.circular(10.r)),
-                                          child: Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  7, 15, 7, 7),
-                                              height: 84.h,
-                                              width: 101.w,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                        color:
-                                                        Color(0x25000000),
-                                                        offset: Offset(0, 4.h),
-                                                        blurRadius: 2),
-                                                  ],
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      10.r)),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceAround,
-                                                children: [
-                                                  Image.asset(
-                                                    AppImage.parcle_icon,
-                                                    height: 38.h,
-                                                    width: 47.w,
-                                                    // Icons.home,
-                                                  ),
-                                                  AutoSizeText(
-                                                    'parcel'.tr,
-                                                    style: TextStyle(
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                        fontSize: 14.sp),
-                                                    maxLines: 1,
-                                                  )
-                                                ],
-                                              )),
-                                        ),
-                                      ),
-                                    ],),
+                                    //   InkWell(
+                                    //     onTap: () {
+                                    //       print('tap other');
+                                    //       cont.isRideSelected.value = false;
+                                    //
+                                    //       Get.to(
+                                    //             () => LocationScreen(
+                                    //           isRideLocationUpdate: false,
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //     child: Card(
+                                    //       shape: RoundedRectangleBorder(
+                                    //           borderRadius:
+                                    //           BorderRadius.circular(10.r)),
+                                    //       child: Container(
+                                    //           padding: EdgeInsets.fromLTRB(
+                                    //               7, 15, 7, 7),
+                                    //           height: 84.h,
+                                    //           width: 101.w,
+                                    //           decoration: BoxDecoration(
+                                    //               boxShadow: [
+                                    //                 BoxShadow(
+                                    //                     color:
+                                    //                     Color(0x25000000),
+                                    //                     offset: Offset(0, 4.h),
+                                    //                     blurRadius: 2),
+                                    //               ],
+                                    //               color: Colors.white,
+                                    //               borderRadius:
+                                    //               BorderRadius.circular(
+                                    //                   10.r)),
+                                    //           child: Column(
+                                    //             mainAxisAlignment:
+                                    //             MainAxisAlignment
+                                    //                 .spaceAround,
+                                    //             children: [
+                                    //               Image.asset(
+                                    //                 AppImage.parcle_icon,
+                                    //                 height: 38.h,
+                                    //                 width: 47.w,
+                                    //                 // Icons.home,
+                                    //               ),
+                                    //               AutoSizeText(
+                                    //                 'parcel'.tr,
+                                    //                 style: TextStyle(
+                                    //                     color: AppColors
+                                    //                         .primaryColor,
+                                    //                     fontSize: 14.sp),
+                                    //                 maxLines: 1,
+                                    //               )
+                                    //             ],
+                                    //           )),
+                                    //     ),
+                                    //   ),
+                                    // ],),
 
                                     Row(
                                       mainAxisAlignment:
