@@ -288,13 +288,13 @@ class UserController extends BaseController {
         // showError(msg: "Password length must be between 6–15 characters.");
         return;
       }
-      if(!passwordController.text.contains((RegExp(r'[0-9]'))) ||
-          !passwordController.text.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
-        Get.snackbar("Make strong password", "Password must be alphanumeric with special characters",
-            backgroundColor: Colors.redAccent.withOpacity(0.8),
-            colorText: Colors.white);
-        return;
-      }
+      // if(!passwordController.text.contains((RegExp(r'[0-9]'))) ||
+      //     !passwordController.text.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+      //   Get.snackbar("Make strong password", "Password must be alphanumeric with special characters",
+      //       backgroundColor: Colors.redAccent.withOpacity(0.8),
+      //       colorText: Colors.white);
+      //   return;
+      // }
       if (((phoneNumberController.text.length ==
           6 || phoneNumberController.text.length ==
           8 || phoneNumberController.text.length ==
