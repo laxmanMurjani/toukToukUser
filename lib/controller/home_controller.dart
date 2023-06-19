@@ -467,6 +467,7 @@ class HomeController extends BaseController {
           url:
               "${ApiUrl.showProviders}?latitude=${userCurrentLocation!.latitude}&longitude=${userCurrentLocation!.longitude}&service=${servicesModel}",
           onSuccess: (Map<String, dynamic> data) {
+            print("ssssssss===>${servicesModel}");
             showDriverLocationList.clear();
             dismissLoader();
             if(checkRequestResponseModel.value.availble_driver_count != 0){
@@ -567,7 +568,7 @@ class HomeController extends BaseController {
     ByteData data = await rootBundle.load(AppImage.taxi);
 
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetHeight: 80);
+        targetHeight: 50);
     ui.FrameInfo fi = await codec.getNextFrame();
     Uint8List markIcons =
         (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
@@ -580,6 +581,8 @@ class HomeController extends BaseController {
       for(int i=0; i <= showDriverLocationList.length-1; i++){
         ShowDriversLocationModel result = showDriverLocationList[i];
         LatLng latLngMarker = LatLng(result.latitude!, result.longitude!);
+        print('===>>${result.latitude!}');
+        print('===>>${result.longitude!}');
         temo.add(Marker(
           markerId: MarkerId("marker$i"),
           position: latLngMarker,

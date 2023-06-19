@@ -21,6 +21,7 @@ import 'package:etoUser/util/app_constant.dart';
 import 'package:etoUser/util/languages.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wakelock/wakelock.dart';
 
 FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
@@ -60,6 +61,7 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Wakelock.enable();
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   await RemoteConfigService.setupRemoteConfig();
   AppString.googleMapKey =firebaseRemoteConfig.getString("map_key");

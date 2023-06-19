@@ -219,13 +219,13 @@ class _HomeScreenState extends State<HomeScreen>
       await _homeController.checkRequest();
 
       Future.delayed(
-        Duration(seconds: 9),
+        Duration(seconds: 0),
         () async {
-          // if (_homeController.userCurrentLocation != null) {
-          //   _homeController.updateLocation(
-          //       _homeController.userCurrentLocation!.latitude.toString(),
-          //       _homeController.userCurrentLocation!.longitude.toString());
-          // }
+          if (_homeController.userCurrentLocation != null) {
+            _homeController.updateLocation(
+                _homeController.userCurrentLocation!.latitude.toString(),
+                _homeController.userCurrentLocation!.longitude.toString());
+          }
           if (_homeController.userCurrentLocation != null) {
             print("checkEnter");
             // if (_homeController.showDriverLocationList.isNotEmpty) {
@@ -233,14 +233,14 @@ class _HomeScreenState extends State<HomeScreen>
             print("0000===>${_homeController.showDriverLocationList.length}");
             // }
 
-            // Future.delayed(Duration(seconds: 10),() async{
-            //   await _homeController.getDriverMarkerData(
-            //       updateData: () => setState(() {}));
-            // },);
-            // if (_homeController.showDriverLocationList.isNotEmpty) {
-            //   await _homeController.getNearDriverTimeData();
-            // }
-            // }
+            Future.delayed(Duration(seconds: 10),() async{
+              await _homeController.getDriverMarkerData(
+                  updateData: () => setState(() {}));
+            },);
+            if (_homeController.showDriverLocationList.isNotEmpty) {
+              await _homeController.getNearDriverTimeData();
+            }
+            //}
           }
 
           // if (_homeController.showDriverLocationList.isEmpty) {

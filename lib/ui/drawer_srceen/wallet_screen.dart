@@ -328,7 +328,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             ),
                           ),
                           Text(
-                            "500 Touk Touk points = 100 Rupees in your wallet.",
+                            "500 Touk Touk points = 100 ${_userController.userData.value.currency} in your wallet.",
                             style: TextStyle(
                               color: AppColors.primaryColor,
                               fontSize: 13.sp,
