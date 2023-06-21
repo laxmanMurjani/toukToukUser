@@ -31,8 +31,8 @@ class Languages extends Translations {
             "You deserve the best, Connecting you with the best driver",
         "continue": "Continue",
         "please_enter_valid_otp": "Please enter valid OTP",
-        "didn_t_get_the_OTP": "didn`t Get The OTP?",
-        "resend_OTP": "RESEND OTP ",
+        "didn_t_get_the_OTP": "Didn`t Get The OTP?",
+        "resend_OTP": "Resend OTP ",
         "enter_phone": "Enter phone number to continue",
         "phone": "Phone",
         "Please_type_the_verification_code_sent_to_your":
@@ -282,7 +282,9 @@ class Languages extends Translations {
         "taxi": 'taxi',
         "delivery": "delivery",
         "email(optional)": "Email (optional)",
-        "email id (not added)": "email id (not added)"
+        "email id (not added)": "email id (not added)",
+        "join_us": "Join Us Via Phone Number",
+        "enter_yor_phone": "Enter your phone number"
       },
       "hi_IN": {
         "Sorry_for_the_technical_Beakdown" :
@@ -1217,7 +1219,13 @@ class Languages extends Translations {
         "taxi": 'سيارة اجره',
         "delivery": "توصيل",
         "email(optional)": "البريد الإلكتروني اختياري)",
-        "email id (not added)": "معرف البريد الإلكتروني (غير مضاف)"
+        "email id (not added)": "معرف البريد الإلكتروني (غير مضاف)",
+        "join_us": "انضم إلينا عبر رقم الهاتف",
+        "enter_yor_phone": "أدخل رقم هاتفك",
+        "didn_t_get_the_OTP": "ألم تحصل على OTP؟",
+        "where_would-you_like_to_go?": "أين تريد أن تذهب؟",
+        "enter_destination": "أدخل الوجهة",
+        "delete_account": "حذف الحساب",
       },
       "hy_AM": {
         "language": "Armenian",
@@ -1465,7 +1473,11 @@ class Languages extends Translations {
         "taxi": "տաքսի",
         "delivery": "առաքում",
         "email(optional)": "Էլփոստ (ըստ ցանկության)",
-        "email id (not added)": "էլփոստի id (ավելացված չէ)"
+        "email id (not added)": "էլփոստի id (ավելացված չէ)",
+        "join_us": "Միացեք մեզ հեռախոսահամարով",
+        "enter_yor_phone": "Մուտքագրեք ձեր հեռախոսահամարը",
+        "didn_t_get_the_OTP": "Չե՞ք ստացել OTP-ն:",
+        "where_would-you_like_to_go?": "Ուր եք ուզում գնալ?",
 
       }
     };
