@@ -19,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   ];
 
   Map<String, dynamic> params = Map();
+  //bool isResendOtp = false;
 
   @override
   void initState() {
@@ -52,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!prefs.containsKey(Database.seenOnBoarding)) {
         _showDialog();
       }
+     _userController.isUserUpdated.value = prefs.containsKey('isUserUpdated');
     });
   }
 
@@ -100,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.55,
               color: AppColors.white,
               // width: double.infinity,
               // child: Image.asset(
@@ -292,9 +295,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30.h),
+                  SizedBox(height: 18.h),
                   InkWell(
                     onTap: () {
+                      // print('xyz ${GetStorage().read('isUserUpdated')}');
                       // Get.to(()=> NewRegistrationScreen());
                       print('ccode:${cont.countryCode}');
                       if (cont.phoneNumberController.text.isEmpty) {
@@ -320,7 +324,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           cont.countryCode == '+961') || cont.phoneNumberController.text.length ==
                           10 && cont.countryCode != '+961') {
                         print('passed');
-                        cont.sendOtp(params: params);
+                        sendOtp(cont);
+                        // cont.sendOtp(params: params);
                         return;
                       }
                       Get.snackbar("Alert", "Please enter a valid mobile number",
@@ -331,22 +336,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
                       child: Container(
-                        width: MediaQuery.of(context).size.width*0.7,
+                        width: MediaQuery.of(context).size.width*0.76,
                         padding: EdgeInsets.symmetric(vertical: 20),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: AppColors.primaryColor,
                             borderRadius: BorderRadius.circular(30),
-                            // border:
-                            //     Border.all(color: AppColors.primaryColor)
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: AppColors.lightGray.withOpacity(0.5),
-                            //     blurRadius: 16.r,
-                            //     spreadRadius: 2.w,
-                            //     offset: Offset(0, 3.h),
-                            //   )
-                            // ],
                             ),
                         child: Text(
                           'continue'.tr,
@@ -358,6 +353,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+
+                  // GetStorage().read('isUserUpdated')==true?
+                  cont.isUserUpdated.value?
+                  GestureDetector(onTap: (){
+                    Get.to(() => LoginWithEmailPassword());
+                  },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width*0.76,
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Text(
+                          'login_with_pw'.tr,
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ) : SizedBox(),
+
                   // CustomButton(
                   //   padding: EdgeInsets.symmetric(vertical: 20),
                   //   text: "Continue",
@@ -721,6 +744,65 @@ class _LoginScreenState extends State<LoginScreen> {
       log("GoogleSignInAuthentication   ==>    ${googleSignInAuthentication.accessToken}");
       _userController.googleAuthToken.value = googleSignInAuthentication.accessToken!;
       _userController.loginWithGoogle(accessToken: googleSignInAuthentication.accessToken ?? "");
+    }
+  }
+
+  sendOtp(cont) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+    var millis = await prefs.getInt('sendOtpTimestamp');
+    print('millis ${millis}');
+
+    if(millis != null){
+      // Assuming you have the original time and a timestamp in milliseconds
+      int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
+      int? timestamp = millis;
+
+// Create DateTime objects from the timestamps
+      DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
+      DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+// Calculate the difference in minutes
+      Duration difference = timestampDateTime.difference(originalDateTime);
+      print("ddddd===>${difference}");
+      int differenceInMinutes = difference.inMinutes * (-1);
+
+// Print the result
+      print('Difference in minutes: $differenceInMinutes');
+
+      if(prefs.containsKey('sendOtpCounter') && differenceInMinutes >= 59){
+        await prefs.remove('sendOtpTimestamp');
+        await prefs.remove('sendOtpCounter');
+        print("dbc===L>${differenceInMinutes >= 59}");
+
+      }
+      // Get.snackbar('Alert', "'Retry after 6 hours'",
+      //     backgroundColor: Colors.red.withOpacity(0.8),
+      //     colorText: Colors.white);
+    }
+
+    cont.resendOtpCounter.value ++;
+
+    // cont.resendOtpCounter.value = prefs.getBool(key)
+
+    if(prefs.containsKey('sendOtpCounter')){
+      Get.snackbar('Alert', "'Retry after 6 hours'",
+          backgroundColor: Colors.red.withOpacity(0.8),
+          colorText: Colors.white);
+      //print("dbc===L>${differenceInMinutes >= 59}");
+    }else{
+      print('counterValue: ${cont.resendOtpCounter.value}');
+      if(cont.resendOtpCounter.value<=2){
+        cont.sendOtp(params: params);
+      }else{
+
+        Get.snackbar('Alert', "'Retry after 6 hours'",
+            backgroundColor: Colors.red.withOpacity(0.8),
+            colorText: Colors.white);
+        print('currentTime${DateTime.now().millisecondsSinceEpoch}');
+        await prefs.setBool('sendOtpCounter', true);
+        await prefs.setInt('sendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+      }
     }
   }
 }

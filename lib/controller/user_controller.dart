@@ -75,6 +75,8 @@ class UserController extends BaseController {
   RxInt selectedLanguage = 0.obs;
   RxString googleAuthToken = ''.obs;
   RxString facebookAuthToken = ''.obs;
+  RxBool isUserUpdated = false.obs;
+  RxInt resendOtpCounter = 0.obs;
 
   @override
   void onInit() {
@@ -1279,6 +1281,18 @@ class UserController extends BaseController {
 
   Future<void> updateProfile(int isFrom) async {
     try {
+      if(firstNameController.text.isEmpty && isFrom == 1){
+        showError(msg: 'Please enter your first name');
+        return;
+      }
+      if(lastNameController.text.isEmpty && isFrom == 1){
+        showError(msg: 'Please enter your last name');
+        return;
+      }
+      if(passwordController.text.isEmpty && isFrom == 1){
+        showError(msg: 'Please enter your password');
+        return;
+      }
       HomeController _homeController = Get.find();
       showLoader();
       Map<String, dynamic> params = {};
@@ -1287,6 +1301,7 @@ class UserController extends BaseController {
       params["email"] = emailController.text;
       params["mobile"] = phoneNumberController.text;
       params["country_code"] = userData.value.countryCode ?? "";
+      params["password"] = passwordController.text;
 
       if (imageFilePah != null) {
         params["picture"] = await dio.MultipartFile.fromFile(imageFilePah!);

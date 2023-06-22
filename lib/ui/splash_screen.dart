@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:etoUser/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -24,6 +25,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver{
   final UserController _userController = Get.find();
+  final HomeController _homeController = Get.find();
   GoogleMapController? _controller;
 
   @override
@@ -34,6 +36,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     super.initState();
     _userController.setLanguage();
     Timer(const Duration(seconds: 3), () {
+      _homeController.getUserLatLong();
       if (_userController.userToken.value.accessToken != null) {
         // _userController.currentUserApi();
         // Get.off(()=> HomeScreen());
@@ -171,21 +174,23 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       //AppColors.primaryColor,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Center(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(80),
+              borderRadius: BorderRadius.circular(100),
               child: Image.asset(
                 AppImage.logoMain,
                 height: 195,
-                width: 233,
+                width: 195,
+                fit: BoxFit.cover,
               ),
             ),
           ),
+          Image.asset(AppImage.splashImg)
           // Column(mainAxisAlignment: MainAxisAlignment.end,children: [
           //   Text('By',style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.white,),),
           //   Image.asset(AppImage.mozilitNameLogo,width: MediaQuery.of(context).size.width*0.7,),

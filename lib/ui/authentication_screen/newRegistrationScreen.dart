@@ -21,11 +21,11 @@ class _NewRegistrationScreenState extends State<NewRegistrationScreen> {
         if (cont.error.value.errorType == ErrorType.internet) {
           return NoInternetWidget();
         }
-        return Stack(
+        return Stack(alignment: Alignment.bottomCenter,
           children: [
             Align(alignment: Alignment.bottomCenter,
               child: Image.asset(AppImage.login3),),
-            SizedBox(height: MediaQuery.of(context).size.height*0.75,
+            SizedBox(height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
                 child: Column(children: [
                   SizedBox(height: MediaQuery.of(context).size.height*0.07,),
@@ -45,12 +45,14 @@ class _NewRegistrationScreenState extends State<NewRegistrationScreen> {
                       .height * 0.03,),
                   Text('Almost There!',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),),
-                  cusTextField(cont.firstNameController, 'Enter First Name',true),
-                  cusTextField(cont.lastNameController, 'Enter Last Name',true),
-                  cusTextField(cont.emailController, 'Email Address(Optional)',false),
-                  cusTextField(cont.referralCodeController, 'Referral Code(Optional)',false),
+                  cusTextField(cont.firstNameController, 'Enter First Name',true, false),
+                  cusTextField(cont.lastNameController, 'Enter Last Name',true, false),
+                  cusTextField(cont.emailController, 'Email Address(Optional)',false, false),
+                  cusTextField(cont.referralCodeController, 'Referral Code(Optional)',false, false),
+                  cusTextField(cont.passwordController, 'Enter password', false, true),
 
                   continueButton(cont),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.5,)
                 ],),
               ),
             ),
@@ -59,7 +61,7 @@ class _NewRegistrationScreenState extends State<NewRegistrationScreen> {
       }));
   }
 
-  Widget cusTextField(textEdController, hintTxt, firstLetterCapital){
+  Widget cusTextField(textEdController, hintTxt, firstLetterCapital, isObscured){
     return Padding(padding: EdgeInsets.symmetric(horizontal: 15,vertical: 8),child:
     Container(height: 50,width: double.infinity,
       decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(15),
@@ -69,7 +71,7 @@ class _NewRegistrationScreenState extends State<NewRegistrationScreen> {
               color: Colors.black26,
               blurRadius: 3,
             )
-          ]),child: TextField(controller: textEdController,
+          ]),child: TextField(obscureText: isObscured,controller: textEdController,
         textCapitalization: firstLetterCapital? TextCapitalization.sentences : TextCapitalization.none,decoration:
       InputDecoration(border: InputBorder.none,hintText:
       hintTxt,hintStyle: TextStyle(fontSize: 18),contentPadding:

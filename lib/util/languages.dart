@@ -5,6 +5,8 @@ class Languages extends Translations {
   Map<String, Map<String, String>> get keys {
     return {
       "en_US": {
+        "login_with_pw": "Login with password",
+        "login_via_otp": "Login via OTP",
         "Sorry_for_the_technical_Beakdown" :
         "Sorry for the technical Breakdown issue. We are here to help you. please wait while we resolve.",
         "payment_back":"Your transaction is under process , Are you sure you want to close this tab?",
@@ -1010,6 +1012,7 @@ class Languages extends Translations {
         "Yes": "Sí"
       },
       "ar_AE":{
+        "login_with_pw": "تسجيل الدخول بكلمة مرور",
         "language": "إنجليزي",
         "forgot_password": "نسيت كلمة المرور",
         "otp": "OTP",
@@ -1226,9 +1229,12 @@ class Languages extends Translations {
         "where_would-you_like_to_go?": "أين تريد أن تذهب؟",
         "enter_destination": "أدخل الوجهة",
         "delete_account": "حذف الحساب",
+        "login_via_otp": "تسجيل الدخول عبر OTP",
       },
       "hy_AM": {
         "language": "Armenian",
+        "login_via_otp": "Մուտք գործեք OTP-ի միջոցով",
+        "login_with_pw": "Մուտք գործեք գաղտնաբառով",
         "forgot_password": "Մոռացել եք գաղտնաբառը",
         "otp": "օտպ",
         "new_password": "Նոր գաղտնաբառ",

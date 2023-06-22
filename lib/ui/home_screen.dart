@@ -7,6 +7,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:etoUser/ui/drawer_srceen/help_screen.dart';
 import 'package:etoUser/ui/widget/verifiedScreen.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart' as location;
 import 'package:contacts_service/contacts_service.dart';
@@ -58,6 +59,7 @@ import 'package:etoUser/util/common.dart';
 import 'package:etoUser/util/custom_radio_button.dart';
 import 'package:etoUser/util/firebase_service.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api.dart';
 import '../model/fare_response_model.dart';
@@ -93,10 +95,10 @@ class _HomeScreenState extends State<HomeScreen>
       index: 0,
       name: "Cash",
     ),
-    PaymentOptionModel(
-      index: 1,
-      name: "Online(UPI, Card, Net banking)",
-    ),
+    // PaymentOptionModel(
+    //   index: 1,
+    //   name: "Online(UPI, Card, Net banking)",
+    // ),
   ];
 
   final PageController _pageController = PageController(initialPage: 0);
@@ -194,6 +196,19 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
+    Future.delayed(Duration.zero,() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isUserUpdated', true);
+    });
+
+    // GetStorage().write('isUserUpdated', true);
+    // Future.delayed(Duration.zero,() async{
+    //   bool checkPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
+    //   if(!checkPermissionStatus){
+    //     await FlutterOverlayWindow.requestPermission();
+    //   }
+    // },);
+
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
@@ -696,7 +711,8 @@ class _HomeScreenState extends State<HomeScreen>
 
                                                 InkWell(
                                                   onTap: () {
-                                                    Get.to(() => NotificationManagerScreen());
+                                                    //Get.to(() => NotificationManagerScreen());
+                                                    print('xyz ${GetStorage().read('isUserUpdated')}');
                                                     //VerifiedDialogue()
                                                     //GetStorage().erase();
 
@@ -5339,7 +5355,7 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
     switch (state) {
@@ -5347,8 +5363,22 @@ class _HomeScreenState extends State<HomeScreen>
         if (_homeController.googleMapController != null) {
           _homeController.googleMapController?.setMapStyle("[]");
         }
+        // FlutterOverlayWindow.closeOverlay()
+        //     .then((value) => log('STOPPED: alue: $value'));
         break;
       case AppLifecycleState.inactive:
+        // print('statusIsInactive');
+        // if (await FlutterOverlayWindow.isActive()) return;
+        // await FlutterOverlayWindow.showOverlay(
+        // enableDrag: true,
+        // overlayTitle: "X-SLAYER",
+        // overlayContent: 'Overlay Enabled',
+        // flag: OverlayFlag.defaultFlag,
+        // visibility: NotificationVisibility.visibilityPublic,
+        // positionGravity: PositionGravity.auto,
+        // height: 200,
+        // width: WindowSize.matchParent,
+        // );
         break;
       case AppLifecycleState.paused:
         break;
