@@ -126,6 +126,7 @@ class AppImage {
   static String login2 = "$_basePath/login2.png";
   static String login3 = "$_basePath/login3.png";
   static String splashImg = "$_basePath/splashImg.png";
+  static String newSplash = "$_basePath/newSplash.png";
 }
 
 double? latitude, longitude;

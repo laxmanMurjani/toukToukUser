@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
+// import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:etoUser/api/api.dart';
 import 'package:etoUser/api/api_service.dart';
 import 'package:etoUser/controller/base_controller.dart';
@@ -156,6 +157,7 @@ class HomeController extends BaseController {
   RxBool isSourceSelect = false.obs;
   RxBool isRideSelected = true.obs;
   TextEditingController addTaskDetailsController = TextEditingController();
+  // ConnectivityResult connectionStatus = ConnectivityResult.none;
 
   @override
   void onInit() {
@@ -485,7 +487,7 @@ class HomeController extends BaseController {
           });
     } catch (e) {
       print(e);
-      showError(msg: e.toString());
+      //showError(msg: e.toString());
     }
   }
 

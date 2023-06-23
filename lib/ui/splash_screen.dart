@@ -36,8 +36,9 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     super.initState();
     _userController.setLanguage();
     Timer(const Duration(seconds: 3), () {
-      _homeController.getUserLatLong();
+      // _homeController.getUserLatLong();
       if (_userController.userToken.value.accessToken != null) {
+        _homeController.getUserLatLong();
         // _userController.currentUserApi();
         // Get.off(()=> HomeScreen());
         _userController.getUserProfileData();
@@ -179,6 +180,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
+          Image.asset(AppImage.newSplash),
           Center(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
@@ -190,7 +192,6 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
               ),
             ),
           ),
-          Image.asset(AppImage.splashImg)
           // Column(mainAxisAlignment: MainAxisAlignment.end,children: [
           //   Text('By',style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.white,),),
           //   Image.asset(AppImage.mozilitNameLogo,width: MediaQuery.of(context).size.width*0.7,),

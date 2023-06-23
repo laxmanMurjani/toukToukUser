@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:etoUser/ui/drawer_srceen/help_screen.dart';
 import 'package:etoUser/ui/widget/verifiedScreen.dart';
 import 'package:flutter/services.dart';
@@ -193,6 +194,9 @@ class _HomeScreenState extends State<HomeScreen>
   //
   //   });
   // }
+  // ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  // final Connectivity _connectivity = Connectivity();
+  // late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
   @override
   void initState() {
@@ -200,6 +204,11 @@ class _HomeScreenState extends State<HomeScreen>
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isUserUpdated', true);
     });
+
+    // initConnectivity();
+    //
+    // _connectivitySubscription =
+    //     _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
 
     // GetStorage().write('isUserUpdated', true);
     // Future.delayed(Duration.zero,() async{
@@ -711,8 +720,10 @@ class _HomeScreenState extends State<HomeScreen>
 
                                                 InkWell(
                                                   onTap: () {
-                                                    //Get.to(() => NotificationManagerScreen());
-                                                    print('xyz ${GetStorage().read('isUserUpdated')}');
+                                                    Get.to(() => NotificationManagerScreen());
+                                                    //print('ccc ${_connectionStatus.toString()}');
+                                                    // initConnectivity();
+                                                    //print('xyz ${GetStorage().read('isUserUpdated')}');
                                                     //VerifiedDialogue()
                                                     //GetStorage().erase();
 
@@ -5351,6 +5362,7 @@ class _HomeScreenState extends State<HomeScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _requestTimer?.cancel();
+    // _connectivitySubscription.cancel();
     super.dispose();
   }
 
@@ -6298,4 +6310,34 @@ class _HomeScreenState extends State<HomeScreen>
           ],
         ));
   }
+
+  // // Platform messages are asynchronous, so we initialize in an async method.
+  // Future<void> initConnectivity() async {
+  //   print('dddd');
+  //   late ConnectivityResult result;
+  //   // Platform messages may fail, so we use a try/catch PlatformException.
+  //   try {
+  //     result = await _connectivity.checkConnectivity();
+  //     print('ddd ${result.toString()}');
+  //   } on PlatformException catch (e) {
+  //     var developer;
+  //     developer.log('Couldn\'t check connectivity status', error: e);
+  //     return;
+  //   }
+  //
+  //   // If the widget was removed from the tree while the asynchronous platform
+  //   // message was in flight, we want to discard the reply rather than calling
+  //   // setState to update our non-existent appearance.
+  //   if (!mounted) {
+  //     return Future.value(null);
+  //   }
+  //   return _updateConnectionStatus(result);
+  // }
+  //
+  // Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+  //   print(result.toString());
+  //   // setState(() {
+  //   //   _connectionStatus = result;
+  //   // });
+  // }
 }
