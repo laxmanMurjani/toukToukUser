@@ -14,6 +14,7 @@ import 'package:etoUser/ui/home_screen.dart';
 import 'package:etoUser/ui/payment_webview_screen.dart';
 import 'package:etoUser/ui/widget/no_internet_widget.dart';
 import 'package:etoUser/util/app_constant.dart';
+import 'package:intl/intl.dart';
 
 class InvoiceDialog extends StatefulWidget {
   @override
@@ -195,22 +196,22 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                 if (travelTime > 0)
                                   _invoiceRow(
                                       label: "time-Taken".tr,
-                                      value: "${travelTime} Min(s)"),
+                                      value: "${formatNumberWithCommas(travelTime.toInt())} Min(s)"),
                                 if (fixed > 0)
                                   _invoiceRow(
                                       label: "base_fare".tr,
                                       value:
-                                          "${fixed} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                          "${formatNumberWithCommas(fixed.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (timeFare > 0)
                                   _invoiceRow(
                                       label: "time_fare".tr,
                                       value:
-                                          "${timeFare} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                          "${formatNumberWithCommas(timeFare.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (payment.distance != 0)
                                   _invoiceRow(
                                     label: "distance_fare".tr,
                                     value:
-                                        "${payment.distance ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                        "${formatNumberWithCommas(payment.distance.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
                                   ),
 
                                 // _invoiceRow(
@@ -220,12 +221,12 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                   _invoiceRow(
                                       label: "waiting_amount".tr,
                                       value:
-                                          "${waitingAmount} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                          "${formatNumberWithCommas(waitingAmount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (tollCharges >= 0)
                                   _invoiceRow(
                                       label: "toll_charges".tr,
                                       value:
-                                          "${payment.tollCharge ?? ""} ${cont.checkRequestResponseModel.value.currency }"),
+                                          "${formatNumberWithCommas(tollCharges.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency }"),
                                 Visibility(
                                   visible: false,
                                   child: Row(
@@ -240,7 +241,7 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                       ),
                                       Expanded(child: Container()),
                                       Text(
-                                        "${payment.total ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                        "${formatNumberWithCommas(payment.total.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
                                         style: TextStyle(
                                           color: AppColors.primaryColor,
                                           fontWeight: FontWeight.w700,
@@ -271,7 +272,7 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                       fontSize: 14.sp,
                                     ),
                                     value:
-                                  "${payment.total ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                  "${formatNumberWithCommas(payment.total.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
                                     valueStyle: TextStyle(
                                       color: AppColors.primaryColor,
                                       fontWeight: FontWeight.w500,
@@ -298,17 +299,17 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                   _invoiceRow(
                                       label: "wallet_detection".tr,
                                       value:
-                                          "${walletDetection} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                          "${formatNumberWithCommas(walletDetection.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (roundOff > 0)
                                   _invoiceRow(
                                       label: "round_off".tr,
                                       value:
-                                          "${roundOff} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                          "${formatNumberWithCommas(roundOff.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (discount > 0)
                                   _invoiceRow(
                                       label: "discount".tr,
                                       value:
-                                          "${discount} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                          "${formatNumberWithCommas(discount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (payable > 0)
                                   _invoiceRow(
                                       label: "payable".tr,
@@ -318,7 +319,7 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                         fontSize: 14.sp,
                                       ),
                                       value:
-                                          "${payment.payable ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                          "${formatNumberWithCommas(payment.payable.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
                                       valueStyle: TextStyle(
                                         color: AppColors.primaryColor,
                                         fontWeight: FontWeight.w500,
@@ -1220,4 +1221,10 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
   }
 
   void _doneBtn() {}
+}
+
+
+String formatNumberWithCommas(int? number) {
+  final formatter = NumberFormat('#,##0');
+  return formatter.format(number);
 }
