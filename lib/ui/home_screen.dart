@@ -3309,7 +3309,7 @@ class _HomeScreenState extends State<HomeScreen>
                                             ),
                                             Spacer(),
                                             Text(
-                                              "${_userController.userData.value.currency ?? ""} ${couponCodeApply(homeController: cont)}",
+                                              "${_userController.userData.value.currency ?? ""} ${formatNumberWithCommas(couponCodeApply(homeController: cont).toInt())}",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: AppColors.primaryColor,
@@ -5609,7 +5609,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ],
                 ),
               !isSelected ? Text("") :  Text(
-                  " ${_userController.userData.value.currency ?? ""} ${fareResponseModel.estimatedFare ?? ""}",
+                  " ${_userController.userData.value.currency ?? ""} ${formatNumberWithCommas(fareResponseModel.estimatedFare.toInt()) ?? ""}",
                   style: TextStyle(
                       fontSize: 18,
                       color: Color(0xFF393A3C),
@@ -6340,4 +6340,8 @@ class _HomeScreenState extends State<HomeScreen>
   //   //   _connectionStatus = result;
   //   // });
   // }
+  String formatNumberWithCommas(int? number) {
+    final formatter = NumberFormat('#,##0');
+    return formatter.format(number);
+  }
 }

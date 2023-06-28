@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -31,6 +33,26 @@ class _OtpScreenState extends State<OtpScreen> {
   final phoneNumber = Get.arguments[0];
   final countryCode = Get.arguments[1];
   bool isResendOtp = false;
+
+  int secondsRemaining = 30;
+  bool enableResend = false;
+  Timer? timer;
+  @override
+  initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      if (secondsRemaining != 0) {
+        setState(() {
+          secondsRemaining--;
+        });
+      } else {
+        setState(() {
+          enableResend = true;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
@@ -273,85 +295,91 @@ class _OtpScreenState extends State<OtpScreen> {
                             color: AppColors.drawer.withOpacity(0.8),fontWeight: FontWeight.w500
                           )),
                       SizedBox(width: 3,),
+                      enableResend?
                       InkWell(
                         onTap: () async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
-                          var millis = await prefs.getInt('resendOtpTimestamp');
-                          print('millis ${millis}');
-
-                          if(millis != null){
-                            // Assuming you have the original time and a timestamp in milliseconds
-                            int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
-                            int? timestamp = millis;
-
-// Create DateTime objects from the timestamps
-                            DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
-                            DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-
-// Calculate the difference in minutes
-                            Duration difference = timestampDateTime.difference(originalDateTime);
-                            print("ddddd===>${difference}");
-                            int differenceInMinutes = difference.inMinutes * (-1);
-
-// Print the result
-                            print('Difference in minutes: $differenceInMinutes');
-
-                            if(prefs.containsKey('resendOtpCounter') && differenceInMinutes >= 59){
-                              await prefs.remove('resendOtpTimestamp');
-                              await prefs.remove('resendOtpCounter');
-                              print("dbc===L>${differenceInMinutes >= 59}");
-
-                            }
-                            // Get.snackbar('Alert', "'Retry after 6 hours'",
-                            //     backgroundColor: Colors.red.withOpacity(0.8),
-                            //     colorText: Colors.white);
-                          }
-
-                          cont.resendOtpCounter.value ++;
-
-                          // cont.resendOtpCounter.value = prefs.getBool(key)
-
-                          if(prefs.containsKey('resendOtpCounter')){
-                            Get.snackbar('Alert', "'Retry after 6 hours'",
-                                backgroundColor: Colors.red.withOpacity(0.8),
-                                colorText: Colors.white);
-                            //print("dbc===L>${differenceInMinutes >= 59}");
-                          }else{
-                            print('counterValue: ${cont.resendOtpCounter.value}');
-                            if(cont.resendOtpCounter.value<=2){
-                              print('resendOtpCounter is less than equal 2');
-                              setState(() {
-                                isResendOtp = true;
-                              });
-                              Map<String, dynamic> params = {};
-                              params["mobile"] = phoneNumber;
-                              params["country_code"] = countryCode;
-                              if(widget.isAuthLogin){
-                                cont.sendOtpWithGoogleSignIn(params: params);
-                              }else{
-                                cont.sendOtp(params: params);
-                                print("otp===> ${_otp}");
-                              }
-                            }else{
-
-                              Get.snackbar('Alert', "'Retry after 6 hours'",
-                                  backgroundColor: Colors.red.withOpacity(0.8),
-                                  colorText: Colors.white);
-                              print('currentTime${DateTime.now().millisecondsSinceEpoch}');
-                              await prefs.setBool('resendOtpCounter', true);
-                              await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
-                            }
-                          }
-
-
+                          _resendCode();
+//                           SharedPreferences prefs = await SharedPreferences.getInstance();
+//                           // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+//                           var millis = await prefs.getInt('resendOtpTimestamp');
+//                           print('millis ${millis}');
+//
+//                           if(millis != null){
+//                             // Assuming you have the original time and a timestamp in milliseconds
+//                             int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
+//                             int? timestamp = millis;
+//
+// // Create DateTime objects from the timestamps
+//                             DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
+//                             DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+//
+// // Calculate the difference in minutes
+//                             Duration difference = timestampDateTime.difference(originalDateTime);
+//                             print("ddddd===>${difference}");
+//                             int differenceInMinutes = difference.inMinutes * (-1);
+//
+// // Print the result
+//                             print('Difference in minutes: $differenceInMinutes');
+//
+//                             if(prefs.containsKey('resendOtpCounter') && differenceInMinutes >= 59){
+//                               await prefs.remove('resendOtpTimestamp');
+//                               await prefs.remove('resendOtpCounter');
+//                               print("dbc===L>${differenceInMinutes >= 59}");
+//
+//                             }
+//                             // Get.snackbar('Alert', "'Retry after 6 hours'",
+//                             //     backgroundColor: Colors.red.withOpacity(0.8),
+//                             //     colorText: Colors.white);
+//                           }
+//
+//                           cont.resendOtpCounter.value ++;
+//
+//                           // cont.resendOtpCounter.value = prefs.getBool(key)
+//
+//                           if(prefs.containsKey('resendOtpCounter')){
+//                             Get.snackbar('Alert', "'Retry after 6 hours'",
+//                                 backgroundColor: Colors.red.withOpacity(0.8),
+//                                 colorText: Colors.white);
+//                             //print("dbc===L>${differenceInMinutes >= 59}");
+//                           }else{
+//                             print('counterValue: ${cont.resendOtpCounter.value}');
+//                             if(cont.resendOtpCounter.value<=2){
+//                               print('resendOtpCounter is less than equal 2');
+//                               setState(() {
+//                                 isResendOtp = true;
+//                               });
+//                               Map<String, dynamic> params = {};
+//                               params["mobile"] = phoneNumber;
+//                               params["country_code"] = countryCode;
+//                               if(widget.isAuthLogin){
+//                                 cont.sendOtpWithGoogleSignIn(params: params);
+//                               }else{
+//                                 cont.sendOtp(params: params);
+//                                 print("otp===> ${_otp}");
+//                               }
+//                             }else{
+//
+//                               Get.snackbar('Alert', "'Retry after 6 hours'",
+//                                   backgroundColor: Colors.red.withOpacity(0.8),
+//                                   colorText: Colors.white);
+//                               print('currentTime${DateTime.now().millisecondsSinceEpoch}');
+//                               await prefs.setBool('resendOtpCounter', true);
+//                               await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+//                             }
+//                           }
 
                         },
                         child: Text(
                           "resend_OTP".tr,
                           style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.w700),
+                              color: enableResend? Colors.black : Colors.grey,
+                              fontWeight: FontWeight.w700),
                         ),
+                      ) : SizedBox(),
+                      enableResend? SizedBox() :
+                      Text(
+                        'Resend OTP after $secondsRemaining seconds',
+                        style: TextStyle(color: Colors.black, fontSize: 12),
                       ),
                     ],
                   ),
@@ -375,5 +403,18 @@ class _OtpScreenState extends State<OtpScreen> {
         );
       }),
     );
+  }
+  void _resendCode() {
+    //other code here
+    setState((){
+      secondsRemaining = 30;
+      enableResend = false;
+    });
+  }
+
+  @override
+  dispose(){
+    timer!.cancel();
+    super.dispose();
   }
 }

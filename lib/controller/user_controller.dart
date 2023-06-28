@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
@@ -77,6 +78,7 @@ class UserController extends BaseController {
   RxString facebookAuthToken = ''.obs;
   RxBool isUserUpdated = false.obs;
   RxInt resendOtpCounter = 0.obs;
+
 
   @override
   void onInit() {
