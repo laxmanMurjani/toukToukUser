@@ -157,6 +157,7 @@ class HomeController extends BaseController {
   RxBool isSourceSelect = false.obs;
   RxBool isRideSelected = true.obs;
   TextEditingController addTaskDetailsController = TextEditingController();
+  bool isMounting = true;
   // ConnectivityResult connectionStatus = ConnectivityResult.none;
 
   @override
@@ -618,7 +619,9 @@ class HomeController extends BaseController {
       // });
       markers = temo;
 
+    if(isMounting){
       updateData!.call();
+    }
   }
 
   Future<List<Placemark>> getLocationAddress(

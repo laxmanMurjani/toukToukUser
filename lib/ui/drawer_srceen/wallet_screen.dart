@@ -92,7 +92,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       margin:
                           EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.35.h,
+                      height: MediaQuery.of(context).size.height * 0.21.h,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [

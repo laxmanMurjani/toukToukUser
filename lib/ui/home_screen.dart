@@ -508,7 +508,14 @@ class _HomeScreenState extends State<HomeScreen>
                           alignment: Alignment.topCenter,
                           child: Container(
                             constraints: BoxConstraints(
-                                maxHeight: isDriverShow
+                                maxHeight: (userCont.locationResponseModel.value.home.isEmpty &&
+                                    userCont.locationResponseModel.value.work
+                                        .isEmpty &&
+                                    userCont.locationResponseModel.value.others
+                                        .isEmpty)? isDriverShow
+                                    ? MediaQuery.of(context).size.height * 0.85
+                                    : MediaQuery.of(context).size.height *
+                                        0.85 : isDriverShow
                                     ? MediaQuery.of(context).size.height * 0.85
                                     : MediaQuery.of(context).size.height *
                                         0.71),
@@ -1457,16 +1464,16 @@ class _HomeScreenState extends State<HomeScreen>
                                       .isEmpty &&
                                   userCont.locationResponseModel.value.others
                                       .isEmpty)
-                              ? 0.34 //0.38
-                              : 0.34, //0.38,
+                              ? 0.33 //0.38
+                              : 0.4, //0.38,
                       minChildSize:
                           (userCont.locationResponseModel.value.home.isEmpty &&
                                   userCont.locationResponseModel.value.work
                                       .isEmpty &&
                                   userCont.locationResponseModel.value.others
                                       .isEmpty)
-                              ? 0.28 //0.38
-                              : 0.28, //0.38,
+                              ? 0.33 //0.38
+                              : 0.4, //0.38,
                       maxChildSize: .6,
                       builder: (BuildContext context,
                           ScrollController scrollController) {
@@ -1506,7 +1513,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       userCont.locationResponseModel.value
                                           .others.isEmpty)
                                   ? MediaQuery.of(context).size.height * 0.24 //0.3
-                                  : MediaQuery.of(context).size.height * 0.24, //0.3,
+                                  : MediaQuery.of(context).size.height * 0.32, //0.3,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -3472,8 +3479,15 @@ class _HomeScreenState extends State<HomeScreen>
                                                 thickness: 1),
                                           ),
                                           mySelfWidget(
-                                            bookForSomeoneElse: () => () {
-                                              Get.to(BookForSomeoneElse());
+                                            bookForSomeoneElse: () => () async {
+                                              PermissionStatus permissionStatus = await _getContactPermission();
+                                              if (permissionStatus == PermissionStatus.granted) {
+                                                print("success");
+                                                Get.to(BookForSomeoneElse());
+                                              } else {
+                                                _handleInvalidPermissions(permissionStatus);
+                                              }
+                                              
                                               // if (number.length == 12) {
                                               //   _homeController.sendRequest(params: {
                                               //     "else_mobile":
@@ -5578,7 +5592,7 @@ class _HomeScreenState extends State<HomeScreen>
                         SizedBox(height: 2),
                         !isSelected ? Text("") : Text(
                           _homeController.nearByDriverTimeList1.isEmpty
-                              ? "Not Available"
+                              ? "Searching"
                               : _homeController
                               .durationToString(_homeController
                               .nearByDriverTimeList1.first)
@@ -6343,5 +6357,28 @@ class _HomeScreenState extends State<HomeScreen>
   String formatNumberWithCommas(int? number) {
     final formatter = NumberFormat('#,##0');
     return formatter.format(number);
+  }
+
+  Future<PermissionStatus> _getContactPermission() async {
+    PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.permanentlyDenied) {
+      PermissionStatus permissionStatus = await Permission.contacts.request();
+      return permissionStatus;
+    } else {
+      return permission;
+    }
+  }
+
+  Future<void> _handleInvalidPermissions(
+      PermissionStatus permissionStatus) async {
+    if (permissionStatus == PermissionStatus.denied) {
+      Get.snackbar("Message", "Access to contact data denied",
+          backgroundColor: Colors.redAccent);
+    } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
+      await openAppSettings();
+      Get.snackbar("Message", "Contact data not available on device'",
+          backgroundColor: Colors.redAccent);
+    }
   }
 }

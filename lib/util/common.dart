@@ -154,14 +154,14 @@ Widget timelineLastRow(String title, String subTile) {
   );
 }
 
-Future<void> contactPermissions() async {
-  PermissionStatus permissionStatus = await _getContactPermission();
-  if (permissionStatus == PermissionStatus.granted) {
-    print("success");
-  } else {
-    _handleInvalidPermissions(permissionStatus);
-  }
-}
+// Future<void> contactPermissions() async {
+//   PermissionStatus permissionStatus = await _getContactPermission();
+//   if (permissionStatus == PermissionStatus.granted) {
+//     print("success");
+//   } else {
+//     _handleInvalidPermissions(permissionStatus);
+//   }
+// }
 
 Future<PermissionStatus> _getContactPermission() async {
   PermissionStatus permission = await Permission.contacts.status;

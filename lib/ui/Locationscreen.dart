@@ -524,27 +524,28 @@ class _LocationScreenState extends State<LocationScreen>
                                       2))
                                     InkWell(
                                       onTap: () {
-                                        MultipleLocationAddModel
-                                        multipleLocationAddModel =
-                                        MultipleLocationAddModel();
-
-                                        multipleLocationAddModel.onChange =
-                                            (String s) async {
-                                          log("message  ==>  $s");
-                                          await cont.getLocationFromAddress(
-                                              address: s);
-                                        };
-                                        multipleLocationAddModel.remove = () {
-                                          cont.multipleLocationAdModelList
-                                              .remove(
-                                              multipleLocationAddModel);
-                                        };
-
-                                        cont.multipleLocationAdModelList
-                                            .add(multipleLocationAddModel);
+                                        cont.tempLocationWhereTo1.clear();
+                                        // MultipleLocationAddModel
+                                        // multipleLocationAddModel =
+                                        // MultipleLocationAddModel();
+                                        //
+                                        // multipleLocationAddModel.onChange =
+                                        //     (String s) async {
+                                        //   log("message  ==>  $s");
+                                        //   await cont.getLocationFromAddress(
+                                        //       address: s);
+                                        // };
+                                        // multipleLocationAddModel.remove = () {
+                                        //   cont.multipleLocationAdModelList
+                                        //       .remove(
+                                        //       multipleLocationAddModel);
+                                        // };
+                                        //
+                                        // cont.multipleLocationAdModelList
+                                        //     .add(multipleLocationAddModel);
                                       },
                                       child: Icon(
-                                        Icons.add,
+                                        Icons.cancel_outlined,
                                         size: 25.w,
                                       ),
                                     )

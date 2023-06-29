@@ -562,9 +562,11 @@ class UserController extends BaseController {
 
     try {
       showLoader();
+      String? token = await FirebaseMessaging.instance.getToken();
 
       params["mobile"] = phoneNumberController.text;
       params["country_code"] = countryCode;
+      params["device_token"] = token;
 
       await apiService.postRequest(
           url: ApiUrl.sendOtp,
@@ -861,10 +863,12 @@ class UserController extends BaseController {
     removeUnFocusManager();
     try {
       showLoader();
+      String? token = await FirebaseMessaging.instance.getToken();
       Map<String, dynamic> params = Map();
       params["oldmobile"] = userData.value.mobile;
       params["newmobile"] = phoneNumberController.text;
       params["country_code"] = countryCode;
+      params["device_token"] = token;
       await apiService.postRequest(
           url: ApiUrl.sendOTPProfile,
           params: params,
@@ -1513,8 +1517,10 @@ class UserController extends BaseController {
   Future<void> logout() async {
     try {
       showLoader();
+      String? token = await FirebaseMessaging.instance.getToken();
       Map<String, String> params = {};
       params["id"] = "${userData.value.id}";
+      params["device_token"] = token!;
       await apiService.postRequest(
           url: ApiUrl.logout,
           params: params,

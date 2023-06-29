@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     // determinePosition();
-    contactPermissions();
+    // contactPermissions();
     super.initState();
     _userController.setLanguage();
     Timer(const Duration(seconds: 3), () {

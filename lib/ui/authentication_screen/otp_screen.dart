@@ -299,74 +299,74 @@ class _OtpScreenState extends State<OtpScreen> {
                       InkWell(
                         onTap: () async {
                           _resendCode();
-//                           SharedPreferences prefs = await SharedPreferences.getInstance();
-//                           // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
-//                           var millis = await prefs.getInt('resendOtpTimestamp');
-//                           print('millis ${millis}');
-//
-//                           if(millis != null){
-//                             // Assuming you have the original time and a timestamp in milliseconds
-//                             int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
-//                             int? timestamp = millis;
-//
-// // Create DateTime objects from the timestamps
-//                             DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
-//                             DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-//
-// // Calculate the difference in minutes
-//                             Duration difference = timestampDateTime.difference(originalDateTime);
-//                             print("ddddd===>${difference}");
-//                             int differenceInMinutes = difference.inMinutes * (-1);
-//
-// // Print the result
-//                             print('Difference in minutes: $differenceInMinutes');
-//
-//                             if(prefs.containsKey('resendOtpCounter') && differenceInMinutes >= 59){
-//                               await prefs.remove('resendOtpTimestamp');
-//                               await prefs.remove('resendOtpCounter');
-//                               print("dbc===L>${differenceInMinutes >= 59}");
-//
-//                             }
-//                             // Get.snackbar('Alert', "'Retry after 6 hours'",
-//                             //     backgroundColor: Colors.red.withOpacity(0.8),
-//                             //     colorText: Colors.white);
-//                           }
-//
-//                           cont.resendOtpCounter.value ++;
-//
-//                           // cont.resendOtpCounter.value = prefs.getBool(key)
-//
-//                           if(prefs.containsKey('resendOtpCounter')){
-//                             Get.snackbar('Alert', "'Retry after 6 hours'",
-//                                 backgroundColor: Colors.red.withOpacity(0.8),
-//                                 colorText: Colors.white);
-//                             //print("dbc===L>${differenceInMinutes >= 59}");
-//                           }else{
-//                             print('counterValue: ${cont.resendOtpCounter.value}');
-//                             if(cont.resendOtpCounter.value<=2){
-//                               print('resendOtpCounter is less than equal 2');
-//                               setState(() {
-//                                 isResendOtp = true;
-//                               });
-//                               Map<String, dynamic> params = {};
-//                               params["mobile"] = phoneNumber;
-//                               params["country_code"] = countryCode;
-//                               if(widget.isAuthLogin){
-//                                 cont.sendOtpWithGoogleSignIn(params: params);
-//                               }else{
-//                                 cont.sendOtp(params: params);
-//                                 print("otp===> ${_otp}");
-//                               }
-//                             }else{
-//
-//                               Get.snackbar('Alert', "'Retry after 6 hours'",
-//                                   backgroundColor: Colors.red.withOpacity(0.8),
-//                                   colorText: Colors.white);
-//                               print('currentTime${DateTime.now().millisecondsSinceEpoch}');
-//                               await prefs.setBool('resendOtpCounter', true);
-//                               await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
-//                             }
-//                           }
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+                          var millis = await prefs.getInt('resendOtpTimestamp');
+                          print('millis ${millis}');
+
+                          if(millis != null){
+                            // Assuming you have the original time and a timestamp in milliseconds
+                            int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
+                            int? timestamp = millis;
+
+// Create DateTime objects from the timestamps
+                            DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
+                            DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+// Calculate the difference in minutes
+                            Duration difference = timestampDateTime.difference(originalDateTime);
+                            print("ddddd===>${difference}");
+                            int differenceInMinutes = difference.inMinutes * (-1);
+
+// Print the result
+                            print('Difference in minutes: $differenceInMinutes');
+
+                            if(prefs.containsKey('resendOtpCounter') && differenceInMinutes >= 59){
+                              await prefs.remove('resendOtpTimestamp');
+                              await prefs.remove('resendOtpCounter');
+                              print("dbc===L>${differenceInMinutes >= 59}");
+
+                            }
+                            // Get.snackbar('Alert', "'Retry after 6 hours'",
+                            //     backgroundColor: Colors.red.withOpacity(0.8),
+                            //     colorText: Colors.white);
+                          }
+
+                          cont.resendOtpCounter.value ++;
+
+                          // cont.resendOtpCounter.value = prefs.getBool(key)
+
+                          if(prefs.containsKey('resendOtpCounter')){
+                            Get.snackbar('Alert', "'Retry after 6 hours'",
+                                backgroundColor: Colors.red.withOpacity(0.8),
+                                colorText: Colors.white);
+                            //print("dbc===L>${differenceInMinutes >= 59}");
+                          }else{
+                            print('counterValue: ${cont.resendOtpCounter.value}');
+                            if(cont.resendOtpCounter.value<=2){
+                              print('resendOtpCounter is less than equal 2');
+                              setState(() {
+                                isResendOtp = true;
+                              });
+                              Map<String, dynamic> params = {};
+                              params["mobile"] = phoneNumber;
+                              params["country_code"] = countryCode;
+                              if(widget.isAuthLogin){
+                                cont.sendOtpWithGoogleSignIn(params: params);
+                              }else{
+                                cont.sendOtp(params: params);
+                                print("otp===> ${_otp}");
+                              }
+                            }else{
+
+                              Get.snackbar('Alert', "'Retry after 6 hours'",
+                                  backgroundColor: Colors.red.withOpacity(0.8),
+                                  colorText: Colors.white);
+                              print('currentTime${DateTime.now().millisecondsSinceEpoch}');
+                              await prefs.setBool('resendOtpCounter', true);
+                              await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+                            }
+                          }
 
                         },
                         child: Text(
