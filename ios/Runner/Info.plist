@@ -14,8 +14,6 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>NSContactsUsageDescription</key>
-    <string>This app requires contacts access to function properly.</string>
 	<key>CFBundleName</key>
 	<string>Touk Touk</string>
 	<key>CFBundlePackageType</key>
@@ -75,6 +73,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>to enable you to upload your picture on your profile to make it easier for driver and user to identify while starting a ride</string>
+	<key>NSLocationUsageDescription</key>
+	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -83,6 +83,8 @@
 	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app does not require access to the microphone.</string>
+	<key>NSContactsUsageDescription</key>
+    <string>This will let you book rides for friends, add emergency contact numbers, and even earn you rewards for your referrals.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>to enable you to upload your picture on your profile to make it easier for driver and user to identify while starting a ride</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
