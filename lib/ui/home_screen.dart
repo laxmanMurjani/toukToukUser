@@ -3487,7 +3487,7 @@ class _HomeScreenState extends State<HomeScreen>
                                               } else {
                                                 _handleInvalidPermissions(permissionStatus);
                                               }
-                                              
+
                                               // if (number.length == 12) {
                                               //   _homeController.sendRequest(params: {
                                               //     "else_mobile":
