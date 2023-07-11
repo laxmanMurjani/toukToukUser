@@ -1161,8 +1161,39 @@ class UserController extends BaseController {
                 notificationManagerModelFromJson(jsonEncode(data["response"]));
             if(tempNotificationList.isNotEmpty){
               notificationManagerList.addAll(tempNotificationList);
-              print("object====>${tempNotificationList.first.notifyType}");
+              print("object====>${jsonEncode(data["response"])}");
+              print("object====>${notificationManagerList.length}");
             }
+          },
+          onError: (ErrorType errorType, String? msg) {
+            showError(msg: msg);
+          });
+    } catch (e) {
+      log("message   ==>  ${e}");
+      showError(msg: e.toString());
+      // showError(msg: e.toString());
+    }
+  }
+
+  Future<void> getNotificationHomeScreenList() async {
+    try {
+      // showLoader();
+      await apiService.getRequest(
+          url: ApiUrl.notifications,
+          onSuccess: (Map<String, dynamic> data) async {
+            // dismissLoader();
+            notificationManagerList.clear();
+            List<NotificationManagerModel> tempNotificationList =
+                notificationManagerModelFromJson(jsonEncode(data["response"]));
+            if(tempNotificationList.isNotEmpty){
+              notificationManagerList.addAll(tempNotificationList);
+              print("object====>${tempNotificationList.first.notifyType}");
+              print("object====>${notificationManagerList.length}");
+            }
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.remove("notificationCount");
+            print("objectsss====>${prefs.getInt('notificationCount')}");
+            await prefs.setInt('notificationCount', notificationManagerList.length);
 
           },
           onError: (ErrorType errorType, String? msg) {

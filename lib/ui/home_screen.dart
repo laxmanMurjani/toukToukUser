@@ -113,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen>
   TimeOfDay? _selectedTimeOfDay;
   bool _shouldScaleDown = false;
   Timer? _requestTimer;
+  Timer? _requestTimerForNotification;
   String totalRidesNumber = '';
   String chetUnRead = '0';
   final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
@@ -120,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<GetNearestDriverTimeModel> totalList = [];
   location.Location _location = location.Location.instance;
   String? _mapStyle;
+  int countNotification = 0;
   // Future<void> getMarkerPosition() async {
   //
   //   double screenWidth = MediaQuery.of(context).size.width *
@@ -292,6 +294,18 @@ class _HomeScreenState extends State<HomeScreen>
           // }
         },
       );
+
+
+
+      Future.delayed(Duration.zero,()async{
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        countNotification =  (await prefs.getInt('notificationCount'))!;
+        setState(() {
+
+        });
+        print("djbfdjhfdf===>${countNotification}");
+      });
+
       if (_homeController.checkRequestResponseModel.value.data.isNotEmpty) {
         _databaseReference = _firebaseDatabase.ref(
             (_homeController.checkRequestResponseModel.value.data[0].id ?? "0")
@@ -313,12 +327,35 @@ class _HomeScreenState extends State<HomeScreen>
       }
     });
 
+    _requestTimerForNotification = Timer.periodic(Duration(seconds: 10), (_) async {
+      await _homeController.checkRequest();
+
+
+
+
+
+      Future.delayed(Duration.zero,()async{
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        countNotification =  (await prefs.getInt('notificationCount'))!;
+        setState(() {
+
+        });
+        print("djbfdjhfdf===>${countNotification}");
+      });
+
+
+    });
+
 
   }
 
 
+
   @override
   Widget build(BuildContext context) {
+    print("sdnjshdjdf==>${countNotification}");
+
+
     Home home = Home();
     Size _size = MediaQuery.of(context).size;
     _homeController.userUiSelectionType.value == UserUiSelectionType.serviceType
@@ -326,6 +363,7 @@ class _HomeScreenState extends State<HomeScreen>
         : SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return WillPopScope(
       onWillPop: () async {
+
         return false;
       },
       child: Scaffold(
@@ -727,6 +765,7 @@ class _HomeScreenState extends State<HomeScreen>
 
                                                 InkWell(
                                                   onTap: () {
+                                                    print("fffff===>${userCont.notificationManagerList.length}");
                                                     Get.to(() => NotificationManagerScreen());
                                                     //print('ccc ${_connectionStatus.toString()}');
                                                     // initConnectivity();
@@ -739,10 +778,29 @@ class _HomeScreenState extends State<HomeScreen>
                                                     padding: const EdgeInsets
                                                         .symmetric(
                                                         horizontal: 12.0),
-                                                    child: Image.asset(
+                                                    child: 
+                                                        countNotification >= 5
+                                                        
+                                                        
+
+                                                        ? Image.asset(
                                                         AppImage.bell,color: AppColors.white,
                                                         height: 30,
-                                                        width: 30),
+                                                        width: 30) :
+
+                                                    Stack(children:[
+                                                           Image.asset(
+                                                               AppImage.bell,color: AppColors.white,
+                                                               height: 30,
+                                                               width: 30),
+                                                      Container(
+                                                              height: 20,width:20,
+                                                       decoration: BoxDecoration(color: Colors.red,shape:BoxShape.circle),
+                                                        alignment: Alignment.center,
+                                                         child: Text((5 - countNotification).toString(),style:TextStyle(color: AppColors.white),)
+                                                      )
+                                                         ])
+
                                                   ),
                                                 ),
                                               ],

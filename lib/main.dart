@@ -186,8 +186,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       AppleNotification? appleNotification = message.notification?.apple;
-      log("RemoteMessage  ===>  ${message.data}");
-      print("RemoteMessage  ===>  ${message.data}");
+      log("RemoteMessage0  ===>  ${message.data}");
+      print("RemoteMessage00  ===>  ${message.data}");
+      print("RemoteMessage000  ===>  ${android}");
+      print("RemoteMessage0000  ===>  ${appleNotification}");
 
       final sound = "wav.wav";
 
