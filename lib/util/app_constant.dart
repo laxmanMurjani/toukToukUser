@@ -6,6 +6,9 @@ class AppImage {
   static const String _basePath = "assets/images";
 
   static String logo = "$_basePath/app_logo.png";
+  static String discount = "$_basePath/discount.png";
+  static String arrowCircle = "$_basePath/arrow_circle.png";
+  static String studentVector = "$_basePath/student_vector.png";
   static String logoMain = "$_basePath/toukLogoUser.jpg";
   static String newRegCar = "$_basePath/newRegCar.jpg";
   static String pastRide = "$_basePath/pastRide.png";

@@ -13,6 +13,7 @@ import 'package:etoUser/enum/error_type.dart';
 import 'package:etoUser/enum/user_location_type.dart';
 import 'package:etoUser/main.dart';
 import 'package:etoUser/model/check_request_response_model.dart';
+import 'package:etoUser/model/discount_list_model.dart';
 import 'package:etoUser/model/dispute_model.dart';
 import 'package:etoUser/model/fare_response_model.dart';
 import 'package:etoUser/model/get_nearest_user_model.dart';
@@ -115,6 +116,7 @@ class HomeController extends BaseController {
   MarkerId _endPointCap = const MarkerId("endPointCap");
 
   RxList<TripDataModel> pastTripDataList = <TripDataModel>[].obs;
+  RxList<DiscountListModel> discountList = <DiscountListModel>[].obs;
   RxList<TripDataModel> upcomingTripDataList = <TripDataModel>[].obs;
   RxList<ShowDriversLocationModel> showDriverLocationList =
       <ShowDriversLocationModel>[].obs;
@@ -894,8 +896,7 @@ class HomeController extends BaseController {
         LatLngBounds builder = new LatLngBounds(
             southwest: LatLng(minLat ?? 0, minLon ?? 0),
             northeast: LatLng(maxLat ?? 0, maxLon ?? 0));
-        googleMapController
-            ?.animateCamera(CameraUpdate.newLatLngBounds(builder, 80));
+        googleMapController?.animateCamera(CameraUpdate.newLatLngBounds(builder, 80));
       }
       refresh();
     } catch (e) {
@@ -1267,9 +1268,10 @@ class HomeController extends BaseController {
           print("providerRate  ==>  ${jsonEncode(data)}");
           msg = data["response"]["message"];
           dismissLoader();
-
+          googleMapController!.dispose();
           clearData();
-          userUiSelectionType.value = UserUiSelectionType.locationSelection;
+          // userUiSelectionType.value = UserUiSelectionType.locationSelection;
+          userUiSelectionType.value = UserUiSelectionType.none;
           Get.back();
 
           await FirebaseDatabase.instance
@@ -1439,6 +1441,27 @@ class HomeController extends BaseController {
               tripDataModelFromJson(jsonEncode(data["response"]));
           pastTripDataList.clear();
           pastTripDataList.addAll(tripList);
+        },
+        onError: (ErrorType? errorType, String? msg) {
+          showError(msg: msg);
+        },
+      );
+    } catch (e) {
+      showError(msg: e.toString());
+    }
+  }
+
+  Future<void> getDiscountList() async {
+    try {
+      showLoader();
+      await apiService.getRequest(
+        url: ApiUrl.discountList,
+        onSuccess: (Map<String, dynamic> data) {
+          dismissLoader();
+          print("ccccccjdcj==>${jsonEncode(data["response"])}");
+          List<DiscountListModel> discountListData = discountListModelFromJson(jsonEncode(data["response"]));
+          discountList.clear();
+          discountList.addAll(discountListData);
         },
         onError: (ErrorType? errorType, String? msg) {
           showError(msg: msg);

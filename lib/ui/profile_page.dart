@@ -24,6 +24,7 @@ import 'package:etoUser/util/app_constant.dart';
 import '../api/api.dart';
 import '../controller/base_controller.dart';
 import 'dialog/chooseLang.dart';
+import 'discount/discount_list_screen.dart';
 import 'drawer_srceen/help_screen.dart';
 import 'drawer_srceen/invite_friend.dart';
 import 'drawer_srceen/setting_screen.dart';
@@ -337,6 +338,31 @@ class _ProfilePageState extends State<ProfilePage> {
                           AppImage.home,
                           width: 35,
                           height: 35,
+                          fit: BoxFit.contain,
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(DiscountListPage());
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Discount'.tr,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: AppColors.primaryColor),
+                        ),
+                        Image.asset(
+                          AppImage.discount,
+                          width: 30,
+                          height: 30,
                           fit: BoxFit.contain,
                         )
                       ],
