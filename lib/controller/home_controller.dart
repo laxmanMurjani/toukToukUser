@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
+import 'package:dio/dio.dart' as dio;
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:etoUser/api/api.dart';
 import 'package:etoUser/api/api_service.dart';
@@ -160,6 +161,7 @@ class HomeController extends BaseController {
   RxBool isRideSelected = true.obs;
   TextEditingController addTaskDetailsController = TextEditingController();
   bool isMounting = true;
+  String? discountImageFilePah;
   // ConnectivityResult connectionStatus = ConnectivityResult.none;
 
   @override
@@ -1469,6 +1471,38 @@ class HomeController extends BaseController {
       );
     } catch (e) {
       showError(msg: e.toString());
+    }
+  }
+
+  Future<void> uploadDiscountImage(String userDiscountId) async {
+    try {
+      print("enter upload discount image");
+      HomeController _homeController = Get.find();
+      showLoader();
+      Map<String, dynamic> params = {};
+      params["user_discnt_id"] = userDiscountId;
+
+      if (discountImageFilePah != null) {
+        params["picture"] = await dio.MultipartFile.fromFile(discountImageFilePah!);
+      }
+      dio.FormData formData = new dio.FormData.fromMap(params);
+      await apiService.postRequest(
+          url: ApiUrl.uploadDiscountImage,
+          params: formData,
+          onSuccess: (Map<String, dynamic> data) async {
+            dismissLoader();
+            _homeController.isCaptureImage.value = false;
+            _homeController.discountImageFilePah = null;
+            showSnack(title: "Alert",msg: data['response']["success"]);
+
+          },
+          onError: (ErrorType errorType, String? msg) {
+            showError(msg: msg);
+          });
+    } catch (e) {
+      log("message   ==>  ${e}");
+      showError(msg: e.toString());
+      // showError(msg: e.toString());
     }
   }
 

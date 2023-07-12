@@ -52,6 +52,7 @@ class ApiUrl {
   static String passBook = "$apiBaseUrl/wallet/passbook";
   static String reasons = "$apiBaseUrl/reasons";
   static String updateProfile = "$apiBaseUrl/update/profile";
+  static String uploadDiscountImage = "$apiBaseUrl/discount/doc";
   static String sendOTPProfile = "$apiBaseUrl/sendotp_profile";
   static String verifyOTPProfile = "$apiBaseUrl/otp_verified_for_profile_update";
   static String changePassword = "$apiBaseUrl/change/password";

@@ -125,6 +125,11 @@ class AppImage {
   static String parcle_icon = "$_basePath/parcel.png";
   static String warehouse_icon = "$_basePath/ic_warehouse.png";
   static String verifiedIcon = "$_basePath/1000.png";
+  static String rejectedIcon = "$_basePath/rejected.png";
+  static String pendingDocument = "$_basePath/pendingDocument.png";
+  static String approvedDocument = "$_basePath/approvedDocument.png";
+  static String notAssignDocument = "$_basePath/notAssignDocument.png";
+  static String toukToukBlurLogo = "$_basePath/touk_touk_bg_blur.png";
   static String circleCheck = "$_basePath/circleCheck.png";
   static String login2 = "$_basePath/login2.png";
   static String login3 = "$_basePath/login3.png";

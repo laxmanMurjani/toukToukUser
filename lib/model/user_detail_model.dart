@@ -74,7 +74,10 @@ class UserDetailModel {
       this.creditPoints,
       this.status,
       this. statusinfo,
-      this.profile_status,});
+      this.profile_status,
+      this.user_discnt_status,
+
+      });
 
   int? id;
   int? creditPoints;
@@ -139,6 +142,7 @@ class UserDetailModel {
   String? status;
   String? statusinfo;
   String? profile_status;
+  String? user_discnt_status;
 
   factory UserDetailModel.fromJson(Map<String, dynamic> json) =>
       UserDetailModel(
@@ -208,6 +212,7 @@ class UserDetailModel {
         status: json["status"],
         statusinfo: json["status_info"],
         profile_status: json["profile_status"],
+        user_discnt_status: json["user_discnt_status"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -274,5 +279,6 @@ class UserDetailModel {
         "status": status,
         "status_info": statusinfo,
         "profile_status": profile_status,
+        "user_discnt_status": user_discnt_status,
       };
 }

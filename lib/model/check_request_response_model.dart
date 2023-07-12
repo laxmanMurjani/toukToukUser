@@ -776,6 +776,8 @@ class User {
     this.referralUniqueId,
     this.referalCount,
     this.updatedAt,
+    this.user_discnt_status,
+    this.user_discnt_id,
   });
 
   dynamic id;
@@ -804,6 +806,8 @@ class User {
   String? referralUniqueId;
   dynamic referalCount;
   DateTime? updatedAt;
+  DateTime? user_discnt_status;
+  DateTime? user_discnt_id;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -831,6 +835,8 @@ class User {
         qrcodeUrl: json["qrcode_url"],
         referralUniqueId: json["referral_unique_id"],
         referalCount: json["referal_count"],
+    user_discnt_status: json["user_discnt_status"],
+    user_discnt_id: json["user_discnt_id"],
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -860,6 +866,8 @@ class User {
         "qrcode_url": qrcodeUrl,
         "referral_unique_id": referralUniqueId,
         "referal_count": referalCount,
+        "user_discnt_status": user_discnt_status,
+        "user_discnt_id": user_discnt_id,
         "updated_at": updatedAt?.toIso8601String(),
       };
 }
