@@ -479,6 +479,8 @@ class _RatingDialogState extends State<RatingDialog> {
                           String? msg = await _homeController.providerRate(
                               rating: "5", comment: "null");
                           Get.back();
+
+
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 12.h),

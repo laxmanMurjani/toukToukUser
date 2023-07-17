@@ -70,7 +70,7 @@ class _DiscountSelectedCategoryPageState extends State<DiscountSelectedCategoryP
               _homeController.checkRequestResponseModel.value.userDetails["user_discnt_status"] == "not_assign"?
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text("Are you a ${argumentVal.name}? Get approved on Touk Touk to enjoy additional discounts",style: TextStyle(
+                child: Text("${argumentVal.description}",style: TextStyle(
                   color: Colors.black,fontSize: 22,fontWeight: FontWeight.w400,
                 ),
                  textAlign: TextAlign.center,

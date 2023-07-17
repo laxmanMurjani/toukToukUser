@@ -222,11 +222,16 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                       label: "waiting_amount".tr,
                                       value:
                                           "${formatNumberWithCommas(waitingAmount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                if (tollCharges >= 0)
-                                  _invoiceRow(
-                                      label: "toll_charges".tr,
-                                      value:
-                                          "${formatNumberWithCommas(tollCharges.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency }"),
+                                if (homeController.checkRequestResponseModel.value.userCategoryDiscount != 0)
+                  _invoiceRow(
+                          label: "Discount",
+                          value:
+                              "${homeController.checkRequestResponseModel.value.userCategoryDiscount}"),
+                                   // if (tollCharges >= 0)
+                                //   _invoiceRow(
+                                //       label: "toll_charges".tr,
+                                //       value:
+                                //           "${formatNumberWithCommas(tollCharges.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency }"),
                                 Visibility(
                                   visible: false,
                                   child: Row(

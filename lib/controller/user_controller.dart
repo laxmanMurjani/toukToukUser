@@ -39,7 +39,6 @@ import '../model/login_otp_reponse_model.dart';
 import '../util/user_details.dart';
 
 class UserController extends BaseController {
-
   RxBool isShowLogin = false.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -60,7 +59,7 @@ class UserController extends BaseController {
   TextEditingController contactNumberController = TextEditingController();
 
   String countryCode = "+961";
-  GoogleMapController? gMapController;
+  GoogleMapController? _controller;
   Rx<LoginResponseModel> userToken = LoginResponseModel().obs;
   Rx<UserDetailModel> userData = UserDetailModel().obs;
   Rx<HelpResponseModel> helpResponseModel = HelpResponseModel().obs;
@@ -185,7 +184,7 @@ class UserController extends BaseController {
     );
     //
     // _markers.add(Marker(markerId: const MarkerId("first"), position: latLng));
-    gMapController?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    _controller?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
     // PolylinePoints polylinePoints = PolylinePoints();
     // PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
@@ -1568,7 +1567,7 @@ class UserController extends BaseController {
             showError(msg: msg);
           });
     } catch (e) {
-      log("message   ==>  ${e}");
+      log("messagessss   ==>  ${e}");
       showError(msg: e.toString());
       // showError(msg: e.toString());
     }

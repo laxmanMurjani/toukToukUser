@@ -778,7 +778,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                     padding: const EdgeInsets
                                                         .symmetric(
                                                         horizontal: 12.0),
-                                                    child:
+                                                    child: 
                                                         countNotification >= 5
                                                         
                                                         
@@ -5434,8 +5434,6 @@ class _HomeScreenState extends State<HomeScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _requestTimer?.cancel();
-    _homeController.googleMapController!.dispose();
-    _googleMapController = Completer();
     // _connectivitySubscription.cancel();
     super.dispose();
   }

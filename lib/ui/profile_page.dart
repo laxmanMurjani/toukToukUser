@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:etoUser/controller/home_controller.dart';
+import 'package:etoUser/ui/discount/discount_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
@@ -24,7 +25,6 @@ import 'package:etoUser/util/app_constant.dart';
 import '../api/api.dart';
 import '../controller/base_controller.dart';
 import 'dialog/chooseLang.dart';
-import 'discount/discount_list_screen.dart';
 import 'drawer_srceen/help_screen.dart';
 import 'drawer_srceen/invite_friend.dart';
 import 'drawer_srceen/setting_screen.dart';
@@ -45,6 +45,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await _homeController.getDiscountList();
+    });
     // _userController.clearFormData();
   }
 
@@ -368,6 +371,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
+
                   SizedBox(
                     height: 20,
                   ),

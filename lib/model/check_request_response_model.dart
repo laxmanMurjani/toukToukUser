@@ -8,6 +8,8 @@ String checkRequestResponseModelToJson(CheckRequestResponseModel data) =>
 
 class CheckRequestResponseModel {
   CheckRequestResponseModel({
+    this.userCategoryDiscount,
+    this.userCategoryDiscount_id,
     this.data = const [],
     this.checkBreakDown_status,
     this.availble_driver_count,
@@ -47,6 +49,8 @@ class CheckRequestResponseModel {
     this.userVerifyCounter
   });
 
+  int? userCategoryDiscount;
+  String? userCategoryDiscount_id;
   List<Datum> data;
   List<MultiDestination> multiDestination;
   String? sos;
@@ -95,6 +99,8 @@ class CheckRequestResponseModel {
             : List<MultiDestination>.from(json["multi_destination"]
                 .map((x) => MultiDestination.fromJson(x))),
         sos: json["sos"],
+        userCategoryDiscount_id: json["userCategoryDiscount_id"],
+        userCategoryDiscount: json["userCategoryDiscount"],
         checkBreakDown_status: json["checkBreakDown_status"],
         availble_driver_count: json["availble_driver_count"],
         cash: json["cash"],
@@ -132,6 +138,8 @@ class CheckRequestResponseModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "userCategoryDiscount": userCategoryDiscount,
+        "userCategoryDiscount_id": userCategoryDiscount_id,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "multi_destination":
             List<dynamic>.from(multiDestination.map((x) => x.toJson())),
@@ -776,8 +784,6 @@ class User {
     this.referralUniqueId,
     this.referalCount,
     this.updatedAt,
-    this.user_discnt_status,
-    this.user_discnt_id,
   });
 
   dynamic id;
@@ -806,8 +812,6 @@ class User {
   String? referralUniqueId;
   dynamic referalCount;
   DateTime? updatedAt;
-  DateTime? user_discnt_status;
-  DateTime? user_discnt_id;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -835,8 +839,6 @@ class User {
         qrcodeUrl: json["qrcode_url"],
         referralUniqueId: json["referral_unique_id"],
         referalCount: json["referal_count"],
-    user_discnt_status: json["user_discnt_status"],
-    user_discnt_id: json["user_discnt_id"],
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -866,8 +868,6 @@ class User {
         "qrcode_url": qrcodeUrl,
         "referral_unique_id": referralUniqueId,
         "referal_count": referalCount,
-        "user_discnt_status": user_discnt_status,
-        "user_discnt_id": user_discnt_id,
         "updated_at": updatedAt?.toIso8601String(),
       };
 }

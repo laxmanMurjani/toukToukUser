@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
-import 'package:dio/dio.dart' as dio;
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:etoUser/api/api.dart';
 import 'package:etoUser/api/api_service.dart';
@@ -42,6 +41,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_place/google_place.dart';
+import 'package:dio/dio.dart' as dio;
 
 class HomeController extends BaseController {
   final UserController _userController = Get.find();
@@ -117,7 +117,6 @@ class HomeController extends BaseController {
   MarkerId _endPointCap = const MarkerId("endPointCap");
 
   RxList<TripDataModel> pastTripDataList = <TripDataModel>[].obs;
-  RxList<DiscountListModel> discountList = <DiscountListModel>[].obs;
   RxList<TripDataModel> upcomingTripDataList = <TripDataModel>[].obs;
   RxList<ShowDriversLocationModel> showDriverLocationList =
       <ShowDriversLocationModel>[].obs;
@@ -161,6 +160,7 @@ class HomeController extends BaseController {
   RxBool isRideSelected = true.obs;
   TextEditingController addTaskDetailsController = TextEditingController();
   bool isMounting = true;
+  RxList<DiscountListModel> discountList = <DiscountListModel>[].obs;
   String? discountImageFilePah;
   // ConnectivityResult connectionStatus = ConnectivityResult.none;
 
@@ -419,6 +419,60 @@ class HomeController extends BaseController {
     }, onError: () {
       log("message   ==>   ERROR");
     });
+  }
+
+
+  Future<void> getDiscountList() async {
+    try {
+      showLoader();
+      await apiService.getRequest(
+        url: ApiUrl.discountList,
+        onSuccess: (Map<String, dynamic> data) {
+          dismissLoader();
+          print("ccccccjdcj==>${jsonEncode(data["response"])}");
+          List<DiscountListModel> discountListData = discountListModelFromJson(jsonEncode(data["response"]));
+          discountList.clear();
+          discountList.addAll(discountListData);
+        },
+        onError: (ErrorType? errorType, String? msg) {
+          showError(msg: msg);
+        },
+      );
+    } catch (e) {
+      showError(msg: e.toString());
+    }
+  }
+
+  Future<void> uploadDiscountImage(String userDiscountId) async {
+    try {
+      print("enter upload discount image");
+      HomeController _homeController = Get.find();
+      showLoader();
+      Map<String, dynamic> params = {};
+      params["user_discnt_id"] = userDiscountId;
+
+      if (discountImageFilePah != null) {
+        params["picture"] = await dio.MultipartFile.fromFile(discountImageFilePah!);
+      }
+      dio.FormData formData = new dio.FormData.fromMap(params);
+      await apiService.postRequest(
+          url: ApiUrl.uploadDiscountImage,
+          params: formData,
+          onSuccess: (Map<String, dynamic> data) async {
+            dismissLoader();
+            _homeController.isCaptureImage.value = false;
+            _homeController.discountImageFilePah = null;
+            showSnack(title: "Alert",msg: data['response']["success"]);
+
+          },
+          onError: (ErrorType errorType, String? msg) {
+            showError(msg: msg);
+          });
+    } catch (e) {
+      log("message   ==>  ${e}");
+      showError(msg: e.toString());
+      // showError(msg: e.toString());
+    }
   }
 
   Future<void> getServices() async {
@@ -898,7 +952,8 @@ class HomeController extends BaseController {
         LatLngBounds builder = new LatLngBounds(
             southwest: LatLng(minLat ?? 0, minLon ?? 0),
             northeast: LatLng(maxLat ?? 0, maxLon ?? 0));
-        googleMapController?.animateCamera(CameraUpdate.newLatLngBounds(builder, 80));
+        googleMapController
+            ?.animateCamera(CameraUpdate.newLatLngBounds(builder, 80));
       }
       refresh();
     } catch (e) {
@@ -1270,10 +1325,9 @@ class HomeController extends BaseController {
           print("providerRate  ==>  ${jsonEncode(data)}");
           msg = data["response"]["message"];
           dismissLoader();
-          googleMapController!.dispose();
+
           clearData();
-          // userUiSelectionType.value = UserUiSelectionType.locationSelection;
-          userUiSelectionType.value = UserUiSelectionType.none;
+          userUiSelectionType.value = UserUiSelectionType.locationSelection;
           Get.back();
 
           await FirebaseDatabase.instance
@@ -1450,59 +1504,6 @@ class HomeController extends BaseController {
       );
     } catch (e) {
       showError(msg: e.toString());
-    }
-  }
-
-  Future<void> getDiscountList() async {
-    try {
-      showLoader();
-      await apiService.getRequest(
-        url: ApiUrl.discountList,
-        onSuccess: (Map<String, dynamic> data) {
-          dismissLoader();
-          print("ccccccjdcj==>${jsonEncode(data["response"])}");
-          List<DiscountListModel> discountListData = discountListModelFromJson(jsonEncode(data["response"]));
-          discountList.clear();
-          discountList.addAll(discountListData);
-        },
-        onError: (ErrorType? errorType, String? msg) {
-          showError(msg: msg);
-        },
-      );
-    } catch (e) {
-      showError(msg: e.toString());
-    }
-  }
-
-  Future<void> uploadDiscountImage(String userDiscountId) async {
-    try {
-      print("enter upload discount image");
-      HomeController _homeController = Get.find();
-      showLoader();
-      Map<String, dynamic> params = {};
-      params["user_discnt_id"] = userDiscountId;
-
-      if (discountImageFilePah != null) {
-        params["picture"] = await dio.MultipartFile.fromFile(discountImageFilePah!);
-      }
-      dio.FormData formData = new dio.FormData.fromMap(params);
-      await apiService.postRequest(
-          url: ApiUrl.uploadDiscountImage,
-          params: formData,
-          onSuccess: (Map<String, dynamic> data) async {
-            dismissLoader();
-            _homeController.isCaptureImage.value = false;
-            _homeController.discountImageFilePah = null;
-            showSnack(title: "Alert",msg: data['response']["success"]);
-
-          },
-          onError: (ErrorType errorType, String? msg) {
-            showError(msg: msg);
-          });
-    } catch (e) {
-      log("message   ==>  ${e}");
-      showError(msg: e.toString());
-      // showError(msg: e.toString());
     }
   }
 
