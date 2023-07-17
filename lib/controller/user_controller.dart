@@ -1562,9 +1562,11 @@ class UserController extends BaseController {
             await _userDetails.logoutUser();
             // Get.offAll(() => SignInUpScreen());
             Get.offAll(() => LoginScreen());
+            log("messagessss   ==>  successfully logout");
           },
           onError: (ErrorType errorType, String? msg) {
             showError(msg: msg);
+            log("showError ===> ${msg}");
           });
     } catch (e) {
       log("messagessss   ==>  ${e}");

@@ -297,14 +297,14 @@ class _HomeScreenState extends State<HomeScreen>
 
 
 
-      Future.delayed(Duration.zero,()async{
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        countNotification =  (await prefs.getInt('notificationCount'))!;
-        setState(() {
-
-        });
-        print("djbfdjhfdf===>${countNotification}");
-      });
+      // Future.delayed(Duration.zero,()async{
+      //   SharedPreferences prefs = await SharedPreferences.getInstance();
+      //   countNotification =  (await prefs.getInt('notificationCount'))!;
+      //   setState(() {
+      //
+      //   });
+      //   print("djbfdjhfdf===>${countNotification}");
+      // });
 
       if (_homeController.checkRequestResponseModel.value.data.isNotEmpty) {
         _databaseReference = _firebaseDatabase.ref(
@@ -334,20 +334,22 @@ class _HomeScreenState extends State<HomeScreen>
 
 
 
-      Future.delayed(Duration.zero,()async{
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        countNotification =  (await prefs.getInt('notificationCount'))!;
-        setState(() {
-
-        });
-        print("djbfdjhfdf===>${countNotification}");
-      });
+      // Future.delayed(Duration.zero,()async{
+      //   SharedPreferences prefs = await SharedPreferences.getInstance();
+      //   countNotification =  (await prefs.getInt('notificationCount'))!;
+      //   setState(() {
+      //
+      //   });
+      //   print("djbfdjhfdf===>${countNotification}");
+      // });
 
 
     });
 
 
   }
+
+
 
 
 
@@ -5434,6 +5436,7 @@ class _HomeScreenState extends State<HomeScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _requestTimer?.cancel();
+    _requestTimerForNotification?.cancel();
     // _connectivitySubscription.cancel();
     super.dispose();
   }
