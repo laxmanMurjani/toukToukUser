@@ -5653,7 +5653,7 @@ class _HomeScreenState extends State<HomeScreen>
                         SizedBox(height: 2),
                         !isSelected ? Text("") : Text(
                           _homeController.nearByDriverTimeList1.isEmpty
-                              ? "Searching"
+                              ? "Available"
                               : _homeController
                               .durationToString(_homeController
                               .nearByDriverTimeList1.first)

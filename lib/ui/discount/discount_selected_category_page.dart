@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:etoUser/api/api.dart';
 import 'package:etoUser/controller/home_controller.dart';
 import 'package:etoUser/model/discount_list_model.dart';
+import 'package:etoUser/ui/discount/document_select_page.dart';
 import 'package:etoUser/ui/drawer_srceen/help_screen.dart';
 import 'package:etoUser/ui/home_screen.dart';
 import 'package:etoUser/ui/widget/custom_fade_in_image.dart';
@@ -27,7 +30,7 @@ class DiscountSelectedCategoryPage extends StatefulWidget {
 class _DiscountSelectedCategoryPageState extends State<DiscountSelectedCategoryPage> {
   final UserController _userController = Get.find();
   final HomeController _homeController = Get.find();
-  final ImagePicker _imagePicker = ImagePicker();
+
 
   DiscountListModel argumentVal = Get.arguments[0];
 
@@ -113,6 +116,7 @@ class _DiscountSelectedCategoryPageState extends State<DiscountSelectedCategoryP
                       ), textAlign: TextAlign.center,),
                     Image.asset(AppImage.notAssignDocument,fit: BoxFit.cover,width: 60),
                     SizedBox(height: 15,),
+
                   ],
                 ),
               ) : SizedBox(),
@@ -169,72 +173,39 @@ class _DiscountSelectedCategoryPageState extends State<DiscountSelectedCategoryP
 
               ],) :
 
-               InkWell(
-                onTap:  () async {
-                  if(_homeController.discountImageFilePah != null){
-                    _homeController.uploadDiscountImage(argumentVal.id.toString());
-                  } else{
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(
-                              "Choose option",
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: [
-                                  Divider(
-                                    height: 1,
-                                    color: Colors.blue,
-                                  ),
-                                  ListTile(
-                                    onTap: () {
-                                      Get.back();
-                                      _imagePick();
-                                    },
-                                    title: Text("Gallery"),
-                                    leading: Icon(
-                                      Icons.account_box,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                    color: Colors.blue,
-                                  ),
-                                  ListTile(
-                                    onTap: () {
-                                      Get.back();
-                                      _photoPick();
-                                    },
-                                    title: Text("Camera"),
-                                    leading: Icon(
-                                      Icons.camera,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
-                  }
-                },
-                child:
-               Container(
-                    height: 50,width: 250,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: AppColors.primaryColor
-                    ),
-                    child: Text(
-                      _homeController.discountImageFilePah == null ? "Select Document" :
-                      "Upload Document",style: TextStyle(color: AppColors.white,fontSize: 16,fontWeight: FontWeight.w400),)
+               Row( mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
 
-                ),
-              ),
+                  SizedBox(width: 10,),
+                   Column(
+                     children: [
+                         InkWell(
+                         onTap:  () async {
+
+                             Get.to(DocumentSelectPage(),arguments: [argumentVal]);
+
+
+                         },
+                         child:
+                         Container(
+                             height: 50,width: 250,
+                             alignment: Alignment.center,
+                             decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20)),
+                                 color: AppColors.primaryColor
+                             ),
+                             child: Text(
+
+                               "Select Document",style: TextStyle(color: AppColors.white,fontSize: 16,fontWeight: FontWeight.w400),)
+
+                         ),
+                       ),
+                       SizedBox(height: 5,),
+
+
+                     ],
+                   ),
+                 ],
+               ),
 
 
               SizedBox(height: _homeController.checkRequestResponseModel.value.userDetails["user_discnt_status"] == "not_assign"? 80:30,),
@@ -311,7 +282,8 @@ class _DiscountSelectedCategoryPageState extends State<DiscountSelectedCategoryP
               ) : SizedBox(),
 
               SizedBox(height:  _homeController.checkRequestResponseModel.value.userDetails["user_discnt_status"] == "accept"?  60:0,),
-              _homeController.checkRequestResponseModel.value.userDetails["user_discnt_status"] == "accept"?  InkWell(
+              _homeController.checkRequestResponseModel.value.userDetails["user_discnt_status"] == "accept"?
+              InkWell(
                 onTap: () {
                   Get.offAll(HomeScreen());
                 },
@@ -346,24 +318,5 @@ class _DiscountSelectedCategoryPageState extends State<DiscountSelectedCategoryP
     );
   }
 
-  Future<void> _imagePick() async {
-    final XFile? image = await _imagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 10);
-    if (image != null) {
-      _homeController.discountImageFilePah = image.path;
-      setState(() {});
-    }
-  }
-
-  Future<void> _photoPick() async {
-    _userController.removeUnFocusManager();
-
-    final XFile? image = await _imagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 10);
-    if (image != null) {
-      _homeController.discountImageFilePah = image.path;
-      setState(() {});
-    }
-  }
 
 }

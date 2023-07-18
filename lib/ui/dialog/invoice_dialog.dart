@@ -305,17 +305,18 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                       label: "wallet_detection".tr,
                                       value:
                                           "${formatNumberWithCommas(walletDetection.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                if (roundOff > 0)
-                                  _invoiceRow(
-                                      label: "round_off".tr,
-                                      value:
-                                          "${formatNumberWithCommas(roundOff.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                // if (roundOff > 0)
+                                //   _invoiceRow(
+                                //       label: "round_off".tr,
+                                //       value:
+                                //           "${formatNumberWithCommas(roundOff.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (discount > 0)
                                   _invoiceRow(
                                       label: "discount".tr,
                                       value:
                                           "${formatNumberWithCommas(discount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                if (payable > 0)
+                             homeController.checkRequestResponseModel.value.userCategoryDiscount != "0" ? SizedBox():
+                                // if (payable > 0)
                                   _invoiceRow(
                                       label: "payable".tr,
                                       labelStyle: TextStyle(
@@ -334,7 +335,7 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                             ),
                           ),
                         ],
-                        Divider(
+                        homeController.checkRequestResponseModel.value.userCategoryDiscount != "0"? SizedBox():  Divider(
                           color: Colors.grey,
                           indent: 30,
                           endIndent: 30,

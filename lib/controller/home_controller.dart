@@ -162,6 +162,7 @@ class HomeController extends BaseController {
   bool isMounting = true;
   RxList<DiscountListModel> discountList = <DiscountListModel>[].obs;
   String? discountImageFilePah;
+  RxString discountStatus = "".obs;
   // ConnectivityResult connectionStatus = ConnectivityResult.none;
 
   @override
@@ -462,8 +463,8 @@ class HomeController extends BaseController {
             dismissLoader();
             _homeController.isCaptureImage.value = false;
             _homeController.discountImageFilePah = null;
+            Get.back();
             showSnack(title: "Alert",msg: data['response']["success"]);
-
           },
           onError: (ErrorType errorType, String? msg) {
             showError(msg: msg);

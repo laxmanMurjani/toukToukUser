@@ -49,7 +49,7 @@ class CheckRequestResponseModel {
     this.userVerifyCounter
   });
 
-  int? userCategoryDiscount;
+  String? userCategoryDiscount;
   String? userCategoryDiscount_id;
   List<Datum> data;
   List<MultiDestination> multiDestination;

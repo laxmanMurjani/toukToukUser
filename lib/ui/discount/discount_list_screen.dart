@@ -23,15 +23,17 @@ class DiscountListPage extends StatefulWidget {
 }
 
 class _DiscountListPageState extends State<DiscountListPage> {
-  // final UserController _userController = Get.find();
-  // final HomeController homeCont = Get.find();
+  final UserController _userController = Get.find();
+  final HomeController homeController = Get.find();
   // String discountId = "";
+
 
   @override
   initState() {
     // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
     //   await homeCont.getDiscountList();
     // });
+
     super.initState();
     // discountId = homeCont.checkRequestResponseModel.value.userCategoryDiscount_id.toString();
     // print("djfghdjfg==>${discountId}");
@@ -41,6 +43,12 @@ class _DiscountListPageState extends State<DiscountListPage> {
 
   @override
   Widget build(BuildContext context) {
+    // homeController.checkRequestResponseModel.listen((p0) {
+    //   homeController.discountStatus.value = p0.userCategoryDiscount_id!;
+    //   print("cheklistuner===>${p0.userCategoryDiscount_id}");
+    //
+    // });
+
     return Scaffold(
       // appBar: CustomAppBar(text: "Profile Page"),
       backgroundColor: Colors.white,
@@ -57,7 +65,12 @@ class _DiscountListPageState extends State<DiscountListPage> {
 
         return  GetX<HomeController>(
           builder: (homeCont) {
-            print("ssssasc===>${homeCont.discountList.length}");
+            bool isCountZero = homeCont.checkRequestResponseModel.value.userCategoryDiscount_id == "0";
+            bool isApproved = homeCont.checkRequestResponseModel.value.userDetails['user_discnt_status'] == "accept";
+            bool isPending = homeCont.checkRequestResponseModel.value.userDetails['user_discnt_status'] == "pending";
+            bool isRejected = homeCont.checkRequestResponseModel.value.userDetails['user_discnt_status'] == "reject";
+            bool isNotAssign = homeCont.checkRequestResponseModel.value.userDetails['user_discnt_status'] == "not_assign";
+            print("jsjsjjd===>${homeCont.checkRequestResponseModel.value.userCategoryDiscount_id}");
             return Stack(
               children: [
                 Center(child: Image.asset(AppImage.toukToukBlurLogo,height: 220,width: 220,)),
@@ -67,70 +80,18 @@ class _DiscountListPageState extends State<DiscountListPage> {
                   shrinkWrap: true,
                   itemCount: homeCont.discountList.length,
                   itemBuilder: (context, index) {
-                    print("hhdhdh==>${homeCont.discountList.length}");
-                    print("hhdhdh==>${homeCont.checkRequestResponseModel.value.cash}");
+                   int selectedIndex = int.parse(homeCont.checkRequestResponseModel.value.userCategoryDiscount_id!);
                   return InkWell(
                     onTap: "0"  == homeCont.checkRequestResponseModel.value.userCategoryDiscount_id ||
-                        homeCont.checkRequestResponseModel.value.userCategoryDiscount_id == homeCont.discountList[index].id.toString() ? () {
+                        homeCont.checkRequestResponseModel.value.userCategoryDiscount_id == homeCont.discountList[index].id.toString() ?
+                        () {
                       Get.to(DiscountSelectedCategoryPage(),arguments: [homeCont.discountList[index]]);
                     } : (){
                       print("dddddd===>%${homeCont.checkRequestResponseModel.value.userCategoryDiscount_id}");
                     },
-                    child: homeCont.checkRequestResponseModel.value.userCategoryDiscount_id == homeCont.discountList[index].id.toString() ?
-                    Container(
-                        height: 150,
-                        margin: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.green.withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            AppBoxShadow.defaultShadow(),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                                height: 120,width: 120,
-                                child:
-                                CustomFadeInImage(
-                                  url:
-                                  "${ApiUrl.baseImageUrl}storage/${homeCont.discountList[index].image}",
-                                  fit: BoxFit.cover,
-                                  placeHolder:
-                                  AppImage.icUserPlaceholder,
-                                )
-                            ),
-                            SizedBox(width: 8,),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.57,
-                              child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(homeCont.discountList[index].name,style: TextStyle(
-                                        color: Colors.black,fontSize: 20,fontWeight: FontWeight.w400,
-                                      ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                      Image.asset(AppImage.arrowCircle,height: 30,width: 30,)
-                                    ],
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(homeCont.discountList[index].description,style: TextStyle(
-                                    color: Colors.black,fontSize: 16,fontWeight: FontWeight.w400,
-                                  ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 4,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        )
-                    )
-                        : homeCont.checkRequestResponseModel.value.userDetails["user_discnt_status"] == "not_assign" ?
+                    child:
+                    isCountZero
+                      ?
                     Container(
                         height: 150,
                         margin: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
@@ -184,6 +145,115 @@ class _DiscountListPageState extends State<DiscountListPage> {
                           ],
                         )
                     ):
+                    index == selectedIndex-1 && (isPending || isApproved) ?
+                    Container(
+                        height: 150,
+                        margin: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFCEEDD8).withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            AppBoxShadow.defaultShadow(),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                                height: 120,width: 120,
+                                child:
+                                CustomFadeInImage(
+                                  url:
+                                  "${ApiUrl.baseImageUrl}storage/${homeCont.discountList[index].image}",
+                                  fit: BoxFit.cover,
+                                  placeHolder:
+                                  AppImage.icUserPlaceholder,
+                                )
+                            ),
+                            SizedBox(width: 8,),
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.57,
+                              child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(homeCont.discountList[index].name,style: TextStyle(
+                                        color: Colors.black,fontSize: 20,fontWeight: FontWeight.w400,
+                                      ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                      Image.asset(AppImage.arrowCircle,height: 30,width: 30,)
+                                    ],
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(homeCont.discountList[index].description,style: TextStyle(
+                                    color: Colors.black,fontSize: 16,fontWeight: FontWeight.w400,
+                                  ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 4,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                    ):
+                    index == selectedIndex-1 && (isRejected) ?
+                    Container(
+                        height: 150,
+                        margin: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFFADEDE).withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            AppBoxShadow.defaultShadow(),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                                height: 120,width: 120,
+                                child:
+                                CustomFadeInImage(
+                                  url:
+                                  "${ApiUrl.baseImageUrl}storage/${homeCont.discountList[index].image}",
+                                  fit: BoxFit.cover,
+                                  placeHolder:
+                                  AppImage.icUserPlaceholder,
+                                )
+                            ),
+                            SizedBox(width: 8,),
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.57,
+                              child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(homeCont.discountList[index].name,style: TextStyle(
+                                        color: Colors.black,fontSize: 20,fontWeight: FontWeight.w400,
+                                      ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                      Image.asset(AppImage.arrowCircle,height: 30,width: 30,)
+                                    ],
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(homeCont.discountList[index].description,style: TextStyle(
+                                    color: Colors.black,fontSize: 16,fontWeight: FontWeight.w400,
+                                  ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 4,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                    ):
+
                    Stack(
                      children: [
                        Container(
@@ -243,7 +313,7 @@ class _DiscountListPageState extends State<DiscountListPage> {
                          margin: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
 
                          decoration: BoxDecoration(
-                           color:  Colors.grey.withOpacity(.8),
+                           color:  Color(0xFFCCCCCC).withOpacity(.5),
                            borderRadius: BorderRadius.circular(20),
                            boxShadow: [
                              AppBoxShadow.defaultShadow(),
