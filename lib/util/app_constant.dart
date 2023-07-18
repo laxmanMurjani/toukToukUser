@@ -130,6 +130,8 @@ class AppImage {
   static String approvedDocument = "$_basePath/approvedDocument.png";
   static String notAssignDocument = "$_basePath/notAssignDocument.png";
   static String toukToukBlurLogo = "$_basePath/touk_touk_bg_blur.png";
+  static String donation = "$_basePath/donation.png";
+  static String circle_logo = "$_basePath/circle_logo.png";
   static String circleCheck = "$_basePath/circleCheck.png";
   static String login2 = "$_basePath/login2.png";
   static String login3 = "$_basePath/login3.png";

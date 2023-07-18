@@ -212,7 +212,7 @@ class _RatingDialogState extends State<RatingDialog> {
                       Text(
                         'rate_driver'.tr,
                         style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w500),
+                            fontSize: 28.sp, fontWeight: FontWeight.w400),
                       ),
                       SizedBox(
                         height: 15.h,

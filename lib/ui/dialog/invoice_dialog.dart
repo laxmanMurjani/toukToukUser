@@ -168,8 +168,8 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                           "invoice".tr,
                           style: TextStyle(
                             color: AppColors.primaryColor,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 26.sp,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                         SizedBox(height: 10.h),
@@ -181,15 +181,15 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Container(
                             decoration: BoxDecoration(
-                                color: AppColors.gray.withOpacity(0.3),
+                                color: Color(0xFFF6F6F6),
                                 borderRadius: BorderRadius.circular(35)
                             ),
                             padding: EdgeInsets.all(15),
                             child: Column(
                               children: [
-                                _invoiceRow(
-                                    label: "booking_id".tr,
-                                    value: "${datum.bookingId ?? ""}"),
+                                // _invoiceRow(
+                                //     label: "booking_id".tr,
+                                //     value: "${datum.bookingId ?? ""}"),
                                 // _invoiceRow(
                                 //     label: "Distance Travelled",
                                 //     value: "${datum.bookingId ?? ""}"),
@@ -201,7 +201,19 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                   _invoiceRow(
                                       label: "base_fare".tr,
                                       value:
-                                          "${formatNumberWithCommas(fixed.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                          "${formatNumberWithCommas(fixed.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                      labelStyle: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.sp,
+                                      ),
+                                     valueStyle: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.sp,
+                                      )
+                                  ),
+
                                 if (timeFare > 0)
                                   _invoiceRow(
                                       label: "time_fare".tr,
@@ -223,10 +235,24 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                       value:
                                           "${formatNumberWithCommas(waitingAmount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (homeController.checkRequestResponseModel.value.userCategoryDiscount != 0)
-                  _invoiceRow(
+                                  homeController.checkRequestResponseModel.value.userCategoryDiscount == "0" ?
+                                  SizedBox():
+                                  _invoiceRow(
                           label: "Discount",
                           value:
-                              "${homeController.checkRequestResponseModel.value.userCategoryDiscount}"),
+                              "${homeController.checkRequestResponseModel.value.userCategoryDiscount}",
+                                      labelStyle: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.sp,
+                                      ),
+                                      valueStyle: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.sp,
+                                      )
+                                  ),
+
                                    // if (tollCharges >= 0)
                                 //   _invoiceRow(
                                 //       label: "toll_charges".tr,
@@ -273,15 +299,15 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                     label: "total".tr,
                                     labelStyle: TextStyle(
                                       color: AppColors.primaryColor,
-                                      // fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 23.sp,
                                     ),
                                     value:
-                                  "${formatNumberWithCommas(payment.total.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                  "${cont.checkRequestResponseModel.value.currency ?? ""} ${formatNumberWithCommas(payment.total.toInt()) ?? ""}",
                                     valueStyle: TextStyle(
                                       color: AppColors.primaryColor,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.sp,
                                     )),
                               ],
                             ),
@@ -291,137 +317,162 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                             walletDetection > 0 ||
                             roundOff > 0 ||
                             discount > 0) ...[
-                          Divider(
-                            color: Colors.grey,
-                            indent: 30,
-                            endIndent: 30,
-                          ),
+                          // Divider(
+                          //   color: Colors.grey,
+                          //   indent: 30,
+                          //   endIndent: 30,
+                          // ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
                             child: Column(
                               children: [
-                                if (walletDetection > 0)
-                                  _invoiceRow(
-                                      label: "wallet_detection".tr,
-                                      value:
-                                          "${formatNumberWithCommas(walletDetection.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                // if (walletDetection > 0)
+                                //   _invoiceRow(
+                                //       label: "wallet_detection".tr,
+                                //       value:
+                                //           "${formatNumberWithCommas(walletDetection.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 // if (roundOff > 0)
                                 //   _invoiceRow(
                                 //       label: "round_off".tr,
                                 //       value:
                                 //           "${formatNumberWithCommas(roundOff.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                if (discount > 0)
-                                  _invoiceRow(
-                                      label: "discount".tr,
-                                      value:
-                                          "${formatNumberWithCommas(discount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                             homeController.checkRequestResponseModel.value.userCategoryDiscount != "0" ? SizedBox():
-                                // if (payable > 0)
-                                  _invoiceRow(
-                                      label: "payable".tr,
-                                      labelStyle: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        // fontWeight: FontWeight.w700,
-                                        fontSize: 14.sp,
-                                      ),
-                                      value:
-                                          "${formatNumberWithCommas(payment.payable.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
-                                      valueStyle: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.sp,
-                                      )),
+                                // if (discount > 0)
+                                //   _invoiceRow(
+                                //       label: "discount".tr,
+                                //       value:
+                                //           "${formatNumberWithCommas(discount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                           // if (payable > 0)
+                           //        _invoiceRow(
+                           //            label: "payable".tr,
+                           //            labelStyle: TextStyle(
+                           //              color: AppColors.primaryColor,
+                           //              // fontWeight: FontWeight.w700,
+                           //              fontSize: 14.sp,
+                           //            ),
+                           //            value:
+                           //                "${formatNumberWithCommas(payment.payable.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                           //            valueStyle: TextStyle(
+                           //              color: AppColors.primaryColor,
+                           //              fontWeight: FontWeight.w500,
+                           //              fontSize: 14.sp,
+                           //            )),
                               ],
                             ),
                           ),
                         ],
-                        homeController.checkRequestResponseModel.value.userCategoryDiscount != "0"? SizedBox():  Divider(
-                          color: Colors.grey,
-                          indent: 30,
-                          endIndent: 30,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          child: Text(
-                              "${cont.checkRequestResponseModel.value.donation ?? ""} ",
-                              style: TextStyle(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.sp,
-                              )),
-                        ),
-                        if (paid == 0) ...[
-                          Divider(
-                            color: Colors.grey,
-                            indent: 30,
-                            endIndent: 30,
+                        // homeController.checkRequestResponseModel.value.userCategoryDiscount != "0"? SizedBox():  Divider(
+                        //   color: Colors.grey,
+                        //   indent: 30,
+                        //   endIndent: 30,
+                        // ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xFFF6F6F6),
+                              borderRadius: BorderRadius.circular(35)
                           ),
-                          InkWell(
-                            onTap: () {
-                              Get.to(
-                                      () => PaymentScreen(
-                                            isAddWalletMoney: false,
-                                            currentUserId: cont
-                                                .checkRequestResponseModel
-                                                .value
-                                                .data
-                                                .first
-                                                .id,
-                                          ),
-                                      arguments: [
-                                        int.parse(payment.payable.toString())
-                                      ],
-                                      preventDuplicates: false)
-                                  ?.then((value) {
+                          padding: EdgeInsets.all(15),
+                  margin: EdgeInsets.only(top: 10,left: 15,right: 15),
+                          child: Column(
+                            children: [
+                              Text(
+                                  "${cont.checkRequestResponseModel.value.donation.toString().split("#").first ?? ""} ",
+                                  style: TextStyle(
+                                    color: AppColors.primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.sp,
+                                  ),textAlign: TextAlign.center),
+                              Text(
+                                  "${cont.checkRequestResponseModel.value.donation.toString().split("#").last ?? ""} ",
+                                  style: TextStyle(
+                                    color: AppColors.primaryColor,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15.sp,
+                                  ),textAlign: TextAlign.center),
+                              SizedBox(height: 10,),
+                              Row(
 
-                                if (value != null) {
-                                  if (value is Map) {
-                                    print("value ==>  $value");
-                                    // cont.paymentModeMap.clear();
-                                    // cont.paymentModeMap.value = value;
-                                    Map<String, dynamic> params = {};
-                                    value.forEach((key, value) {
-                                      params["$key"] = "$value";
-                                    });
-                                    cont.updateRequest();
-                                  }
-                                }
-                              });
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w, vertical: 5.h),
-                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "payment_:_".tr,
-                                    style: TextStyle(
-                                      // fontWeight: FontWeight.w700,
-                                      fontSize: 13.sp,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${cont.checkRequestResponseModel.value.data.first.selected_payment ?? ""}",
-                                    style: TextStyle(
-                                      color: AppColors.primaryColor,
-                                      // fontWeight: FontWeight.w700,
-                                      fontSize: 13.sp,
-                                    ),
-                                  ),
-                                  Expanded(child: Container()),
-                                  // Text(
-                                  //   "change".tr,
-                                  //   style: TextStyle(
-                                  //     color: Color(0xff5B96AF),
-                                  //     fontWeight: FontWeight.w500,
-                                  //     fontSize: 13.sp,
-                                  //   ),
-                                  // ),
+                                  Image.asset(AppImage.circle_logo,height: 60,width: 60,),
+                                  // SizedBox(width: 5,),
+                                  Image.asset(AppImage.donation,height: 116,),
                                 ],
-                              ),
-                            ),
+                              )
+                            ],
                           ),
-                        ],
+                        ),
+                        // if (paid == 0) ...[
+                        //   Divider(
+                        //     color: Colors.grey,
+                        //     indent: 30,
+                        //     endIndent: 30,
+                        //   ),
+                        //   InkWell(
+                        //     onTap: () {
+                        //       Get.to(
+                        //               () => PaymentScreen(
+                        //                     isAddWalletMoney: false,
+                        //                     currentUserId: cont
+                        //                         .checkRequestResponseModel
+                        //                         .value
+                        //                         .data
+                        //                         .first
+                        //                         .id,
+                        //                   ),
+                        //               arguments: [
+                        //                 int.parse(payment.payable.toString())
+                        //               ],
+                        //               preventDuplicates: false)
+                        //           ?.then((value) {
+                        //
+                        //         if (value != null) {
+                        //           if (value is Map) {
+                        //             print("value ==>  $value");
+                        //             // cont.paymentModeMap.clear();
+                        //             // cont.paymentModeMap.value = value;
+                        //             Map<String, dynamic> params = {};
+                        //             value.forEach((key, value) {
+                        //               params["$key"] = "$value";
+                        //             });
+                        //             cont.updateRequest();
+                        //           }
+                        //         }
+                        //       });
+                        //     },
+                        //     child: Padding(
+                        //       padding: EdgeInsets.symmetric(
+                        //           horizontal: 10.w, vertical: 5.h),
+                        //       child: Row(
+                        //         children: [
+                        //           Text(
+                        //             "payment_:_".tr,
+                        //             style: TextStyle(
+                        //               // fontWeight: FontWeight.w700,
+                        //               fontSize: 13.sp,
+                        //             ),
+                        //           ),
+                        //           Text(
+                        //             "${cont.checkRequestResponseModel.value.data.first.selected_payment ?? ""}",
+                        //             style: TextStyle(
+                        //               color: AppColors.primaryColor,
+                        //               // fontWeight: FontWeight.w700,
+                        //               fontSize: 13.sp,
+                        //             ),
+                        //           ),
+                        //           Expanded(child: Container()),
+                        //           // Text(
+                        //           //   "change".tr,
+                        //           //   style: TextStyle(
+                        //           //     color: Color(0xff5B96AF),
+                        //           //     fontWeight: FontWeight.w500,
+                        //           //     fontSize: 13.sp,
+                        //           //   ),
+                        //           // ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ],
 
                         SizedBox(
                           height: 10,
