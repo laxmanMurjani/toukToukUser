@@ -73,12 +73,13 @@ Future<void> main() async {
   AppString.firebaseUserAndroidVersionCode =firebaseRemoteConfig.getString("androidUserVersionCode");
   AppString.firebaseUserIosBuildNumber =firebaseRemoteConfig.getString("iosUserBuildNumber");
   AppString.firebaseUserIosVersionCode =firebaseRemoteConfig.getString("iosUserVersionCode");
+  AppString.testing_version_code_check_dialog = firebaseRemoteConfig.getBool("testing_version_code_check_dialog");
 
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   if(Platform.isAndroid){
     AppString.detectUserAndroidBuildNumber = packageInfo.version.replaceAll(".", "");
     AppString.detectUserAndroidVersionCode = packageInfo.buildNumber;
-    print("sdnmdn000===>${AppString.detectUserAndroidBuildNumber}   ${AppString.detectUserAndroidVersionCode}");
+    print("sdnmdn000===>${AppString.testing_version_code_check_dialog}   ${AppString.detectUserAndroidVersionCode}");
   } else {
     AppString.detectUserIosBuildNumber = packageInfo.version.replaceAll(".", "");
     AppString.detectUserIosVersionCode = packageInfo.buildNumber;

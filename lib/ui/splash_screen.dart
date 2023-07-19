@@ -40,45 +40,50 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     super.initState();
     _userController.setLanguage();
 
-    if(Platform.isAndroid){
-      if(int.parse(AppString.detectUserAndroidBuildNumber!) < int.parse(AppString.firebaseUserAndroidBuildNumber!) ||
-          int.parse(AppString.detectUserAndroidVersionCode!) < int.parse(AppString.firebaseUserAndroidVersionCode!)){
-        _userController.isUpdateApp.value = true;
-      } else{
-        _userController.isUpdateApp.value = false;
-        Timer(const Duration(seconds: 3), () {
-          // _homeController.getUserLatLong();
-          if (_userController.userToken.value.accessToken != null) {
-            _homeController.getUserLatLong();
-            // _userController.currentUserApi();
-            // Get.off(()=> HomeScreen());
-            _userController.getUserProfileData();
 
-          } else {
-            Get.off(() => LoginScreen());
-          }
-        });
-      }}
-    else{
-      if(int.parse(AppString.detectUserIosBuildNumber!) <= int.parse(AppString.firebaseUserIosBuildNumber!) &&
-          int.parse(AppString.detectUserIosVersionCode!) <= int.parse(AppString.detectUserIosVersionCode!)){
-        _userController.isUpdateApp.value = true;
-      } else{
-        _userController.isUpdateApp.value = false;
-        Timer(const Duration(seconds: 3), () {
-          // _homeController.getUserLatLong();
-          if (_userController.userToken.value.accessToken != null) {
-            _homeController.getUserLatLong();
-            // _userController.currentUserApi();
-            // Get.off(()=> HomeScreen());
-            _userController.getUserProfileData();
+    if(!AppString.testing_version_code_check_dialog!){
+      if(Platform.isAndroid){
+        if(int.parse(AppString.detectUserAndroidBuildNumber!) < int.parse(AppString.firebaseUserAndroidBuildNumber!) ||
+            int.parse(AppString.detectUserAndroidVersionCode!) < int.parse(AppString.firebaseUserAndroidVersionCode!)){
+          _userController.isUpdateApp.value = true;
+        } else{
+          _userController.isUpdateApp.value = false;
+          Timer(const Duration(seconds: 3), () {
+            // _homeController.getUserLatLong();
+            if (_userController.userToken.value.accessToken != null) {
+              _homeController.getUserLatLong();
+              // _userController.currentUserApi();
+              // Get.off(()=> HomeScreen());
+              _userController.getUserProfileData();
 
-          } else {
-            Get.off(() => LoginScreen());
-          }
-        });
+            } else {
+              Get.off(() => LoginScreen());
+            }
+          });
+        }}
+      else{
+        if(int.parse(AppString.detectUserIosBuildNumber!) <= int.parse(AppString.firebaseUserIosBuildNumber!) &&
+            int.parse(AppString.detectUserIosVersionCode!) <= int.parse(AppString.detectUserIosVersionCode!)){
+          _userController.isUpdateApp.value = true;
+        } else{
+          _userController.isUpdateApp.value = false;
+          Timer(const Duration(seconds: 3), () {
+            // _homeController.getUserLatLong();
+            if (_userController.userToken.value.accessToken != null) {
+              _homeController.getUserLatLong();
+              // _userController.currentUserApi();
+              // Get.off(()=> HomeScreen());
+              _userController.getUserProfileData();
+
+            } else {
+              Get.off(() => LoginScreen());
+            }
+          });
+        }
       }
     }
+
+
 
 
   }
@@ -252,7 +257,13 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
             positiveBtnText: 'Update',
             negativeBtnText: 'Cancel',
             negativeButtonShow: !AppString.isForceCancleButtonShow!,
-            positiveButtonShow: true,) : SizedBox()
+            positiveButtonShow: true,) : SizedBox(),
+      AppString.testing_version_code_check_dialog! ? CustomAlertDialog(
+        title: "Check version History",
+        message: "detectUser${Platform.isAndroid ? "Android" : "Ios"}BuildNumber ==>${Platform.isAndroid?AppString.detectUserAndroidBuildNumber:AppString.detectUserIosBuildNumber}\ndetectUser${Platform.isAndroid ? "Android" : "Ios"}VersionCode ===> ${Platform.isAndroid ? AppString.detectUserAndroidVersionCode : AppString.detectUserIosVersionCode} \n\n"
+            "firebaseUser${Platform.isAndroid ? "Android": "Ios"}BuildNumber ===>${Platform.isAndroid?AppString.firebaseUserAndroidBuildNumber:AppString.firebaseUserIosBuildNumber}\ndetectUser${Platform.isAndroid ? "Android" : "Ios"}VersionCode ===> ${Platform.isAndroid ? AppString.firebaseUserAndroidVersionCode : AppString.firebaseUserIosVersionCode}",
+      ) : SizedBox()
+
           // Column(mainAxisAlignment: MainAxisAlignment.end,children: [
           //   Text('By',style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.white,),),
           //   Image.asset(AppImage.mozilitNameLogo,width: MediaQuery.of(context).size.width*0.7,),

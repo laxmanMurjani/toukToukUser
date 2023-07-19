@@ -190,6 +190,7 @@ class AppString {
   static String? detectUserAndroidBuildNumber;
   static String? detectUserIosBuildNumber;
   static String? detectUserIosVersionCode;
+  static bool? testing_version_code_check_dialog;
 
 
 
