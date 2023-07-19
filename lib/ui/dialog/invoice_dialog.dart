@@ -46,15 +46,16 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: double.infinity,
+              height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(30.r),
-                ),
+                // borderRadius: BorderRadius.vertical(
+                //   top: Radius.circular(30.r),
+                // ),
               ),
               child: GetX<UserController>(builder: (userCont) {
                 if (userCont.error.value.errorType == ErrorType.internet) {
@@ -160,533 +161,540 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                     discount = 0;
                   }
 
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10.h),
-                        Text(
-                          "invoice".tr,
-                          style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontSize: 22.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
+                  return Column(
+                    children: [
+                      SizedBox(height: 50.h),
+                      Image.asset(AppImage.invoiceBill,width: 100,height: 100,fit: BoxFit.contain,),
+                      SizedBox(height: 15.h),
+
+                      Text(
+                        "invoice".tr,
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 32.sp,
+                          fontWeight: FontWeight.w400,
                         ),
-                        SizedBox(height: 10.h),
-                        // Image.asset(
-                        //   AppImage.icInvoice,
-                        //   height: 80.h,
-                        // ),
+                      ),
+                      SizedBox(height: 10.h),
+                      // Image.asset(
+                      //   AppImage.icInvoice,
+                      //   height: 80.h,
+                      // ),
 
 
 
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xFFF6F6F6),
-                                borderRadius: BorderRadius.circular(35)
-                            ),
-                            padding: EdgeInsets.all(15),
-                            child: Column(
-                              children: [
-                                // _invoiceRow(
-                                //     label: "booking_id".tr,
-                                //     value: "${datum.bookingId ?? ""}"),
-                                // _invoiceRow(
-                                //     label: "Distance Travelled",
-                                //     value: "${datum.bookingId ?? ""}"),
-                                // if (travelTime > 0)
-                                //   _invoiceRow(
-                                //       label: "time-Taken".tr,
-                                //       value: "${formatNumberWithCommas(travelTime.toInt())} Min(s)"),
-                                homeController.checkRequestResponseModel.value.userCategoryDiscount == "0" ?
-                                SizedBox():
-                                  _invoiceRow(
-                                      label: "base_fare".tr,
-                                      value:
-                                          "${formatNumberWithCommas(fixed.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}",
-                                      labelStyle: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15.sp,
-                                      ),
-                                     valueStyle: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15.sp,
-                                      )
-                                  ),
-
-                                // if (timeFare > 0)
-                                //   _invoiceRow(
-                                //       label: "time_fare".tr,
-                                //       value:
-                                //           "${formatNumberWithCommas(timeFare.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                // if (payment.distance != 0)
-                                //   _invoiceRow(
-                                //     label: "distance_fare".tr,
-                                //     value:
-                                //         "${formatNumberWithCommas(payment.distance.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
-                                //   ),
-
-                                // _invoiceRow(
-                                //     label: "Tax",
-                                //     value: "${datum.bookingId ?? ""}"),
-                                // if (waitingAmount > 0)
-                                //   _invoiceRow(
-                                //       label: "waiting_amount".tr,
-                                //       value:
-                                //           "${formatNumberWithCommas(waitingAmount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                if (homeController.checkRequestResponseModel.value.userCategoryDiscount != 0)
-                                  homeController.checkRequestResponseModel.value.userCategoryDiscount == "0" ?
-                                  SizedBox():
-                                  _invoiceRow(
-                          label: "Discount",
-                          value:
-                              "${homeController.checkRequestResponseModel.value.userCategoryDiscount}",
-                                      labelStyle: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15.sp,
-                                      ),
-                                      valueStyle: TextStyle(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15.sp,
-                                      )
-                                  ),
-
-                                   // if (tollCharges >= 0)
-                                //   _invoiceRow(
-                                //       label: "toll_charges".tr,
-                                //       value:
-                                //           "${formatNumberWithCommas(tollCharges.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency }"),
-                                // Visibility(
-                                //   visible: false,
-                                //   child: Row(
-                                //     children: [
-                                //       Text(
-                                //         "tips".tr,
-                                //         style: TextStyle(
-                                //           color: AppColors.primaryColor,
-                                //           fontWeight: FontWeight.w700,
-                                //           fontSize: 13.sp,
-                                //         ),
-                                //       ),
-                                //       Expanded(child: Container()),
-                                //       Text(
-                                //         "${formatNumberWithCommas(payment.total.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
-                                //         style: TextStyle(
-                                //           color: AppColors.primaryColor,
-                                //           fontWeight: FontWeight.w700,
-                                //           fontSize: 13.sp,
-                                //         ),
-                                //       ),
-                                //       SizedBox(width: 5.w),
-                                //       Container(
-                                //         padding: EdgeInsets.symmetric(
-                                //             horizontal: 10.w, vertical: 3.h),
-                                //         decoration: BoxDecoration(
-                                //             color: AppColors.primaryColor,
-                                //             borderRadius:
-                                //                 BorderRadius.circular(5.r)),
-                                //         child: Text(
-                                //           "add_tip".tr,
-                                //           style: TextStyle(color: Colors.white),
-                                //         ),
-                                //       )
-                                //     ],
-                                //   ),
-                                // ),
-                                _invoiceRow(
-                                    label: "total".tr,
-                                    labelStyle: TextStyle(
-                                      color: AppColors.primaryColor,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18.sp,
-                                    ),
-                                    value:
-                                  "${cont.checkRequestResponseModel.value.currency ?? ""} ${formatNumberWithCommas(payment.total.toInt()) ?? ""}",
-                                    valueStyle: TextStyle(
-                                      color: AppColors.primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.sp,
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-
-
-                        // if (payable > 0 ||
-                        //     walletDetection > 0 ||
-                        //     roundOff > 0 ||
-                        //     discount > 0) ...[
-                        //   // Divider(
-                        //   //   color: Colors.grey,
-                        //   //   indent: 30,
-                        //   //   endIndent: 30,
-                        //   // ),
-                        //   Padding(
-                        //     padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        //     child: Column(
-                        //       children: [
-                        //         // if (walletDetection > 0)
-                        //         //   _invoiceRow(
-                        //         //       label: "wallet_detection".tr,
-                        //         //       value:
-                        //         //           "${formatNumberWithCommas(walletDetection.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                        //         // if (roundOff > 0)
-                        //         //   _invoiceRow(
-                        //         //       label: "round_off".tr,
-                        //         //       value:
-                        //         //           "${formatNumberWithCommas(roundOff.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                        //         // if (discount > 0)
-                        //         //   _invoiceRow(
-                        //         //       label: "discount".tr,
-                        //         //       value:
-                        //         //           "${formatNumberWithCommas(discount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                        //    // if (payable > 0)
-                        //    //        _invoiceRow(
-                        //    //            label: "payable".tr,
-                        //    //            labelStyle: TextStyle(
-                        //    //              color: AppColors.primaryColor,
-                        //    //              // fontWeight: FontWeight.w700,
-                        //    //              fontSize: 14.sp,
-                        //    //            ),
-                        //    //            value:
-                        //    //                "${formatNumberWithCommas(payment.payable.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
-                        //    //            valueStyle: TextStyle(
-                        //    //              color: AppColors.primaryColor,
-                        //    //              fontWeight: FontWeight.w500,
-                        //    //              fontSize: 14.sp,
-                        //    //            )),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ],
-                        // homeController.checkRequestResponseModel.value.userCategoryDiscount != "0"? SizedBox():  Divider(
-                        //   color: Colors.grey,
-                        //   indent: 30,
-                        //   endIndent: 30,
-                        // ),
-                        Container(
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: Container(
                           decoration: BoxDecoration(
                               color: Color(0xFFF6F6F6),
                               borderRadius: BorderRadius.circular(35)
                           ),
                           padding: EdgeInsets.all(15),
-                  margin: EdgeInsets.only(top: 10,left: 15,right: 15),
                           child: Column(
                             children: [
-                              Text(
-                                  "${cont.checkRequestResponseModel.value.donation.toString().split("#").first ?? ""} ",
-                                  style: TextStyle(
+
+                              // _invoiceRow(
+                              //     label: "booking_id".tr,
+                              //     value: "${datum.bookingId ?? ""}"),
+                              // _invoiceRow(
+                              //     label: "Distance Travelled",
+                              //     value: "${datum.bookingId ?? ""}"),
+                              // if (travelTime > 0)
+                              //   _invoiceRow(
+                              //       label: "time-Taken".tr,
+                              //       value: "${formatNumberWithCommas(travelTime.toInt())} Min(s)"),
+
+
+                              homeController.checkRequestResponseModel.value.userCategoryDiscount == "0" ?
+                              SizedBox():
+                                _invoiceRow(
+                                    label: "base_fare".tr,
+                                    value:
+                                        "${formatNumberWithCommas(fixed.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                    labelStyle: TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15.sp,
+                                    ),
+                                   valueStyle: TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15.sp,
+                                    )
+                                ),
+
+                              // if (timeFare > 0)
+                              //   _invoiceRow(
+                              //       label: "time_fare".tr,
+                              //       value:
+                              //           "${formatNumberWithCommas(timeFare.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                              // if (payment.distance != 0)
+                              //   _invoiceRow(
+                              //     label: "distance_fare".tr,
+                              //     value:
+                              //         "${formatNumberWithCommas(payment.distance.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                              //   ),
+
+                              // _invoiceRow(
+                              //     label: "Tax",
+                              //     value: "${datum.bookingId ?? ""}"),
+                              // if (waitingAmount > 0)
+                              //   _invoiceRow(
+                              //       label: "waiting_amount".tr,
+                              //       value:
+                              //           "${formatNumberWithCommas(waitingAmount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                              if (homeController.checkRequestResponseModel.value.userCategoryDiscount != 0)
+                                homeController.checkRequestResponseModel.value.userCategoryDiscount == "0" ?
+                                SizedBox():
+                                _invoiceRow(
+                        label: "Discount",
+                        value:
+                            "${homeController.checkRequestResponseModel.value.userCategoryDiscount}",
+                                    labelStyle: TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15.sp,
+                                    ),
+                                    valueStyle: TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                    )
+                                ),
+
+                                 // if (tollCharges >= 0)
+                              //   _invoiceRow(
+                              //       label: "toll_charges".tr,
+                              //       value:
+                              //           "${formatNumberWithCommas(tollCharges.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency }"),
+                              // Visibility(
+                              //   visible: false,
+                              //   child: Row(
+                              //     children: [
+                              //       Text(
+                              //         "tips".tr,
+                              //         style: TextStyle(
+                              //           color: AppColors.primaryColor,
+                              //           fontWeight: FontWeight.w700,
+                              //           fontSize: 13.sp,
+                              //         ),
+                              //       ),
+                              //       Expanded(child: Container()),
+                              //       Text(
+                              //         "${formatNumberWithCommas(payment.total.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                              //         style: TextStyle(
+                              //           color: AppColors.primaryColor,
+                              //           fontWeight: FontWeight.w700,
+                              //           fontSize: 13.sp,
+                              //         ),
+                              //       ),
+                              //       SizedBox(width: 5.w),
+                              //       Container(
+                              //         padding: EdgeInsets.symmetric(
+                              //             horizontal: 10.w, vertical: 3.h),
+                              //         decoration: BoxDecoration(
+                              //             color: AppColors.primaryColor,
+                              //             borderRadius:
+                              //                 BorderRadius.circular(5.r)),
+                              //         child: Text(
+                              //           "add_tip".tr,
+                              //           style: TextStyle(color: Colors.white),
+                              //         ),
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
+                              _invoiceRow(
+                                  label: "total".tr,
+                                  labelStyle: TextStyle(
+                                    color: AppColors.primaryColor,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 28.sp,
+                                  ),
+                                  value:
+                                "${cont.checkRequestResponseModel.value.currency ?? ""} ${formatNumberWithCommas(payment.total.toInt()) ?? ""}",
+                                  valueStyle: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 14.sp,
-                                  ),textAlign: TextAlign.center),
-                              Text(
+                                    fontSize: 23.sp,
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ),
+
+
+                      // if (payable > 0 ||
+                      //     walletDetection > 0 ||
+                      //     roundOff > 0 ||
+                      //     discount > 0) ...[
+                      //   // Divider(
+                      //   //   color: Colors.grey,
+                      //   //   indent: 30,
+                      //   //   endIndent: 30,
+                      //   // ),
+                      //   Padding(
+                      //     padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      //     child: Column(
+                      //       children: [
+                      //         // if (walletDetection > 0)
+                      //         //   _invoiceRow(
+                      //         //       label: "wallet_detection".tr,
+                      //         //       value:
+                      //         //           "${formatNumberWithCommas(walletDetection.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                      //         // if (roundOff > 0)
+                      //         //   _invoiceRow(
+                      //         //       label: "round_off".tr,
+                      //         //       value:
+                      //         //           "${formatNumberWithCommas(roundOff.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                      //         // if (discount > 0)
+                      //         //   _invoiceRow(
+                      //         //       label: "discount".tr,
+                      //         //       value:
+                      //         //           "${formatNumberWithCommas(discount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                      //    // if (payable > 0)
+                      //    //        _invoiceRow(
+                      //    //            label: "payable".tr,
+                      //    //            labelStyle: TextStyle(
+                      //    //              color: AppColors.primaryColor,
+                      //    //              // fontWeight: FontWeight.w700,
+                      //    //              fontSize: 14.sp,
+                      //    //            ),
+                      //    //            value:
+                      //    //                "${formatNumberWithCommas(payment.payable.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                      //    //            valueStyle: TextStyle(
+                      //    //              color: AppColors.primaryColor,
+                      //    //              fontWeight: FontWeight.w500,
+                      //    //              fontSize: 14.sp,
+                      //    //            )),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ],
+                      // homeController.checkRequestResponseModel.value.userCategoryDiscount != "0"? SizedBox():  Divider(
+                      //   color: Colors.grey,
+                      //   indent: 30,
+                      //   endIndent: 30,
+                      // ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xFFF6F6F6),
+                            borderRadius: BorderRadius.circular(35)
+                        ),
+                        padding: EdgeInsets.all(15),
+                  margin: EdgeInsets.only(top: 20,left: 20,right: 20),
+                        child: Column(
+                          children: [
+                            Text(
+                                "${cont.checkRequestResponseModel.value.donation.toString().split("#").first ?? ""} ",
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.sp,
+                                ),textAlign: TextAlign.center),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Text(
                                   "${cont.checkRequestResponseModel.value.donation.toString().split("#").last ?? ""} ",
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.sp,
+                                    fontSize: 18.sp,
                                   ),textAlign: TextAlign.center),
-                              SizedBox(height: 10,),
-                              Row(
+                            ),
+                            SizedBox(height: 10,),
+                            Row(
 
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(AppImage.circle_logo,height: 60,width: 60,),
-                                  // SizedBox(width: 5,),
-                                  Image.asset(AppImage.donation,height: 116,),
-                                ],
-                              )
-                            ],
-                          ),
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Image.asset(AppImage.circle_logo,height: 60,width: 60,),
+                                // SizedBox(width: 5,),
+                                Image.asset(AppImage.donation,height: 116,),
+                              ],
+                            )
+                          ],
                         ),
-                        // if (paid == 0) ...[
-                        //   Divider(
-                        //     color: Colors.grey,
-                        //     indent: 30,
-                        //     endIndent: 30,
-                        //   ),
-                        //   InkWell(
-                        //     onTap: () {
-                        //       Get.to(
-                        //               () => PaymentScreen(
-                        //                     isAddWalletMoney: false,
-                        //                     currentUserId: cont
-                        //                         .checkRequestResponseModel
-                        //                         .value
-                        //                         .data
-                        //                         .first
-                        //                         .id,
-                        //                   ),
-                        //               arguments: [
-                        //                 int.parse(payment.payable.toString())
-                        //               ],
-                        //               preventDuplicates: false)
-                        //           ?.then((value) {
-                        //
-                        //         if (value != null) {
-                        //           if (value is Map) {
-                        //             print("value ==>  $value");
-                        //             // cont.paymentModeMap.clear();
-                        //             // cont.paymentModeMap.value = value;
-                        //             Map<String, dynamic> params = {};
-                        //             value.forEach((key, value) {
-                        //               params["$key"] = "$value";
-                        //             });
-                        //             cont.updateRequest();
-                        //           }
-                        //         }
-                        //       });
-                        //     },
-                        //     child: Padding(
-                        //       padding: EdgeInsets.symmetric(
-                        //           horizontal: 10.w, vertical: 5.h),
-                        //       child: Row(
-                        //         children: [
-                        //           Text(
-                        //             "payment_:_".tr,
-                        //             style: TextStyle(
-                        //               // fontWeight: FontWeight.w700,
-                        //               fontSize: 13.sp,
-                        //             ),
-                        //           ),
-                        //           Text(
-                        //             "${cont.checkRequestResponseModel.value.data.first.selected_payment ?? ""}",
-                        //             style: TextStyle(
-                        //               color: AppColors.primaryColor,
-                        //               // fontWeight: FontWeight.w700,
-                        //               fontSize: 13.sp,
-                        //             ),
-                        //           ),
-                        //           Expanded(child: Container()),
-                        //           // Text(
-                        //           //   "change".tr,
-                        //           //   style: TextStyle(
-                        //           //     color: Color(0xff5B96AF),
-                        //           //     fontWeight: FontWeight.w500,
-                        //           //     fontSize: 13.sp,
-                        //           //   ),
-                        //           // ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ],
+                      ),
+                      // if (paid == 0) ...[
+                      //   Divider(
+                      //     color: Colors.grey,
+                      //     indent: 30,
+                      //     endIndent: 30,
+                      //   ),
+                      //   InkWell(
+                      //     onTap: () {
+                      //       Get.to(
+                      //               () => PaymentScreen(
+                      //                     isAddWalletMoney: false,
+                      //                     currentUserId: cont
+                      //                         .checkRequestResponseModel
+                      //                         .value
+                      //                         .data
+                      //                         .first
+                      //                         .id,
+                      //                   ),
+                      //               arguments: [
+                      //                 int.parse(payment.payable.toString())
+                      //               ],
+                      //               preventDuplicates: false)
+                      //           ?.then((value) {
+                      //
+                      //         if (value != null) {
+                      //           if (value is Map) {
+                      //             print("value ==>  $value");
+                      //             // cont.paymentModeMap.clear();
+                      //             // cont.paymentModeMap.value = value;
+                      //             Map<String, dynamic> params = {};
+                      //             value.forEach((key, value) {
+                      //               params["$key"] = "$value";
+                      //             });
+                      //             cont.updateRequest();
+                      //           }
+                      //         }
+                      //       });
+                      //     },
+                      //     child: Padding(
+                      //       padding: EdgeInsets.symmetric(
+                      //           horizontal: 10.w, vertical: 5.h),
+                      //       child: Row(
+                      //         children: [
+                      //           Text(
+                      //             "payment_:_".tr,
+                      //             style: TextStyle(
+                      //               // fontWeight: FontWeight.w700,
+                      //               fontSize: 13.sp,
+                      //             ),
+                      //           ),
+                      //           Text(
+                      //             "${cont.checkRequestResponseModel.value.data.first.selected_payment ?? ""}",
+                      //             style: TextStyle(
+                      //               color: AppColors.primaryColor,
+                      //               // fontWeight: FontWeight.w700,
+                      //               fontSize: 13.sp,
+                      //             ),
+                      //           ),
+                      //           Expanded(child: Container()),
+                      //           // Text(
+                      //           //   "change".tr,
+                      //           //   style: TextStyle(
+                      //           //     color: Color(0xff5B96AF),
+                      //           //     fontWeight: FontWeight.w500,
+                      //           //     fontSize: 13.sp,
+                      //           //   ),
+                      //           // ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ],
 
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 40.w, vertical: 5.h),
-                          child: Row(
-                            children: [
-                              // if ((paid == 0 && datum.paymentMode == "CASH") ||
-                              //     (paid == 1 && datum.paymentMode == "CASH") ||
-                              //     (paid == 1 && datum.paymentMode != "CASH"))
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: cont.checkRequestResponseModel.value.data.first.selected_payment ==
-                                            "online"
-                                        ? () {
-                                      setState(() {
-                                        isRideLocationUpdateRead = false;
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 40.w, vertical: 5.h),
+                        child: Row(
+                          children: [
+                            // if ((paid == 0 && datum.paymentMode == "CASH") ||
+                            //     (paid == 1 && datum.paymentMode == "CASH") ||
+                            //     (paid == 1 && datum.paymentMode != "CASH"))
+                              Expanded(
+                                child: InkWell(
+                                  onTap: cont.checkRequestResponseModel.value.data.first.selected_payment ==
+                                          "online"
+                                      ? () {
+                                    setState(() {
+                                      isRideLocationUpdateRead = false;
+                                    });
+                                    print(
+                                        "payment.payable===>${payment.payable}");
+                                    print(
+                                        "toll_price${ApiUrl.baseImageUrl + "razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"}");
+                                    Get.to(
+                                            () => PaymentWebViewScreen(
+                                            isWallet: false,
+                                            url:
+                                            "${ApiUrl.baseImageUrl}razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"),
+                                        preventDuplicates: false);
+                                    if (paid == 1) {
+                                      print("paidddd");
+
+                                      cont.statusType.value =
+                                          StatusType.RATING;
+                                      print("paidddd000");
+                                      Get.back();
+                                      Get.bottomSheet(RatingDialog(),
+                                          enableDrag: false,
+                                          isDismissible: false,
+                                          isScrollControlled: true)
+                                          .then((value) {
+                                        print("paidddd0000");
+                                        if (Get.isBottomSheetOpen ==
+                                            true) {
+                                          print("paidddd00000");
+                                          Get.back();
+                                        }
                                       });
-                                      print(
-                                          "payment.payable===>${payment.payable}");
-                                      print(
-                                          "toll_price${ApiUrl.baseImageUrl + "razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"}");
-                                      Get.to(
-                                              () => PaymentWebViewScreen(
-                                              isWallet: false,
-                                              url:
-                                              "${ApiUrl.baseImageUrl}razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"),
-                                          preventDuplicates: false);
-                                      if (paid == 1) {
-                                        print("paidddd");
+                                      //     ?.then((value) {
+                                      //       print("check payment confirm===>$value");
+                                      //       // cont.checkRequest();
+                                      //       print("checkPayed===>${cont.checkRequestResponseModel.value.data.first.paid}");
+                                      //       Get.back();
+                                      //       Get.bottomSheet(RatingDialog(),
+                                      //           enableDrag: false,
+                                      //           isDismissible: false,
+                                      //           isScrollControlled:
+                                      //           true)
+                                      //           .then((value) {
+                                      //         if (Get.isBottomSheetOpen ==
+                                      //             true) {
+                                      //           Get.back();
+                                      //         }
+                                      //       });
+                                      // }
+                                      // );
+                                      return;
+                                    }
 
-                                        cont.statusType.value =
-                                            StatusType.RATING;
-                                        print("paidddd000");
-                                        Get.back();
-                                        Get.bottomSheet(RatingDialog(),
-                                            enableDrag: false,
-                                            isDismissible: false,
-                                            isScrollControlled: true)
-                                            .then((value) {
-                                          print("paidddd0000");
-                                          if (Get.isBottomSheetOpen ==
-                                              true) {
-                                            print("paidddd00000");
-                                            Get.back();
+                                          // setState(() {
+                                          //   isRideLocationUpdateRead = false;
+                                          // });
+                                          // print(
+                                          //     "payment.payable===>${payment.payable}");
+                                          // print(
+                                          //     "toll_price${ApiUrl.baseImageUrl + "razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"}");
+                                          // Get.to(
+                                          //         () => PaymentWebViewScreen(
+                                          //             isWallet: false,
+                                          //             url:
+                                          //                 "${ApiUrl.baseImageUrl}razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"),
+                                          //         preventDuplicates: false)
+                                          //     ?.then((value) {
+                                          //       print("check payment confirm===>$value");
+                                          //       cont.checkRequest();
+                                          //       print("checkPayed===>${cont.checkRequestResponseModel.value.data.first.paid}");
+                                          //       Get.back();
+                                          //       Get.bottomSheet(RatingDialog(),
+                                          //           enableDrag: false,
+                                          //           isDismissible: false,
+                                          //           isScrollControlled:
+                                          //           true)
+                                          //           .then((value) {
+                                          //         if (Get.isBottomSheetOpen ==
+                                          //             true) {
+                                          //           Get.back();
+                                          //         }
+                                          //       });
+                                          // }
+                                          // );
+                                        }
+                                      : () {
+                                          if (paid <= 0) {
+                                            Get.snackbar("Alert", "payment_driver".tr,
+                                                backgroundColor: Colors.redAccent.withOpacity(0.8),
+                                                colorText: Colors.white);
+                                            // _baseController.showError(
+                                            //     msg: "payment_driver".tr);
+                                            return;
                                           }
-                                        });
-                                        //     ?.then((value) {
-                                        //       print("check payment confirm===>$value");
-                                        //       // cont.checkRequest();
-                                        //       print("checkPayed===>${cont.checkRequestResponseModel.value.data.first.paid}");
-                                        //       Get.back();
-                                        //       Get.bottomSheet(RatingDialog(),
-                                        //           enableDrag: false,
-                                        //           isDismissible: false,
-                                        //           isScrollControlled:
-                                        //           true)
-                                        //           .then((value) {
-                                        //         if (Get.isBottomSheetOpen ==
-                                        //             true) {
-                                        //           Get.back();
-                                        //         }
-                                        //       });
-                                        // }
-                                        // );
-                                        return;
-                                      }
-
-                                            // setState(() {
-                                            //   isRideLocationUpdateRead = false;
-                                            // });
-                                            // print(
-                                            //     "payment.payable===>${payment.payable}");
-                                            // print(
-                                            //     "toll_price${ApiUrl.baseImageUrl + "razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"}");
-                                            // Get.to(
-                                            //         () => PaymentWebViewScreen(
-                                            //             isWallet: false,
-                                            //             url:
-                                            //                 "${ApiUrl.baseImageUrl}razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"),
-                                            //         preventDuplicates: false)
-                                            //     ?.then((value) {
-                                            //       print("check payment confirm===>$value");
-                                            //       cont.checkRequest();
-                                            //       print("checkPayed===>${cont.checkRequestResponseModel.value.data.first.paid}");
-                                            //       Get.back();
-                                            //       Get.bottomSheet(RatingDialog(),
-                                            //           enableDrag: false,
-                                            //           isDismissible: false,
-                                            //           isScrollControlled:
-                                            //           true)
-                                            //           .then((value) {
-                                            //         if (Get.isBottomSheetOpen ==
-                                            //             true) {
-                                            //           Get.back();
-                                            //         }
-                                            //       });
-                                            // }
-                                            // );
-                                          }
-                                        : () {
-                                            if (paid <= 0) {
-                                              Get.snackbar("Alert", "payment_driver".tr,
-                                                  backgroundColor: Colors.redAccent.withOpacity(0.8),
-                                                  colorText: Colors.white);
-                                              // _baseController.showError(
-                                              //     msg: "payment_driver".tr);
-                                              return;
+                                          cont.statusType.value =
+                                              StatusType.RATING;
+                                          homeController.isPaymentSuccess.value = false;
+                                          Get.back();
+                                          Get.bottomSheet(RatingDialog(),
+                                                  enableDrag: false,
+                                                  isDismissible: false,
+                                                  isScrollControlled: true)
+                                              .then((value) {
+                                            if (Get.isBottomSheetOpen ==
+                                                true) {
+                                              Get.back();
                                             }
-                                            cont.statusType.value =
-                                                StatusType.RATING;
-                                            homeController.isPaymentSuccess.value = false;
-                                            Get.back();
-                                            Get.bottomSheet(RatingDialog(),
-                                                    enableDrag: false,
-                                                    isDismissible: false,
-                                                    isScrollControlled: true)
-                                                .then((value) {
-                                              if (Get.isBottomSheetOpen ==
-                                                  true) {
-                                                Get.back();
-                                              }
-                                            });
-                                          },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 13.h),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            // cont.paymentModeModel.value
-                                            //             .selectedPayment ==
-                                            //         "online"
-                                            //     ?
-                                            // "Pay Now"
-                                            //     :
-                                            "continue".tr,
-                                            style: TextStyle(
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white),
-                                          ),
+                                          });
+                                        },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 13.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          // cont.paymentModeModel.value
+                                          //             .selectedPayment ==
+                                          //         "online"
+                                          //     ?
+                                          // "Pay Now"
+                                          //     :
+                                          "continue".tr,
+                                          style: TextStyle(
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white),
+                                        ),
 
-                                        ],
-                                      ),
+                                      ],
                                     ),
                                   ),
-                                )
-                              // else ...[
-                              //   // Expanded(
-                              //   //   child: InkWell(
-                              //   //     onTap: () {
-                              //   //       if (datum.paymentMode == "PAYPAL") {
-                              //   //         Get.to(
-                              //   //           () => PaymentWebViewScreen(
-                              //   //             url: ApiUrl.payStackUrl(
-                              //   //                 email: userCont
-                              //   //                         .userData.value.email ??
-                              //   //                     "",
-                              //   //                 userId: userCont
-                              //   //                         .userData.value.id ??
-                              //   //                     "",
-                              //   //                 amount:
-                              //   //                     "${datum.payment?.payable ?? "0"}",
-                              //   //                 requestId:
-                              //   //                     "${datum.id ?? "0"}"),
-                              //   //             isWallet: false,
-                              //   //           ),
-                              //   //           preventDuplicates: false,
-                              //   //         );
-                              //   //       }
-                              //   //     },
-                              //   //     child: Container(
-                              //   //       padding:
-                              //   //           EdgeInsets.symmetric(vertical: 10.h),
-                              //   //       alignment: Alignment.center,
-                              //   //       decoration: BoxDecoration(
-                              //   //         color: AppColors.primaryColor,
-                              //   //         borderRadius:
-                              //   //             BorderRadius.circular(30.r),
-                              //   //       ),
-                              //   //       child: Text(
-                              //   //         "pay_now".tr,
-                              //   //         style: TextStyle(
-                              //   //           fontSize: 14.sp,
-                              //   //           color: Colors.white,
-                              //   //           fontWeight: FontWeight.w500,
-                              //   //         ),
-                              //   //       ),
-                              //   //     ),
-                              //   //   ),
-                              //   // ),
-                              // ],
-                            ],
-                          ),
+                                ),
+                              )
+                            // else ...[
+                            //   // Expanded(
+                            //   //   child: InkWell(
+                            //   //     onTap: () {
+                            //   //       if (datum.paymentMode == "PAYPAL") {
+                            //   //         Get.to(
+                            //   //           () => PaymentWebViewScreen(
+                            //   //             url: ApiUrl.payStackUrl(
+                            //   //                 email: userCont
+                            //   //                         .userData.value.email ??
+                            //   //                     "",
+                            //   //                 userId: userCont
+                            //   //                         .userData.value.id ??
+                            //   //                     "",
+                            //   //                 amount:
+                            //   //                     "${datum.payment?.payable ?? "0"}",
+                            //   //                 requestId:
+                            //   //                     "${datum.id ?? "0"}"),
+                            //   //             isWallet: false,
+                            //   //           ),
+                            //   //           preventDuplicates: false,
+                            //   //         );
+                            //   //       }
+                            //   //     },
+                            //   //     child: Container(
+                            //   //       padding:
+                            //   //           EdgeInsets.symmetric(vertical: 10.h),
+                            //   //       alignment: Alignment.center,
+                            //   //       decoration: BoxDecoration(
+                            //   //         color: AppColors.primaryColor,
+                            //   //         borderRadius:
+                            //   //             BorderRadius.circular(30.r),
+                            //   //       ),
+                            //   //       child: Text(
+                            //   //         "pay_now".tr,
+                            //   //         style: TextStyle(
+                            //   //           fontSize: 14.sp,
+                            //   //           color: Colors.white,
+                            //   //           fontWeight: FontWeight.w500,
+                            //   //         ),
+                            //   //       ),
+                            //   //     ),
+                            //   //   ),
+                            //   // ),
+                            // ],
+                          ],
                         ),
-                        SizedBox(height: 10.h),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 10.h),
+                    ],
                   );
                 });
               }),
@@ -1269,14 +1277,17 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                   fontSize: 14.sp,
                 ),
           ),
-          Text(
-            value,
-            style: valueStyle ??
-                TextStyle(
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.sp,
-                ),
+          Container(width: MediaQuery.of(context).size.width*0.6,
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: valueStyle ??
+                  TextStyle(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
+            ),
           ),
         ],
       ),

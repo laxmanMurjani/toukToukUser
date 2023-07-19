@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:math' as math;
 import 'package:etoUser/api/api.dart';
 import 'package:etoUser/api/api_service.dart';
@@ -77,6 +78,7 @@ class UserController extends BaseController {
   RxString googleAuthToken = ''.obs;
   RxString facebookAuthToken = ''.obs;
   RxBool isUserUpdated = false.obs;
+  RxBool isUpdateApp = false.obs;
   RxInt resendOtpCounter = 0.obs;
 
 
@@ -1652,6 +1654,23 @@ class UserController extends BaseController {
       showError(msg: "Could not launch $mail");
     }
   }
+
+  Future<void> sendUpdateApp() async {
+    if (Platform.isAndroid || Platform.isIOS) {
+      final appId = Platform.isAndroid ? 'com.touktouktaxi.user' : '1594378799';
+      final url = Uri.parse(
+        Platform.isAndroid
+            ? "market://details?id=$appId"
+            : "https://apps.apple.com/app/id$appId",
+      );
+      launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+    }
+  }
+
+
 
   Future<void> deleteAccount() async {
     try {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:etoUser/overlays/messanger_chathead.dart';
 import 'package:etoUser/util/remote_config_service.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -22,6 +23,7 @@ import 'package:etoUser/util/app_constant.dart';
 import 'package:etoUser/util/languages.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wakelock/wakelock.dart';
 
 FirebaseAnalytics analytics = FirebaseAnalytics.instance;
@@ -66,6 +68,22 @@ Future<void> main() async {
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   await RemoteConfigService.setupRemoteConfig();
   AppString.googleMapKey =firebaseRemoteConfig.getString("map_key");
+  AppString.isForceCancleButtonShow = Platform.isAndroid ? firebaseRemoteConfig.getBool("isUserForceUpdateAndroid") : firebaseRemoteConfig.getBool("isUserForceUpdateIos");
+  AppString.firebaseUserAndroidBuildNumber =firebaseRemoteConfig.getString("androidUserBuildNumber");
+  AppString.firebaseUserAndroidVersionCode =firebaseRemoteConfig.getString("androidUserVersionCode");
+  AppString.firebaseUserIosBuildNumber =firebaseRemoteConfig.getString("iosUserBuildNumber");
+  AppString.firebaseUserIosVersionCode =firebaseRemoteConfig.getString("iosUserVersionCode");
+
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  if(Platform.isAndroid){
+    AppString.detectUserAndroidBuildNumber = packageInfo.version.replaceAll(".", "");
+    AppString.detectUserAndroidVersionCode = packageInfo.buildNumber;
+    print("sdnmdn000===>${AppString.detectUserAndroidBuildNumber}   ${AppString.detectUserAndroidVersionCode}");
+  } else {
+    AppString.detectUserIosBuildNumber = packageInfo.version.replaceAll(".", "");
+    AppString.detectUserIosVersionCode = packageInfo.buildNumber;
+  }
+
   print("sdnmdn===>${AppString.googleMapKey}");
   NotificationSettings settings =
       await FirebaseMessaging.instance.requestPermission(

@@ -132,6 +132,8 @@ class AppImage {
   static String toukToukBlurLogo = "$_basePath/touk_touk_bg_blur.png";
   static String donation = "$_basePath/donation.png";
   static String circle_logo = "$_basePath/circle_logo.png";
+  static String invoiceBill = "$_basePath/invoice_bill.png";
+  static String ratingLogo = "$_basePath/rating_logo.png";
   static String circleCheck = "$_basePath/circleCheck.png";
   static String login2 = "$_basePath/login2.png";
   static String login3 = "$_basePath/login3.png";
@@ -179,6 +181,18 @@ class AppBoxShadow {
 
 class AppString {
   static String? googleMapKey;
+  static bool? isForceCancleButtonShow;
+  static String? firebaseUserAndroidVersionCode;
+  static String? firebaseUserAndroidBuildNumber;
+  static String? firebaseUserIosVersionCode;
+  static String? firebaseUserIosBuildNumber;
+  static String? detectUserAndroidVersionCode;
+  static String? detectUserAndroidBuildNumber;
+  static String? detectUserIosBuildNumber;
+  static String? detectUserIosVersionCode;
+
+
+
   // static String googleSignInServerClientId = "923493235275-rfgum3smjh425690v239cnb33af7koei.apps.googleusercontent.com";
   static String googleSignInServerClientId =
       "409063719465-b29hdm79hdl8lqlbjmbjol2dpevp9ffm.apps.googleusercontent.com";

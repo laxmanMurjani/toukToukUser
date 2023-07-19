@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:etoUser/controller/home_controller.dart';
+import 'package:etoUser/ui/dialog/update_app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -28,6 +30,8 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
   final HomeController _homeController = Get.find();
   GoogleMapController? _controller;
 
+
+
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -35,18 +39,48 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     // contactPermissions();
     super.initState();
     _userController.setLanguage();
-    Timer(const Duration(seconds: 3), () {
-      // _homeController.getUserLatLong();
-      if (_userController.userToken.value.accessToken != null) {
-        _homeController.getUserLatLong();
-        // _userController.currentUserApi();
-        // Get.off(()=> HomeScreen());
-        _userController.getUserProfileData();
 
-      } else {
-        Get.off(() => LoginScreen());
+    if(Platform.isAndroid){
+      if(int.parse(AppString.detectUserAndroidBuildNumber!) < int.parse(AppString.firebaseUserAndroidBuildNumber!) ||
+          int.parse(AppString.detectUserAndroidVersionCode!) < int.parse(AppString.firebaseUserAndroidVersionCode!)){
+        _userController.isUpdateApp.value = true;
+      } else{
+        _userController.isUpdateApp.value = false;
+        Timer(const Duration(seconds: 3), () {
+          // _homeController.getUserLatLong();
+          if (_userController.userToken.value.accessToken != null) {
+            _homeController.getUserLatLong();
+            // _userController.currentUserApi();
+            // Get.off(()=> HomeScreen());
+            _userController.getUserProfileData();
+
+          } else {
+            Get.off(() => LoginScreen());
+          }
+        });
+      }}
+    else{
+      if(int.parse(AppString.detectUserIosBuildNumber!) <= int.parse(AppString.firebaseUserIosBuildNumber!) &&
+          int.parse(AppString.detectUserIosVersionCode!) <= int.parse(AppString.detectUserIosVersionCode!)){
+        _userController.isUpdateApp.value = true;
+      } else{
+        _userController.isUpdateApp.value = false;
+        Timer(const Duration(seconds: 3), () {
+          // _homeController.getUserLatLong();
+          if (_userController.userToken.value.accessToken != null) {
+            _homeController.getUserLatLong();
+            // _userController.currentUserApi();
+            // Get.off(()=> HomeScreen());
+            _userController.getUserProfileData();
+
+          } else {
+            Get.off(() => LoginScreen());
+          }
+        });
       }
-    });
+    }
+
+
   }
 
   // @override
@@ -174,6 +208,17 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    CustomAlertDialog dialog = CustomAlertDialog(
+      title: "Update App",
+      message: "This app new feature available in ${Platform.isAndroid ? "Play Store" : "App Store"}, please update app",
+      onPostivePressed: () async{
+        await _userController.sendUpdateApp();
+      },
+      onNegativePressed: (){Get.back();},
+      positiveBtnText: 'Update',
+      negativeBtnText: 'Cancel',
+      negativeButtonShow: !AppString.isForceCancleButtonShow!,
+      positiveButtonShow: true,);
     return Scaffold(
       backgroundColor: Colors.white,
       //AppColors.primaryColor,
@@ -192,6 +237,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
               ),
             ),
           ),
+          _userController.isUpdateApp.value ? dialog : SizedBox()
           // Column(mainAxisAlignment: MainAxisAlignment.end,children: [
           //   Text('By',style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.white,),),
           //   Image.asset(AppImage.mozilitNameLogo,width: MediaQuery.of(context).size.width*0.7,),
@@ -201,4 +247,5 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
       ),
     );
   }
+
 }

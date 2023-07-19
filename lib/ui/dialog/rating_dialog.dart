@@ -187,15 +187,15 @@ class _RatingDialogState extends State<RatingDialog> {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: double.infinity,
+              height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(30.r),
-                ),
+                // borderRadius: BorderRadius.vertical(
+                //   top: Radius.circular(30.r),
+                // ),
               ),
               child: GetX<HomeController>(builder: (cont) {
                 if (cont.error.value.errorType == ErrorType.internet) {
@@ -207,12 +207,14 @@ class _RatingDialogState extends State<RatingDialog> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15.h,
+                        height: 40.h,
                       ),
+                      Image.asset(AppImage.ratingLogo,width: 176,height: 180,fit: BoxFit.contain,),
+                      SizedBox(height: 10.h),
                       Text(
                         'rate_driver'.tr,
                         style: TextStyle(
-                            fontSize: 22.sp, fontWeight: FontWeight.w400),
+                            fontSize: 30.sp, fontWeight: FontWeight.w400),
                       ),
                       SizedBox(
                         height: 15.h,
@@ -221,8 +223,7 @@ class _RatingDialogState extends State<RatingDialog> {
                       Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: AppColors.gray
-                                .withOpacity(0.3),
+                            color: Color(0xFFF6F6F6),
                             borderRadius: BorderRadius.all(
                                 Radius.circular(15))),
                         padding: EdgeInsets.all(8),
@@ -410,7 +411,7 @@ class _RatingDialogState extends State<RatingDialog> {
                               width: MediaQuery.of(context).size.width * 0.9,
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
-                                  color: AppColors.bgColor,
+                                  color: Color(0xFFF6F6F6),
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                               alignment: Alignment.center,
