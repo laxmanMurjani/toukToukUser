@@ -206,19 +206,9 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
+
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    CustomAlertDialog dialog = CustomAlertDialog(
-      title: "Update App",
-      message: "This app new feature available in ${Platform.isAndroid ? "Play Store" : "App Store"}, please update app",
-      onPostivePressed: () async{
-        await _userController.sendUpdateApp();
-      },
-      onNegativePressed: (){Get.back();},
-      positiveBtnText: 'Update',
-      negativeBtnText: 'Cancel',
-      negativeButtonShow: !AppString.isForceCancleButtonShow!,
-      positiveButtonShow: true,);
     return Scaffold(
       backgroundColor: Colors.white,
       //AppColors.primaryColor,
@@ -237,7 +227,32 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
               ),
             ),
           ),
-          _userController.isUpdateApp.value ? dialog : SizedBox()
+          _userController.isUpdateApp.value ? CustomAlertDialog(
+            title: "Update App",
+            message: "This app new feature available in ${Platform.isAndroid ? "Play Store" : "App Store"}, please update app",
+            onPostivePressed: () async{
+              await _userController.sendUpdateApp();
+            },
+            onNegativePressed: (){
+              _userController.isUpdateApp.value = false;
+
+              setState(() {
+
+              });
+
+                if (_userController.userToken.value.accessToken != null) {
+                  _homeController.getUserLatLong();
+                  _userController.getUserProfileData();
+                } else {
+                  Get.off(() => LoginScreen());
+                }
+
+              // Navigator.pop(context);
+            },
+            positiveBtnText: 'Update',
+            negativeBtnText: 'Cancel',
+            negativeButtonShow: !AppString.isForceCancleButtonShow!,
+            positiveButtonShow: true,) : SizedBox()
           // Column(mainAxisAlignment: MainAxisAlignment.end,children: [
           //   Text('By',style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.white,),),
           //   Image.asset(AppImage.mozilitNameLogo,width: MediaQuery.of(context).size.width*0.7,),
@@ -247,5 +262,4 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
       ),
     );
   }
-
 }
