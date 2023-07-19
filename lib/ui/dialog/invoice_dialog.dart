@@ -168,7 +168,7 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                           "invoice".tr,
                           style: TextStyle(
                             color: AppColors.primaryColor,
-                            fontSize: 26.sp,
+                            fontSize: 22.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -177,6 +177,9 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                         //   AppImage.icInvoice,
                         //   height: 80.h,
                         // ),
+
+
+
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Container(
@@ -193,11 +196,12 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                 // _invoiceRow(
                                 //     label: "Distance Travelled",
                                 //     value: "${datum.bookingId ?? ""}"),
-                                if (travelTime > 0)
-                                  _invoiceRow(
-                                      label: "time-Taken".tr,
-                                      value: "${formatNumberWithCommas(travelTime.toInt())} Min(s)"),
-                                if (fixed > 0)
+                                // if (travelTime > 0)
+                                //   _invoiceRow(
+                                //       label: "time-Taken".tr,
+                                //       value: "${formatNumberWithCommas(travelTime.toInt())} Min(s)"),
+                                homeController.checkRequestResponseModel.value.userCategoryDiscount == "0" ?
+                                SizedBox():
                                   _invoiceRow(
                                       label: "base_fare".tr,
                                       value:
@@ -205,35 +209,35 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                       labelStyle: TextStyle(
                                         color: AppColors.primaryColor,
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 16.sp,
+                                        fontSize: 15.sp,
                                       ),
                                      valueStyle: TextStyle(
                                         color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15.sp,
                                       )
                                   ),
 
-                                if (timeFare > 0)
-                                  _invoiceRow(
-                                      label: "time_fare".tr,
-                                      value:
-                                          "${formatNumberWithCommas(timeFare.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                if (payment.distance != 0)
-                                  _invoiceRow(
-                                    label: "distance_fare".tr,
-                                    value:
-                                        "${formatNumberWithCommas(payment.distance.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
-                                  ),
+                                // if (timeFare > 0)
+                                //   _invoiceRow(
+                                //       label: "time_fare".tr,
+                                //       value:
+                                //           "${formatNumberWithCommas(timeFare.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                // if (payment.distance != 0)
+                                //   _invoiceRow(
+                                //     label: "distance_fare".tr,
+                                //     value:
+                                //         "${formatNumberWithCommas(payment.distance.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                //   ),
 
                                 // _invoiceRow(
                                 //     label: "Tax",
                                 //     value: "${datum.bookingId ?? ""}"),
-                                if (waitingAmount > 0)
-                                  _invoiceRow(
-                                      label: "waiting_amount".tr,
-                                      value:
-                                          "${formatNumberWithCommas(waitingAmount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                                // if (waitingAmount > 0)
+                                //   _invoiceRow(
+                                //       label: "waiting_amount".tr,
+                                //       value:
+                                //           "${formatNumberWithCommas(waitingAmount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
                                 if (homeController.checkRequestResponseModel.value.userCategoryDiscount != 0)
                                   homeController.checkRequestResponseModel.value.userCategoryDiscount == "0" ?
                                   SizedBox():
@@ -244,12 +248,12 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                       labelStyle: TextStyle(
                                         color: AppColors.primaryColor,
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 16.sp,
+                                        fontSize: 15.sp,
                                       ),
                                       valueStyle: TextStyle(
                                         color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15.sp,
                                       )
                                   ),
 
@@ -258,49 +262,49 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                 //       label: "toll_charges".tr,
                                 //       value:
                                 //           "${formatNumberWithCommas(tollCharges.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency }"),
-                                Visibility(
-                                  visible: false,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "tips".tr,
-                                        style: TextStyle(
-                                          color: AppColors.primaryColor,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 13.sp,
-                                        ),
-                                      ),
-                                      Expanded(child: Container()),
-                                      Text(
-                                        "${formatNumberWithCommas(payment.total.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
-                                        style: TextStyle(
-                                          color: AppColors.primaryColor,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 13.sp,
-                                        ),
-                                      ),
-                                      SizedBox(width: 5.w),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.w, vertical: 3.h),
-                                        decoration: BoxDecoration(
-                                            color: AppColors.primaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(5.r)),
-                                        child: Text(
-                                          "add_tip".tr,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                // Visibility(
+                                //   visible: false,
+                                //   child: Row(
+                                //     children: [
+                                //       Text(
+                                //         "tips".tr,
+                                //         style: TextStyle(
+                                //           color: AppColors.primaryColor,
+                                //           fontWeight: FontWeight.w700,
+                                //           fontSize: 13.sp,
+                                //         ),
+                                //       ),
+                                //       Expanded(child: Container()),
+                                //       Text(
+                                //         "${formatNumberWithCommas(payment.total.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                                //         style: TextStyle(
+                                //           color: AppColors.primaryColor,
+                                //           fontWeight: FontWeight.w700,
+                                //           fontSize: 13.sp,
+                                //         ),
+                                //       ),
+                                //       SizedBox(width: 5.w),
+                                //       Container(
+                                //         padding: EdgeInsets.symmetric(
+                                //             horizontal: 10.w, vertical: 3.h),
+                                //         decoration: BoxDecoration(
+                                //             color: AppColors.primaryColor,
+                                //             borderRadius:
+                                //                 BorderRadius.circular(5.r)),
+                                //         child: Text(
+                                //           "add_tip".tr,
+                                //           style: TextStyle(color: Colors.white),
+                                //         ),
+                                //       )
+                                //     ],
+                                //   ),
+                                // ),
                                 _invoiceRow(
                                     label: "total".tr,
                                     labelStyle: TextStyle(
                                       color: AppColors.primaryColor,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 23.sp,
+                                      fontSize: 18.sp,
                                     ),
                                     value:
                                   "${cont.checkRequestResponseModel.value.currency ?? ""} ${formatNumberWithCommas(payment.total.toInt()) ?? ""}",
@@ -313,53 +317,55 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                             ),
                           ),
                         ),
-                        if (payable > 0 ||
-                            walletDetection > 0 ||
-                            roundOff > 0 ||
-                            discount > 0) ...[
-                          // Divider(
-                          //   color: Colors.grey,
-                          //   indent: 30,
-                          //   endIndent: 30,
-                          // ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: Column(
-                              children: [
-                                // if (walletDetection > 0)
-                                //   _invoiceRow(
-                                //       label: "wallet_detection".tr,
-                                //       value:
-                                //           "${formatNumberWithCommas(walletDetection.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                // if (roundOff > 0)
-                                //   _invoiceRow(
-                                //       label: "round_off".tr,
-                                //       value:
-                                //           "${formatNumberWithCommas(roundOff.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                                // if (discount > 0)
-                                //   _invoiceRow(
-                                //       label: "discount".tr,
-                                //       value:
-                                //           "${formatNumberWithCommas(discount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
-                           // if (payable > 0)
-                           //        _invoiceRow(
-                           //            label: "payable".tr,
-                           //            labelStyle: TextStyle(
-                           //              color: AppColors.primaryColor,
-                           //              // fontWeight: FontWeight.w700,
-                           //              fontSize: 14.sp,
-                           //            ),
-                           //            value:
-                           //                "${formatNumberWithCommas(payment.payable.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
-                           //            valueStyle: TextStyle(
-                           //              color: AppColors.primaryColor,
-                           //              fontWeight: FontWeight.w500,
-                           //              fontSize: 14.sp,
-                           //            )),
-                              ],
-                            ),
-                          ),
-                        ],
+
+
+                        // if (payable > 0 ||
+                        //     walletDetection > 0 ||
+                        //     roundOff > 0 ||
+                        //     discount > 0) ...[
+                        //   // Divider(
+                        //   //   color: Colors.grey,
+                        //   //   indent: 30,
+                        //   //   endIndent: 30,
+                        //   // ),
+                        //   Padding(
+                        //     padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        //     child: Column(
+                        //       children: [
+                        //         // if (walletDetection > 0)
+                        //         //   _invoiceRow(
+                        //         //       label: "wallet_detection".tr,
+                        //         //       value:
+                        //         //           "${formatNumberWithCommas(walletDetection.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                        //         // if (roundOff > 0)
+                        //         //   _invoiceRow(
+                        //         //       label: "round_off".tr,
+                        //         //       value:
+                        //         //           "${formatNumberWithCommas(roundOff.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                        //         // if (discount > 0)
+                        //         //   _invoiceRow(
+                        //         //       label: "discount".tr,
+                        //         //       value:
+                        //         //           "${formatNumberWithCommas(discount.toInt())} ${cont.checkRequestResponseModel.value.currency ?? ""}"),
+                        //    // if (payable > 0)
+                        //    //        _invoiceRow(
+                        //    //            label: "payable".tr,
+                        //    //            labelStyle: TextStyle(
+                        //    //              color: AppColors.primaryColor,
+                        //    //              // fontWeight: FontWeight.w700,
+                        //    //              fontSize: 14.sp,
+                        //    //            ),
+                        //    //            value:
+                        //    //                "${formatNumberWithCommas(payment.payable.toInt()) ?? ""} ${cont.checkRequestResponseModel.value.currency ?? ""}",
+                        //    //            valueStyle: TextStyle(
+                        //    //              color: AppColors.primaryColor,
+                        //    //              fontWeight: FontWeight.w500,
+                        //    //              fontSize: 14.sp,
+                        //    //            )),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ],
                         // homeController.checkRequestResponseModel.value.userCategoryDiscount != "0"? SizedBox():  Divider(
                         //   color: Colors.grey,
                         //   indent: 30,
@@ -379,14 +385,14 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 15.sp,
+                                    fontSize: 14.sp,
                                   ),textAlign: TextAlign.center),
                               Text(
                                   "${cont.checkRequestResponseModel.value.donation.toString().split("#").last ?? ""} ",
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 15.sp,
+                                    fontSize: 14.sp,
                                   ),textAlign: TextAlign.center),
                               SizedBox(height: 10,),
                               Row(
