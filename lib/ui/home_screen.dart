@@ -226,7 +226,6 @@ class _HomeScreenState extends State<HomeScreen>
     // getCurrentLocation();
     FirebaseService.loginUpdateToken("");
     print("enter init home");
-
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
@@ -247,10 +246,15 @@ class _HomeScreenState extends State<HomeScreen>
       Future.delayed(
         Duration(seconds: 0),
         () async {
+          print( "{xsks==> ${_homeController.isStatusCheck.value}");
+          print( "xsks==> ${_homeController.isBackgroundStatusCheck.value}");
+
           if (_homeController.userCurrentLocation != null) {
             _homeController.updateLocation(
                 _homeController.userCurrentLocation!.latitude.toString(),
-                _homeController.userCurrentLocation!.longitude.toString());
+                _homeController.userCurrentLocation!.longitude.toString(),
+                _homeController.isStatusCheck.value ? "Online" : _homeController.isBackgroundStatusCheck.value ?"Background" : "Offline"
+            );
           }
           if (_homeController.userCurrentLocation != null) {
             print("checkEnter");
@@ -365,7 +369,6 @@ class _HomeScreenState extends State<HomeScreen>
         : SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return WillPopScope(
       onWillPop: () async {
-
         return false;
       },
       child: Scaffold(
@@ -795,12 +798,12 @@ class _HomeScreenState extends State<HomeScreen>
                                                                AppImage.bell,color: AppColors.white,
                                                                height: 30,
                                                                width: 30),
-                                                      Container(
-                                                              height: 20,width:20,
-                                                       decoration: BoxDecoration(color: Colors.red,shape:BoxShape.circle),
-                                                        alignment: Alignment.center,
-                                                         child: Text((5 - countNotification).toString(),style:TextStyle(color: AppColors.white),)
-                                                      )
+                                                      // Container(
+                                                      //         height: 20,width:20,
+                                                      //  decoration: BoxDecoration(color: Colors.red,shape:BoxShape.circle),
+                                                      //   alignment: Alignment.center,
+                                                      //    child: Text((5 - countNotification).toString(),style:TextStyle(color: AppColors.white),)
+                                                      // )
                                                          ])
 
                                                   ),
@@ -1585,9 +1588,9 @@ class _HomeScreenState extends State<HomeScreen>
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 child: Column(
                                   children: [
-                                    SizedBox(
-                                      height: 20.h,
-                                    ),
+                                    // SizedBox(
+                                    //   height: 20.h,
+                                    // ),
                                     // Divider(
                                     //   indent:
                                     //       MediaQuery.of(context).size.width * 0.3,
@@ -1606,6 +1609,178 @@ class _HomeScreenState extends State<HomeScreen>
                                             fontSize: 18),
                                       ),
                                     ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                      children: [
+                                        if (userCont.locationResponseModel.value
+                                            .home.isNotEmpty)
+                                          GestureDetector(
+                                            onTap: () async {
+                                              if (cont.userCurrentLocation !=
+                                                  null) {
+                                                if (_homeController
+                                                    .showDriverLocationList
+                                                    .isNotEmpty) {
+
+
+                                                  _homeController
+                                                      .getNearDriverTimeData(
+                                                      servicesModelID: "1");
+
+                                                }
+                                                setState(() {
+                                                  isDriverShow = false;
+                                                });
+                                                Home home = userCont
+                                                    .locationResponseModel
+                                                    .value
+                                                    .home
+                                                    .last;
+                                                cont.tempLatLngWhereTo1 =
+                                                    LatLng(home.latitude ?? 0,
+                                                        home.longitude ?? 0);
+                                                cont.tempLocationWhereTo1.text =
+                                                    home.address ?? "";
+                                                cont.selectedLocationDrawRoute();
+                                                isSubmit = false;
+                                                _shouldScaleDown = false;
+                                              } else {
+                                                Get.snackbar("Alert",
+                                                    "Please wait, your current location found",
+                                                    backgroundColor: Colors.red
+                                                        .withOpacity(0.8),
+                                                    colorText: Colors.white);
+                                              }
+                                            },
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Image.asset(AppImage.home,
+                                                    width: 40, height: 40),
+                                                SizedBox(height: 5),
+                                                Text(
+                                                  'home'.tr,
+                                                  style: TextStyle(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      fontSize: 13),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        if (userCont.locationResponseModel.value
+                                            .work.isNotEmpty)
+                                          GestureDetector(
+                                            onTap: () async {
+                                              if (cont.userCurrentLocation !=
+                                                  null) {
+                                                if (_homeController
+                                                    .showDriverLocationList
+                                                    .isNotEmpty) {
+
+                                                  _homeController.getNearDriverTimeData(servicesModelID: "1");
+
+                                                }
+                                                setState(() {
+                                                  isDriverShow = false;
+                                                });
+                                                Home home = userCont
+                                                    .locationResponseModel
+                                                    .value
+                                                    .work
+                                                    .last;
+                                                cont.tempLatLngWhereTo1 =
+                                                    LatLng(home.latitude ?? 0,
+                                                        home.longitude ?? 0);
+                                                cont.tempLocationWhereTo1.text =
+                                                    home.address ?? "";
+                                                cont.selectedLocationDrawRoute();
+                                                isSubmit = false;
+                                                _shouldScaleDown = false;
+                                              } else {
+                                                Get.snackbar("Alert",
+                                                    "Please wait, your current location found",
+                                                    backgroundColor: Colors.red
+                                                        .withOpacity(0.8),
+                                                    colorText: Colors.white);
+                                              }
+                                            },
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Image.asset(AppImage.work,
+                                                    width: 40, height: 40),
+                                                SizedBox(height: 5),
+                                                Text(
+                                                  'work'.tr,
+                                                  style: TextStyle(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      fontSize: 13),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        if (userCont.locationResponseModel.value
+                                            .others.isNotEmpty)
+                                          GestureDetector(
+                                            onTap: () async {
+                                              if (cont.userCurrentLocation !=
+                                                  null) {
+                                                if (_homeController
+                                                    .showDriverLocationList
+                                                    .isNotEmpty) {
+
+                                                  _homeController.getNearDriverTimeData(servicesModelID: "1");
+
+                                                }
+                                                setState(() {
+                                                  isDriverShow = false;
+                                                });
+                                                Home home = userCont
+                                                    .locationResponseModel
+                                                    .value
+                                                    .others
+                                                    .last;
+                                                cont.tempLatLngWhereTo1 =
+                                                    LatLng(home.latitude ?? 0,
+                                                        home.longitude ?? 0);
+                                                cont.tempLocationWhereTo1.text =
+                                                    home.address ?? "";
+                                                cont.selectedLocationDrawRoute();
+                                                isSubmit = false;
+                                                _shouldScaleDown = false;
+                                              } else {
+                                                Get.snackbar("Alert",
+                                                    "Please wait, your current location found",
+                                                    backgroundColor: Colors.red
+                                                        .withOpacity(0.8),
+                                                    colorText: Colors.white);
+                                              }
+                                            },
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Image.asset(AppImage.favorite,
+                                                    height: 40, width: 40),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  'other'.tr,
+                                                  style:
+                                                  TextStyle(fontSize: 12),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 15,),
                                     // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
                                     //   InkWell(
                                     //     onTap: () {
@@ -1718,177 +1893,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     //   ),
                                     // ],),
 
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        if (userCont.locationResponseModel.value
-                                            .home.isNotEmpty)
-                                          GestureDetector(
-                                            onTap: () async {
-                                              if (cont.userCurrentLocation !=
-                                                  null) {
-                                                if (_homeController
-                                                    .showDriverLocationList
-                                                    .isNotEmpty) {
 
-
-                                                      _homeController
-                                                          .getNearDriverTimeData(
-                                                          servicesModelID: "1");
-
-                                                }
-                                                setState(() {
-                                                  isDriverShow = false;
-                                                });
-                                                Home home = userCont
-                                                    .locationResponseModel
-                                                    .value
-                                                    .home
-                                                    .last;
-                                                cont.tempLatLngWhereTo1 =
-                                                    LatLng(home.latitude ?? 0,
-                                                        home.longitude ?? 0);
-                                                cont.tempLocationWhereTo1.text =
-                                                    home.address ?? "";
-                                                cont.selectedLocationDrawRoute();
-                                                isSubmit = false;
-                                                _shouldScaleDown = false;
-                                              } else {
-                                                Get.snackbar("Alert",
-                                                    "Please wait, your current location found",
-                                                    backgroundColor: Colors.red
-                                                        .withOpacity(0.8),
-                                                    colorText: Colors.white);
-                                              }
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Image.asset(AppImage.home,
-                                                    width: 40, height: 40),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  'home'.tr,
-                                                  style: TextStyle(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      fontSize: 13),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        if (userCont.locationResponseModel.value
-                                            .work.isNotEmpty)
-                                          GestureDetector(
-                                            onTap: () async {
-                                              if (cont.userCurrentLocation !=
-                                                  null) {
-                                                if (_homeController
-                                                    .showDriverLocationList
-                                                    .isNotEmpty) {
-
-                                                      _homeController.getNearDriverTimeData(servicesModelID: "1");
-
-                                                }
-                                                setState(() {
-                                                  isDriverShow = false;
-                                                });
-                                                Home home = userCont
-                                                    .locationResponseModel
-                                                    .value
-                                                    .work
-                                                    .last;
-                                                cont.tempLatLngWhereTo1 =
-                                                    LatLng(home.latitude ?? 0,
-                                                        home.longitude ?? 0);
-                                                cont.tempLocationWhereTo1.text =
-                                                    home.address ?? "";
-                                                cont.selectedLocationDrawRoute();
-                                                isSubmit = false;
-                                                _shouldScaleDown = false;
-                                              } else {
-                                                Get.snackbar("Alert",
-                                                    "Please wait, your current location found",
-                                                    backgroundColor: Colors.red
-                                                        .withOpacity(0.8),
-                                                    colorText: Colors.white);
-                                              }
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Image.asset(AppImage.work,
-                                                    width: 40, height: 40),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  'work'.tr,
-                                                  style: TextStyle(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      fontSize: 13),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        if (userCont.locationResponseModel.value
-                                            .others.isNotEmpty)
-                                          GestureDetector(
-                                            onTap: () async {
-                                              if (cont.userCurrentLocation !=
-                                                  null) {
-                                                if (_homeController
-                                                    .showDriverLocationList
-                                                    .isNotEmpty) {
-
-                                                      _homeController.getNearDriverTimeData(servicesModelID: "1");
-
-                                                }
-                                                setState(() {
-                                                  isDriverShow = false;
-                                                });
-                                                Home home = userCont
-                                                    .locationResponseModel
-                                                    .value
-                                                    .others
-                                                    .last;
-                                                cont.tempLatLngWhereTo1 =
-                                                    LatLng(home.latitude ?? 0,
-                                                        home.longitude ?? 0);
-                                                cont.tempLocationWhereTo1.text =
-                                                    home.address ?? "";
-                                                cont.selectedLocationDrawRoute();
-                                                isSubmit = false;
-                                                _shouldScaleDown = false;
-                                              } else {
-                                                Get.snackbar("Alert",
-                                                    "Please wait, your current location found",
-                                                    backgroundColor: Colors.red
-                                                        .withOpacity(0.8),
-                                                    colorText: Colors.white);
-                                              }
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Image.asset(AppImage.favorite,
-                                                    height: 40, width: 40),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  'other'.tr,
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                      ],
-                                    ),
                                     SizedBox(
                                       height:(userCont.locationResponseModel.value.home.isEmpty
                                       || userCont.locationResponseModel.value.work.isEmpty ||
@@ -5444,16 +5449,21 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
-
+    print('status checkdd ===> ${state}');
     switch (state) {
       case AppLifecycleState.resumed:
+        _homeController.isStatusCheck.value = true;
+        _homeController.isBackgroundStatusCheck.value = false;
         if (_homeController.googleMapController != null) {
           _homeController.googleMapController?.setMapStyle("[]");
         }
+        print('reaumed status');
         // FlutterOverlayWindow.closeOverlay()
         //     .then((value) => log('STOPPED: alue: $value'));
         break;
       case AppLifecycleState.inactive:
+        _homeController.isStatusCheck.value = false;
+        _homeController.isBackgroundStatusCheck.value = true;
         // print('statusIsInactive');
         // if (await FlutterOverlayWindow.isActive()) return;
         // await FlutterOverlayWindow.showOverlay(
@@ -5468,8 +5478,14 @@ class _HomeScreenState extends State<HomeScreen>
         // );
         break;
       case AppLifecycleState.paused:
+        _homeController.isStatusCheck.value = false;
+        _homeController.isBackgroundStatusCheck.value = true;
+        print('paused status');
         break;
       case AppLifecycleState.detached:
+        print('detached status');
+        _homeController.isStatusCheck.value = false;
+        _homeController.isBackgroundStatusCheck.value = false;
         break;
     }
   }

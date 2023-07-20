@@ -40,6 +40,8 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     super.initState();
     _userController.setLanguage();
 
+    _homeController.isStatusCheck.value = true;
+
 
     if(!AppString.testing_version_code_check_dialog!){
       if(Platform.isAndroid){
@@ -62,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
           });
         }}
       else{
-        if(int.parse(AppString.detectUserIosBuildNumber!) <= int.parse(AppString.firebaseUserIosBuildNumber!) &&
+        if(int.parse(AppString.detectUserIosBuildNumber!) < int.parse(AppString.firebaseUserIosBuildNumber!) &&
             int.parse(AppString.detectUserIosVersionCode!) <= int.parse(AppString.detectUserIosVersionCode!)){
           _userController.isUpdateApp.value = true;
         } else{

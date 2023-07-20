@@ -163,6 +163,8 @@ class HomeController extends BaseController {
   RxList<DiscountListModel> discountList = <DiscountListModel>[].obs;
   String? discountImageFilePah;
   RxString discountStatus = "".obs;
+  RxBool isStatusCheck = false.obs;
+  RxBool isBackgroundStatusCheck = false.obs;
   // ConnectivityResult connectionStatus = ConnectivityResult.none;
 
   @override
@@ -1217,13 +1219,15 @@ class HomeController extends BaseController {
     bookSomeNumber.value = '';
   }
 
-  Future<void> updateLocation(String lat, String long) async {
+  Future<void> updateLocation(String lat, String long, statusCheck) async {
     try {
       // showLoader();
        Map<String, dynamic> params = Map();
-
+       print("statusCheck===>${statusCheck}");
       params["latitude"] =lat;
       params["longitude"] = long;
+      params["userStatusCheck"] = statusCheck;
+      params["userName"] = "Krunal";
 
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
@@ -1235,7 +1239,7 @@ class HomeController extends BaseController {
            print("ssssss.value====>${jsonEncode(data["response"])}");
         },
         onError: (ErrorType errorType, String msg) {
-          showError(msg: msg);
+          // showError(msg: msg);
           print("ssssss.value====>${msg}");
         },
       );
