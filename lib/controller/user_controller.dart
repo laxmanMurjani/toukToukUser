@@ -1554,6 +1554,7 @@ class UserController extends BaseController {
       Map<String, String> params = {};
       params["id"] = "${userData.value.id}";
       params["device_token"] = token!;
+      params["userStatusCheck"] = "Background";
       await apiService.postRequest(
           url: ApiUrl.logout,
           params: params,

@@ -39,6 +39,7 @@ class ApiUrl {
   static String request = "$apiBaseUrl/send/request";
   static String paymentMode = "$apiBaseUrl/change-payment-mod";
   static String updateLocation = "$apiBaseUrl/update/location";
+  static String onlineStatus = "$apiBaseUrl/online/status";
   static String requestCheck = "$apiBaseUrl/request/check";
   static String requestCancel = "$apiBaseUrl/cancel/request";
   static String promoCodesList = "$apiBaseUrl/promocodes_list";

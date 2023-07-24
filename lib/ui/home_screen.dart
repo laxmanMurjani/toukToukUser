@@ -114,6 +114,7 @@ class _HomeScreenState extends State<HomeScreen>
   bool _shouldScaleDown = false;
   Timer? _requestTimer;
   Timer? _requestTimerForNotification;
+  Timer? checkOnlineStatus;
   String totalRidesNumber = '';
   String chetUnRead = '0';
   final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
@@ -253,8 +254,7 @@ class _HomeScreenState extends State<HomeScreen>
             _homeController.updateLocation(
                 _homeController.userCurrentLocation!.latitude.toString(),
                 _homeController.userCurrentLocation!.longitude.toString(),
-                _homeController.isStatusCheck.value ? "Online" : _homeController.isBackgroundStatusCheck.value ?"Background" : "Offline"
-            );
+                 );
           }
           if (_homeController.userCurrentLocation != null) {
             print("checkEnter");
@@ -334,10 +334,6 @@ class _HomeScreenState extends State<HomeScreen>
     _requestTimerForNotification = Timer.periodic(Duration(seconds: 10), (_) async {
       await _homeController.checkRequest();
 
-
-
-
-
       // Future.delayed(Duration.zero,()async{
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //   countNotification =  (await prefs.getInt('notificationCount'))!;
@@ -350,6 +346,8 @@ class _HomeScreenState extends State<HomeScreen>
 
     });
 
+    checkOnlineStatus = Timer.periodic(Duration(seconds: 1), (_) async {
+       _homeController.onlineStatusCheck(_homeController.isStatusCheck.value ? "Online" : _homeController.isBackgroundStatusCheck.value ?"Background" : "Offline"); });
 
   }
 
@@ -5442,6 +5440,7 @@ class _HomeScreenState extends State<HomeScreen>
     WidgetsBinding.instance.removeObserver(this);
     _requestTimer?.cancel();
     _requestTimerForNotification?.cancel();
+    checkOnlineStatus?.cancel();
     // _connectivitySubscription.cancel();
     super.dispose();
   }

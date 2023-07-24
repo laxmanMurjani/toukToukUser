@@ -581,7 +581,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                   InkWell(
                     onTap: () {
-                      _showLogoutDialog();
+        _showLogoutDialog();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

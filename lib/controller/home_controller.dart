@@ -1219,15 +1219,13 @@ class HomeController extends BaseController {
     bookSomeNumber.value = '';
   }
 
-  Future<void> updateLocation(String lat, String long, statusCheck) async {
+  Future<void> updateLocation(String lat, String long) async {
     try {
       // showLoader();
        Map<String, dynamic> params = Map();
-       print("statusCheck===>${statusCheck}");
+
       params["latitude"] =lat;
       params["longitude"] = long;
-      params["userStatusCheck"] = statusCheck;
-      params["userName"] = "Krunal";
 
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
@@ -1237,6 +1235,35 @@ class HomeController extends BaseController {
           // dismissLoader();
           // paymentModeModel.value = paymentModeModelFromJson(jsonEncode(data["response"]));
            print("ssssss.value====>${jsonEncode(data["response"])}");
+        },
+        onError: (ErrorType errorType, String msg) {
+          // showError(msg: msg);
+          print("ssssss.value====>${msg}");
+        },
+      );
+    } catch (e) {
+      // showError(msg: e.toString());
+    }
+    bookSomeNumber.value = '';
+  }
+
+  Future<void> onlineStatusCheck(statusCheck) async {
+    try {
+      // showLoader();
+       Map<String, dynamic> params = Map();
+       print("statusCheck===>${statusCheck}");
+
+      params["userStatusCheck"] = statusCheck;
+      params["name"] = "krunal";
+
+      await apiService.postRequest(
+        // url: "${ApiUrl.request}?${queryString}",
+        url: "${ApiUrl.onlineStatus}",
+        params: params,
+        onSuccess: (Map<String, dynamic> data) {
+          // dismissLoader();
+          // paymentModeModel.value = paymentModeModelFromJson(jsonEncode(data["response"]));
+           print("ssssss.valssue====>${jsonEncode(data["response"])}");
         },
         onError: (ErrorType errorType, String msg) {
           // showError(msg: msg);
