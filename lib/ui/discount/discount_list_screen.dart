@@ -30,9 +30,9 @@ class _DiscountListPageState extends State<DiscountListPage> {
 
   @override
   initState() {
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-    //   await homeCont.getDiscountList();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await homeController.getDiscountList();
+    });
 
     super.initState();
     // discountId = homeCont.checkRequestResponseModel.value.userCategoryDiscount_id.toString();

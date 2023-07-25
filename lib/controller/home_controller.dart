@@ -1254,7 +1254,6 @@ class HomeController extends BaseController {
        print("statusCheck===>${statusCheck}");
 
       params["userStatusCheck"] = statusCheck;
-      params["name"] = "krunal";
 
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",

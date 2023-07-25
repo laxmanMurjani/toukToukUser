@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:etoUser/ui/discount/discount_list_screen.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:etoUser/ui/drawer_srceen/help_screen.dart';
 import 'package:etoUser/ui/widget/verifiedScreen.dart';
@@ -1525,964 +1526,974 @@ class _HomeScreenState extends State<HomeScreen>
                                       .isEmpty &&
                                   userCont.locationResponseModel.value.others
                                       .isEmpty)
-                              ? 0.33 //0.38
-                              : 0.4, //0.38,
+                              ? 0.46 //0.38
+                              : 0.53, //0.38,
                       minChildSize:
                           (userCont.locationResponseModel.value.home.isEmpty &&
                                   userCont.locationResponseModel.value.work
                                       .isEmpty &&
                                   userCont.locationResponseModel.value.others
                                       .isEmpty)
-                              ? 0.33 //0.38
-                              : 0.4, //0.38,
+                              ? 0.46 //0.38
+                              : 0.53, //0.38,
                       maxChildSize: .6,
                       builder: (BuildContext context,
                           ScrollController scrollController) {
-                        return Container(
-                            child: ListView(
+                        return Column(
                           children: [
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 22),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    determinePosition();
-                                  },
-                                  child:  Container(
-                                    margin: EdgeInsets.only(right: 10),
-                                    height: 35.w,
-                                    width: 35.w,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle),
-                                    child: Image.asset(AppImage.point,
-                                        width: 23, height: 23),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 22),
+                            child: GestureDetector(
+                              onTap: () {
+                                determinePosition();
+                              },
+                              child:  Container(
+                                margin: EdgeInsets.only(right: 10),
+                                height: 35.w,
+                                width: 35.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle),
+                                child: Image.asset(AppImage.point,
+                                    width: 23, height: 23),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Container(
+                          height: (userCont.locationResponseModel.value.home
+                                      .isEmpty &&
+                                  userCont.locationResponseModel.value.work
+                                      .isEmpty &&
+                                  userCont.locationResponseModel.value
+                                      .others.isEmpty)
+                              ? MediaQuery.of(context).size.height * 0.4 //0.3
+                              : MediaQuery.of(context).size.height * 0.47, //0.3,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(40.0),
+                              topLeft: Radius.circular(40.0),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              // SizedBox(
+                              //   height: 20.h,
+                              // ),
+                              // Divider(
+                              //   indent:
+                              //       MediaQuery.of(context).size.width * 0.3,
+                              //   endIndent:
+                              //       MediaQuery.of(context).size.width * 0.3,
+                              //   thickness: 1,
+                              // ),
+                              Column(
+                                children: [
+                                  SizedBox(height: 20,),
+                                  Text(
+                                    'What service do you need?'.tr,
+                                    style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18),
                                   ),
-                                ),
+                                  Text(
+                                    'Taxi or delivery, We have got you covered'.tr,
+                                    style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 13),
+                                  ),
+                                ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            Container(
-                              height: (userCont.locationResponseModel.value.home
-                                          .isEmpty &&
-                                      userCont.locationResponseModel.value.work
-                                          .isEmpty &&
-                                      userCont.locationResponseModel.value
-                                          .others.isEmpty)
-                                  ? MediaQuery.of(context).size.height * 0.24 //0.3
-                                  : MediaQuery.of(context).size.height * 0.32, //0.3,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(40.0),
-                                  topLeft: Radius.circular(40.0),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Column(
-                                  children: [
-                                    // SizedBox(
-                                    //   height: 20.h,
-                                    // ),
-                                    // Divider(
-                                    //   indent:
-                                    //       MediaQuery.of(context).size.width * 0.3,
-                                    //   endIndent:
-                                    //       MediaQuery.of(context).size.width * 0.3,
-                                    //   thickness: 1,
-                                    // ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 20),
-                                      child: Text(
-                                        'where_would-you_like_to_go?'.tr,
-                                        style: TextStyle(
-                                            color: AppColors.primaryColor,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 18),
+                              SizedBox(height: 10,),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceAround,
+                                children: [
+                                  if (userCont.locationResponseModel.value
+                                      .home.isNotEmpty)
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (cont.userCurrentLocation !=
+                                            null) {
+                                          if (_homeController
+                                              .showDriverLocationList
+                                              .isNotEmpty) {
+
+
+                                            _homeController
+                                                .getNearDriverTimeData(
+                                                servicesModelID: "1");
+
+                                          }
+                                          setState(() {
+                                            isDriverShow = false;
+                                          });
+                                          Home home = userCont
+                                              .locationResponseModel
+                                              .value
+                                              .home
+                                              .last;
+                                          cont.tempLatLngWhereTo1 =
+                                              LatLng(home.latitude ?? 0,
+                                                  home.longitude ?? 0);
+                                          cont.tempLocationWhereTo1.text =
+                                              home.address ?? "";
+                                          cont.selectedLocationDrawRoute();
+                                          isSubmit = false;
+                                          _shouldScaleDown = false;
+                                        } else {
+                                          Get.snackbar("Alert",
+                                              "Please wait, your current location found",
+                                              backgroundColor: Colors.red
+                                                  .withOpacity(0.8),
+                                              colorText: Colors.white);
+                                        }
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Image.asset(AppImage.home,
+                                              width: 40, height: 40),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            'home'.tr,
+                                            style: TextStyle(
+                                                color: AppColors
+                                                    .primaryColor,
+                                                fontSize: 13),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                      children: [
-                                        if (userCont.locationResponseModel.value
-                                            .home.isNotEmpty)
-                                          GestureDetector(
-                                            onTap: () async {
-                                              if (cont.userCurrentLocation !=
-                                                  null) {
-                                                if (_homeController
-                                                    .showDriverLocationList
-                                                    .isNotEmpty) {
+                                  if (userCont.locationResponseModel.value
+                                      .work.isNotEmpty)
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (cont.userCurrentLocation !=
+                                            null) {
+                                          if (_homeController
+                                              .showDriverLocationList
+                                              .isNotEmpty) {
 
+                                            _homeController.getNearDriverTimeData(servicesModelID: "1");
 
-                                                  _homeController
-                                                      .getNearDriverTimeData(
-                                                      servicesModelID: "1");
-
-                                                }
-                                                setState(() {
-                                                  isDriverShow = false;
-                                                });
-                                                Home home = userCont
-                                                    .locationResponseModel
-                                                    .value
-                                                    .home
-                                                    .last;
-                                                cont.tempLatLngWhereTo1 =
-                                                    LatLng(home.latitude ?? 0,
-                                                        home.longitude ?? 0);
-                                                cont.tempLocationWhereTo1.text =
-                                                    home.address ?? "";
-                                                cont.selectedLocationDrawRoute();
-                                                isSubmit = false;
-                                                _shouldScaleDown = false;
-                                              } else {
-                                                Get.snackbar("Alert",
-                                                    "Please wait, your current location found",
-                                                    backgroundColor: Colors.red
-                                                        .withOpacity(0.8),
-                                                    colorText: Colors.white);
-                                              }
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Image.asset(AppImage.home,
-                                                    width: 40, height: 40),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  'home'.tr,
-                                                  style: TextStyle(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      fontSize: 13),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        if (userCont.locationResponseModel.value
-                                            .work.isNotEmpty)
-                                          GestureDetector(
-                                            onTap: () async {
-                                              if (cont.userCurrentLocation !=
-                                                  null) {
-                                                if (_homeController
-                                                    .showDriverLocationList
-                                                    .isNotEmpty) {
-
-                                                  _homeController.getNearDriverTimeData(servicesModelID: "1");
-
-                                                }
-                                                setState(() {
-                                                  isDriverShow = false;
-                                                });
-                                                Home home = userCont
-                                                    .locationResponseModel
-                                                    .value
-                                                    .work
-                                                    .last;
-                                                cont.tempLatLngWhereTo1 =
-                                                    LatLng(home.latitude ?? 0,
-                                                        home.longitude ?? 0);
-                                                cont.tempLocationWhereTo1.text =
-                                                    home.address ?? "";
-                                                cont.selectedLocationDrawRoute();
-                                                isSubmit = false;
-                                                _shouldScaleDown = false;
-                                              } else {
-                                                Get.snackbar("Alert",
-                                                    "Please wait, your current location found",
-                                                    backgroundColor: Colors.red
-                                                        .withOpacity(0.8),
-                                                    colorText: Colors.white);
-                                              }
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Image.asset(AppImage.work,
-                                                    width: 40, height: 40),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  'work'.tr,
-                                                  style: TextStyle(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      fontSize: 13),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        if (userCont.locationResponseModel.value
-                                            .others.isNotEmpty)
-                                          GestureDetector(
-                                            onTap: () async {
-                                              if (cont.userCurrentLocation !=
-                                                  null) {
-                                                if (_homeController
-                                                    .showDriverLocationList
-                                                    .isNotEmpty) {
-
-                                                  _homeController.getNearDriverTimeData(servicesModelID: "1");
-
-                                                }
-                                                setState(() {
-                                                  isDriverShow = false;
-                                                });
-                                                Home home = userCont
-                                                    .locationResponseModel
-                                                    .value
-                                                    .others
-                                                    .last;
-                                                cont.tempLatLngWhereTo1 =
-                                                    LatLng(home.latitude ?? 0,
-                                                        home.longitude ?? 0);
-                                                cont.tempLocationWhereTo1.text =
-                                                    home.address ?? "";
-                                                cont.selectedLocationDrawRoute();
-                                                isSubmit = false;
-                                                _shouldScaleDown = false;
-                                              } else {
-                                                Get.snackbar("Alert",
-                                                    "Please wait, your current location found",
-                                                    backgroundColor: Colors.red
-                                                        .withOpacity(0.8),
-                                                    colorText: Colors.white);
-                                              }
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Image.asset(AppImage.favorite,
-                                                    height: 40, width: 40),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  'other'.tr,
-                                                  style:
-                                                  TextStyle(fontSize: 12),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                      ],
+                                          }
+                                          setState(() {
+                                            isDriverShow = false;
+                                          });
+                                          Home home = userCont
+                                              .locationResponseModel
+                                              .value
+                                              .work
+                                              .last;
+                                          cont.tempLatLngWhereTo1 =
+                                              LatLng(home.latitude ?? 0,
+                                                  home.longitude ?? 0);
+                                          cont.tempLocationWhereTo1.text =
+                                              home.address ?? "";
+                                          cont.selectedLocationDrawRoute();
+                                          isSubmit = false;
+                                          _shouldScaleDown = false;
+                                        } else {
+                                          Get.snackbar("Alert",
+                                              "Please wait, your current location found",
+                                              backgroundColor: Colors.red
+                                                  .withOpacity(0.8),
+                                              colorText: Colors.white);
+                                        }
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Image.asset(AppImage.work,
+                                              width: 40, height: 40),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            'work'.tr,
+                                            style: TextStyle(
+                                                color: AppColors
+                                                    .primaryColor,
+                                                fontSize: 13),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                    SizedBox(height: 15,),
-                                    // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
-                                    //   InkWell(
-                                    //     onTap: () {
-                                    //       print('tap other');
-                                    //       cont.isRideSelected.value = true;
-                                    //
-                                    //       Get.to(
-                                    //             () => LocationScreen(
-                                    //           isRideLocationUpdate: false,
-                                    //         ),
-                                    //       );
-                                    //     },
-                                    //     child: Card(
-                                    //       shape: RoundedRectangleBorder(
-                                    //           borderRadius:
-                                    //           BorderRadius.circular(10.r)),
-                                    //       child: Container(
-                                    //           padding: EdgeInsets.all(7),
-                                    //           height: 84.h,
-                                    //           width: 101.w,
-                                    //           decoration: BoxDecoration(
-                                    //               boxShadow: [
-                                    //                 BoxShadow(
-                                    //                     color:
-                                    //                     Color(0x25000000),
-                                    //                     offset: Offset(0, 4.h),
-                                    //                     blurRadius: 2),
-                                    //               ],
-                                    //               color: Colors.white,
-                                    //               borderRadius:
-                                    //               BorderRadius.circular(
-                                    //                   10)),
-                                    //           child: Column(
-                                    //             mainAxisAlignment:
-                                    //             MainAxisAlignment
-                                    //                 .spaceAround,
-                                    //             children: [
-                                    //               Image.asset(
-                                    //                 AppImage.ride_icon,
-                                    //                 height: 47.h,
-                                    //                 width: 38.w,
-                                    //                 // Icons.home,
-                                    //               ),
-                                    //               AutoSizeText(
-                                    //                 'ride'.tr,
-                                    //                 style: TextStyle(
-                                    //                     color: AppColors
-                                    //                         .primaryColor,
-                                    //                     fontSize: 14.sp),
-                                    //                 maxLines: 1,
-                                    //               )
-                                    //             ],
-                                    //           )),
-                                    //     ),
-                                    //   ),
-                                    //   InkWell(
-                                    //     onTap: () {
-                                    //       print('tap other');
-                                    //       cont.isRideSelected.value = false;
-                                    //
-                                    //       Get.to(
-                                    //             () => LocationScreen(
-                                    //           isRideLocationUpdate: false,
-                                    //         ),
-                                    //       );
-                                    //     },
-                                    //     child: Card(
-                                    //       shape: RoundedRectangleBorder(
-                                    //           borderRadius:
-                                    //           BorderRadius.circular(10.r)),
-                                    //       child: Container(
-                                    //           padding: EdgeInsets.fromLTRB(
-                                    //               7, 15, 7, 7),
-                                    //           height: 84.h,
-                                    //           width: 101.w,
-                                    //           decoration: BoxDecoration(
-                                    //               boxShadow: [
-                                    //                 BoxShadow(
-                                    //                     color:
-                                    //                     Color(0x25000000),
-                                    //                     offset: Offset(0, 4.h),
-                                    //                     blurRadius: 2),
-                                    //               ],
-                                    //               color: Colors.white,
-                                    //               borderRadius:
-                                    //               BorderRadius.circular(
-                                    //                   10.r)),
-                                    //           child: Column(
-                                    //             mainAxisAlignment:
-                                    //             MainAxisAlignment
-                                    //                 .spaceAround,
-                                    //             children: [
-                                    //               Image.asset(
-                                    //                 AppImage.parcle_icon,
-                                    //                 height: 38.h,
-                                    //                 width: 47.w,
-                                    //                 // Icons.home,
-                                    //               ),
-                                    //               AutoSizeText(
-                                    //                 'parcel'.tr,
-                                    //                 style: TextStyle(
-                                    //                     color: AppColors
-                                    //                         .primaryColor,
-                                    //                     fontSize: 14.sp),
-                                    //                 maxLines: 1,
-                                    //               )
-                                    //             ],
-                                    //           )),
-                                    //     ),
-                                    //   ),
-                                    // ],),
+                                  if (userCont.locationResponseModel.value
+                                      .others.isNotEmpty)
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (cont.userCurrentLocation !=
+                                            null) {
+                                          if (_homeController
+                                              .showDriverLocationList
+                                              .isNotEmpty) {
 
+                                            _homeController.getNearDriverTimeData(servicesModelID: "1");
 
-                                    SizedBox(
-                                      height:(userCont.locationResponseModel.value.home.isEmpty
-                                      || userCont.locationResponseModel.value.work.isEmpty ||
-                                          userCont.locationResponseModel.value.others.isEmpty
-                                      ) ? 0: 10,
-                                    ),
-                                    // Container(
-                                    //   decoration: BoxDecoration(
-                                    //     color: Colors.grey[100],
-                                    //     borderRadius: BorderRadius.circular(10),
-                                    //   ),
-                                    //   child: const TextField(
-                                    //     decoration: InputDecoration(
-                                    //       prefixIcon: Icon(Icons.search),
-                                    //       // labelText: "Enter Destination",
-                                    //       hintText: "Enter Destination",
-                                    //       enabledBorder: OutlineInputBorder(
-                                    //         borderRadius: BorderRadius.all(
-                                    //             Radius.circular(20.0)),
-                                    //         borderSide: BorderSide(
-                                    //           color: Colors.grey,
-                                    //         ),
-                                    //       ),
-                                    //       focusedBorder: OutlineInputBorder(
-                                    //         borderRadius: BorderRadius.all(
-                                    //             Radius.circular(10.0)),
-                                    //         borderSide:
-                                    //             BorderSide(color: Colors.grey),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // if (userCont.locationResponseModel
-                                        //         .value.home.isNotEmpty ||
-                                        //     userCont.locationResponseModel
-                                        //         .value.work.isNotEmpty)
-                                        // Row(
-                                        //   mainAxisAlignment:
-                                        //       MainAxisAlignment.spaceEvenly,
-                                        //   children: [
-                                        //       if (userCont
-                                        //           .locationResponseModel
-                                        //           .value
-                                        //           .home
-                                        //           .isNotEmpty)
-                                        //         GestureDetector(
-                                        //           onTap: () {
-                                        //             Home home = userCont
-                                        //                 .locationResponseModel
-                                        //                 .value
-                                        //                 .home[0];
-                                        //             cont.tempLatLngWhereTo1 =
-                                        //                 LatLng(
-                                        //                     home.latitude ??
-                                        //                         0,
-                                        //                     home.longitude ??
-                                        //                         0);
-                                        //             cont.tempLocationWhereTo1
-                                        //                     .text =
-                                        //                 home.address ?? "";
-                                        //             cont.selectedLocationDrawRoute();
-                                        //             isSubmit = false;
-                                        //             _shouldScaleDown = false;
-                                        //           },
-                                        //           child: Column(
-                                        //             children: [
-                                        //               Container(
-                                        //                 height: 40.w,
-                                        //                 width: 40.w,
-                                        //                 decoration:
-                                        //                     BoxDecoration(
-                                        //                   color: Colors.white,
-                                        //                   border: Border.all(
-                                        //                       color: Colors
-                                        //                           .grey),
-                                        //                   shape:
-                                        //                       BoxShape.circle,
-                                        //                 ),
-                                        //                 child: Center(
-                                        //                   child: Image.asset(
-                                        //                     AppImage.icHome,
-                                        //                     height: 23.w,
-                                        //                   ),
-                                        //                 ),
-                                        //               ),
-                                        //               Text(
-                                        //                 "home".tr,
-                                        //                 style: TextStyle(
-                                        //                     color:
-                                        //                         Colors.black,
-                                        //                     fontWeight:
-                                        //                         FontWeight
-                                        //                             .w500,
-                                        //                     fontSize: 12.sp),
-                                        //               ),
-                                        //             ],
-                                        //           ),
-                                        //         ),
-                                        //       if (userCont
-                                        //           .locationResponseModel
-                                        //           .value
-                                        //           .work
-                                        //           .isNotEmpty)
-                                        //         GestureDetector(
-                                        //           onTap: () {
-                                        //             Home home = userCont
-                                        //                 .locationResponseModel
-                                        //                 .value
-                                        //                 .work[0];
-                                        //             cont.tempLatLngWhereTo1 =
-                                        //                 LatLng(
-                                        //                     home.latitude ??
-                                        //                         0,
-                                        //                     home.longitude ??
-                                        //                         0);
-                                        //             cont.tempLocationWhereTo1
-                                        //                     .text =
-                                        //                 home.address ?? "";
-                                        //             cont.selectedLocationDrawRoute();
-                                        //             isSubmit = false;
-                                        //             _shouldScaleDown = false;
-                                        //           },
-                                        //           child: Column(
-                                        //             children: [
-                                        //               Container(
-                                        //                 height: 40.w,
-                                        //                 width: 40.w,
-                                        //                 decoration:
-                                        //                     BoxDecoration(
-                                        //                   color: Colors.white,
-                                        //                   border: Border.all(
-                                        //                       color: Colors
-                                        //                           .grey),
-                                        //                   shape:
-                                        //                       BoxShape.circle,
-                                        //                 ),
-                                        //                 child: Center(
-                                        //                   child: Image.asset(
-                                        //                     AppImage.icWork,
-                                        //                     height: 23.w,
-                                        //                   ),
-                                        //                 ),
-                                        //               ),
-                                        //               Text(
-                                        //                 "work".tr,
-                                        //                 style: TextStyle(
-                                        //                   color: AppColors.primaryColor,
-                                        //                   fontWeight:
-                                        //                       FontWeight.w500,
-                                        //                   fontSize: 12.sp,
-                                        //                 ),
-                                        //               ),
-                                        //             ],
-                                        //           ),
-                                        //         ),
-                                        //     ],
-                                        //   ),
-                                        // SizedBox(height: 5.h),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Get.to(
-                                                      () => LocationScreen());
-                                                  isSubmit = false;
-                                                  _shouldScaleDown = false;
-                                                },
-                                                child: Container(
-                                                    // height: 55.h,
-                                                    // padding:
-                                                    //     EdgeInsets.symmetric(
-                                                    //   horizontal: 20.w,
-                                                    //   vertical: 10.h,
-                                                    // ),
-                                                    // alignment:
-                                                    //     Alignment.center,
-                                                    // width: double.infinity,
-                                                    // decoration: BoxDecoration(
-                                                    //   color: Colors.grey[200],
-                                                    //   borderRadius:
-                                                    //       BorderRadius
-                                                    //           .circular(10.r),
-                                                    // boxShadow: [
-                                                    //   BoxShadow(
-                                                    //     color: AppColors.primaryColor
-                                                    //         .withOpacity(0.06),
-                                                    //     offset: Offset(0, 12.h),
-                                                    //     blurRadius: 10.r,
-                                                    //   )
-                                                    // ],
-                                                    // ),
-                                                    // child:
-                                                    // TextField(
-                                                    //   controller:
-                                                    //       cont.locationFromTo,
-                                                    //   style: TextStyle(
-                                                    //     color: AppColors.primaryColor,
-                                                    //     fontSize: 14.sp,
-                                                    //     fontWeight:
-                                                    //         FontWeight.w400,
-                                                    //   ),
-                                                    //   decoration:
-                                                    //       InputDecoration(
-                                                    //           hintText:
-                                                    //               "from_to"
-                                                    //                   .tr,
-                                                    //           isDense: true,
-                                                    //           contentPadding:
-                                                    //               EdgeInsets
-                                                    //                   .zero,
-                                                    //           border:
-                                                    //               InputBorder
-                                                    //                   .none,
-                                                    //           prefixIcon:
-                                                    //               Icon(
-                                                    //             Icons
-                                                    //                 .location_on,
-                                                    //             color: Colors
-                                                    //                 .black,
-                                                    //             size: 25,
-                                                    //           ),
-                                                    //           hintStyle:
-                                                    //               TextStyle(
-                                                    //             color: Colors
-                                                    //                 .black,
-                                                    //             fontSize:
-                                                    //                 14.sp,
-                                                    //             fontWeight:
-                                                    //                 FontWeight
-                                                    //                     .w500,
-                                                    //           )),
-                                                    //   minLines: 1,
-                                                    //   maxLines: 2,
-                                                    //   readOnly: true,
-                                                    //   enabled: false,
-                                                    // ),
-                                                    ),
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.w),
-                                            // GestureDetector(
-                                            //   onTap: () {
-                                            //     determinePosition();
-                                            //   },
-                                            //   child: Container(
-                                            //     height: 40.w,
-                                            //     width: 40.w,
-                                            //     decoration: BoxDecoration(
-                                            //         color: Colors.white,
-                                            //         borderRadius:
-                                            //             BorderRadius.circular(10.r),
-                                            //         boxShadow: [
-                                            //           BoxShadow(
-                                            //             color: AppColors.primaryColor
-                                            //                 .withOpacity(0.06),
-                                            //             offset: Offset(0, 12.h),
-                                            //             blurRadius: 16.r,
-                                            //           )
-                                            //         ]),
-                                            //     child: Center(
-                                            //       child: Image.asset(
-                                            //         AppImage.icGPS,
-                                            //         width: 25.w,
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 10.h),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 5),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              if (cont.userCurrentLocation !=
-                                                  null) {
-                                                Get.to(() => LocationScreen());
-                                                isSubmit = false;
-                                                _shouldScaleDown = false;
-                                              } else {
-                                                Get.snackbar("Alert",
-                                                    "Please wait, your current location found",
-                                                    backgroundColor: Colors.red
-                                                        .withOpacity(0.8),
-                                                    colorText: Colors.white);
-                                              }
-                                            },
-                                            child:  Container(
-                                              height: 50.h,
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 5.w,
-                                                  vertical: 10.h),
-                                              alignment: Alignment.center,
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey[200],
-                                                borderRadius:
-                                                BorderRadius.circular(10.r),
-                                                // boxShadow: [
-                                                //   BoxShadow(
-                                                //     color: AppColors.primaryColor
-                                                //         .withOpacity(0.06),
-                                                //     offset: Offset(0, 12.h),
-                                                //     blurRadius: 10.r,
-                                                //   )
-                                                // ],
-                                              ),
-                                              child: TextField(
-                                                controller: cont.locationWhereTo1,
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(
-                                                  color: AppColors.primaryColor,
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                                textAlignVertical:
-                                                TextAlignVertical.center,
-                                                decoration: InputDecoration(
-                                                  isDense: true,
-                                                  contentPadding: EdgeInsets.zero,
-                                                  hintText:
-                                                  "enter_destination".tr,
-                                                  prefixIcon: Padding(
-                                                    padding:
-                                                    const EdgeInsets.all(5.0),
-                                                    child: Image.asset(
-                                                      AppImage.search,
-                                                      width: 27,
-                                                      height: 27,
-                                                      fit: BoxFit.contain,
-                                                      color:
-                                                      AppColors.primaryColor,
-                                                    ),
-                                                  ),
-                                                  hintStyle: TextStyle(
-                                                      color: Colors.grey.shade400,
-                                                      fontSize: 15.sp),
-                                                  border: InputBorder.none,
-                                                ),
-                                                minLines: 1,
-                                                maxLines: 2,
-                                                readOnly: true,
-                                                enabled: false,
-                                              ),
-                                            ),
+                                          }
+                                          setState(() {
+                                            isDriverShow = false;
+                                          });
+                                          Home home = userCont
+                                              .locationResponseModel
+                                              .value
+                                              .others
+                                              .last;
+                                          cont.tempLatLngWhereTo1 =
+                                              LatLng(home.latitude ?? 0,
+                                                  home.longitude ?? 0);
+                                          cont.tempLocationWhereTo1.text =
+                                              home.address ?? "";
+                                          cont.selectedLocationDrawRoute();
+                                          isSubmit = false;
+                                          _shouldScaleDown = false;
+                                        } else {
+                                          Get.snackbar("Alert",
+                                              "Please wait, your current location found",
+                                              backgroundColor: Colors.red
+                                                  .withOpacity(0.8),
+                                              colorText: Colors.white);
+                                        }
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Image.asset(AppImage.favorite,
+                                              height: 40, width: 40),
+                                          SizedBox(
+                                            height: 5,
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            'other'.tr,
+                                            style:
+                                            TextStyle(fontSize: 12),
+                                          )
+                                        ],
+                                      ),
                                     ),
-
-                                    // GestureDetector(
-                                    //   onTap: () {
-                                    //     Get.to(() => LocationScreen());
-                                    //     isSubmit = false;
-                                    //     _shouldScaleDown = false;
-                                    //   },
-                                    //   child: Card(
-                                    //     child: Container(
-                                    //       height: 50.h,
-                                    //       padding: EdgeInsets.symmetric(
-                                    //           horizontal: 10.w, vertical: 10.h),
-                                    //       alignment: Alignment.center,
-                                    //       width: double.infinity,
-                                    //       decoration: BoxDecoration(
-                                    //         color: Colors.white,
-                                    //         borderRadius:
-                                    //             BorderRadius.circular(10.r),
-                                    //         boxShadow: [
-                                    //           BoxShadow(
-                                    //             color:
-                                    //                 Colors.black.withOpacity(0.06),
-                                    //             offset: Offset(0, 12.h),
-                                    //             blurRadius: 16.r,
-                                    //           )
-                                    //         ],
-                                    //       ),
-                                    //       child: TextField(
-                                    //         controller: cont.locationWhereTo1,
-                                    //         textAlign: TextAlign.start,
-                                    //         style: TextStyle(
-                                    //           color: AppColors.primaryColor,
-                                    //           fontSize: 14.sp,
-                                    //           fontWeight: FontWeight.w400,
-                                    //         ),
-                                    //         textAlignVertical:
-                                    //             TextAlignVertical.center,
-                                    //         decoration: InputDecoration(
-                                    //           isDense: true,
-                                    //           contentPadding: EdgeInsets.zero,
-                                    //           hintText: "Enter Destination",
-                                    //           prefixIcon: Icon(
-                                    //             Icons.search_rounded,
-                                    //             size: 25,
-                                    //           ),
-                                    //           hintStyle: TextStyle(
-                                    //               color: Colors.grey,
-                                    //               fontSize: 12.sp),
-                                    //           border: InputBorder.none,
-                                    //         ),
-                                    //         minLines: 1,
-                                    //         maxLines: 2,
-                                    //         readOnly: true,
-                                    //         enabled: false,
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    // Column(
-                                    //   crossAxisAlignment:
-                                    //       CrossAxisAlignment.start,
-                                    //   children: [
-                                    //     Text(
-                                    //       'Recent Locations',
-                                    //       style: TextStyle(
-                                    //           fontWeight: FontWeight.w500,
-                                    //           fontSize: 14),
-                                    //     ),
-                                    //     ListTile(
-                                    //       leading:
-                                    //           Icon(Icons.watch_later_sharp),
-                                    //       title: Text(
-                                    //         'Mozilit',
-                                    //         style: TextStyle(fontSize: 14),
-                                    //       ),
-                                    //       subtitle: Text(
-                                    //         '49, Shiv Nagar, Block E10, Peer Muchalla, Zirakpur, Punjab',
-                                    //         style: TextStyle(fontSize: 12),
-                                    //       ),
-                                    //     ),
-                                    //     Divider(
-                                    //       indent: 60,
-                                    //     ),
-                                    //     ListTile(
-                                    //       leading:
-                                    //           Icon(Icons.watch_later_sharp),
-                                    //       title: Text(
-                                    //         'Mozilit',
-                                    //         style: TextStyle(fontSize: 14),
-                                    //       ),
-                                    //       subtitle: Text(
-                                    //         '49, Shiv Nagar, Block E10, Peer Muchalla, Zirakpur, Punjab',
-                                    //         style: TextStyle(fontSize: 12),
-                                    //       ),
-                                    //     )
-                                    //   ],
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    // Container(
-                                    //   height: 90,
-                                    //   width: double.infinity,
-                                    //   color: Colors.white,
-                                    //   child: Image.asset(
-                                    //     AppImage.home_banner,
-                                    //     fit: BoxFit.fill,
-                                    //   ),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    // Row(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.spaceAround,
-                                    //   children: [
-                                    //     InkWell(
-                                    //       onTap: () {
-                                    //         Get.to(() => YourTripsScreen());
-                                    //       },
-                                    //       child: Card(
-                                    //         shape: RoundedRectangleBorder(
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(10)),
-                                    //         child: Container(
-                                    //             padding: EdgeInsets.all(7),
-                                    //             height: 60,
-                                    //             width: 80,
-                                    //             decoration: BoxDecoration(
-                                    //                 color: Colors.white,
-                                    //                 borderRadius:
-                                    //                     BorderRadius.circular(
-                                    //                         10)),
-                                    //             child: Column(
-                                    //               mainAxisAlignment:
-                                    //                   MainAxisAlignment
-                                    //                       .spaceAround,
-                                    //               children: [
-                                    //                 Icon(
-                                    //                   Icons.format_align_left,
-                                    //                   size: 25,
-                                    //                 ),
-                                    //                 Text(
-                                    //                   'Past Rides',
-                                    //                   style:
-                                    //                       TextStyle(fontSize: 11),
-                                    //                 )
-                                    //               ],
-                                    //             )),
-                                    //       ),
-                                    //     ),
-                                    //     InkWell(
-                                    //       onTap: () {
-                                    //         Get.to(() => WalletScreen());
-                                    //       },
-                                    //       child: Card(
-                                    //         shape: RoundedRectangleBorder(
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(10)),
-                                    //         child: Container(
-                                    //             padding: EdgeInsets.all(7),
-                                    //             height: 60,
-                                    //             width: 80,
-                                    //             decoration: BoxDecoration(
-                                    //                 color: Colors.white,
-                                    //                 borderRadius:
-                                    //                     BorderRadius.circular(
-                                    //                         10)),
-                                    //             child: Column(
-                                    //               mainAxisAlignment:
-                                    //                   MainAxisAlignment
-                                    //                       .spaceAround,
-                                    //               children: [
-                                    //                 Icon(
-                                    //                   Icons.wallet_rounded,
-                                    //                   size: 25,
-                                    //                 ),
-                                    //                 Text(
-                                    //                   'Wallet',
-                                    //                   style:
-                                    //                       TextStyle(fontSize: 12),
-                                    //                 )
-                                    //               ],
-                                    //             )),
-                                    //       ),
-                                    //     ),
-                                    //     InkWell(
-                                    //       onTap: () {
-                                    //         Get.to(() => ProfilePage());
-                                    //       },
-                                    //       child: Card(
-                                    //         shape: RoundedRectangleBorder(
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(10)),
-                                    //         child: Container(
-                                    //             padding: EdgeInsets.all(7),
-                                    //             height: 60,
-                                    //             width: 80,
-                                    //             decoration: BoxDecoration(
-                                    //                 color: Colors.white,
-                                    //                 borderRadius:
-                                    //                     BorderRadius.circular(
-                                    //                         10)),
-                                    //             child: Column(
-                                    //               mainAxisAlignment:
-                                    //                   MainAxisAlignment
-                                    //                       .spaceAround,
-                                    //               children: [
-                                    //                 Icon(
-                                    //                   Icons
-                                    //                       .account_circle_rounded,
-                                    //                   size: 25,
-                                    //                 ),
-                                    //                 Text(
-                                    //                   'Account',
-                                    //                   style:
-                                    //                       TextStyle(fontSize: 12),
-                                    //                 )
-                                    //               ],
-                                    //             )),
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // ),
-                                    SizedBox(
-                                      height: 13,
-                                    ),
-                                  ],
-                                ),
+                                ],
                               ),
-                            )
+                              SizedBox(height: 10,),
+                              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
+                                InkWell(
+                                  onTap: () {
+                                    print('tap other');
+                                    cont.isRideSelected.value = true;
+
+                                    Get.to(
+                                          () => LocationScreen(
+                                        isRideLocationUpdate: false,
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.r)),
+                                    child: Container(
+                                        padding: EdgeInsets.all(7),
+                                        height: 84.h,
+                                        width: 101.w,
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color:
+                                                  Color(0x25000000),
+                                                  offset: Offset(0, 4.h),
+                                                  blurRadius: 2),
+                                            ],
+                                            color: Colors.white,
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                                10)),
+                                        child: Image.asset(
+                                          AppImage.taxiLogo,
+                                          height: 47.h,
+                                          width: 38.w,
+                                          // Icons.home,
+                                        )),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    print('tap other');
+                                    cont.isRideSelected.value = false;
+
+                                    Get.to(
+                                          () => LocationScreen(
+                                        isRideLocationUpdate: false,
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.r)),
+                                    child: Container(
+                                        padding: EdgeInsets.fromLTRB(
+                                            7, 15, 7, 7),
+                                        height: 84.h,
+                                        width: 101.w,
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color:
+                                                  Color(0x25000000),
+                                                  offset: Offset(0, 4.h),
+                                                  blurRadius: 2),
+                                            ],
+                                            color: Colors.white,
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                                10.r)),
+                                        child: Image.asset(
+                                          AppImage.deliveryLogo,
+                                          height: 38.h,
+                                          width: 47.w,
+                                          // Icons.home,
+                                        )),
+                                  ),
+                                ),
+                              ],),
+                              SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  SizedBox(width: 20,),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'Ride with special\ndiscounts in Touk Touk'.tr,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 16),
+                                      ),
+                                      SizedBox(height: 5,),
+                                      SizedBox(
+                                        width: 175,
+                                        // height: 45,
+                                        child: CustomButton(textColor: Colors.white,
+                                        bgColor: Colors.black,
+                                          text: "Apply Now",onTap: (){
+                                          Get.to(DiscountListPage());
+                                          },),
+                                      )
+                                    ],
+                                  ),
+                                  Image.asset(
+                                    AppImage.bannerLogo,
+                                    height: 100.h,
+                                    width: 172.w,
+                                    fit: BoxFit.contain,
+                                    // Icons.home,
+                                  )
+                                ],
+                              ),
+
+
+                              SizedBox(
+                                height:(userCont.locationResponseModel.value.home.isEmpty
+                                || userCont.locationResponseModel.value.work.isEmpty ||
+                                    userCont.locationResponseModel.value.others.isEmpty
+                                ) ? 0: 10,
+                              ),
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //     color: Colors.grey[100],
+                              //     borderRadius: BorderRadius.circular(10),
+                              //   ),
+                              //   child: const TextField(
+                              //     decoration: InputDecoration(
+                              //       prefixIcon: Icon(Icons.search),
+                              //       // labelText: "Enter Destination",
+                              //       hintText: "Enter Destination",
+                              //       enabledBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.all(
+                              //             Radius.circular(20.0)),
+                              //         borderSide: BorderSide(
+                              //           color: Colors.grey,
+                              //         ),
+                              //       ),
+                              //       focusedBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.all(
+                              //             Radius.circular(10.0)),
+                              //         borderSide:
+                              //             BorderSide(color: Colors.grey),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+
+                              // Column(
+                              //   crossAxisAlignment:
+                              //       CrossAxisAlignment.start,
+                              //   children: [
+                              //     // if (userCont.locationResponseModel
+                              //     //         .value.home.isNotEmpty ||
+                              //     //     userCont.locationResponseModel
+                              //     //         .value.work.isNotEmpty)
+                              //     // Row(
+                              //     //   mainAxisAlignment:
+                              //     //       MainAxisAlignment.spaceEvenly,
+                              //     //   children: [
+                              //     //       if (userCont
+                              //     //           .locationResponseModel
+                              //     //           .value
+                              //     //           .home
+                              //     //           .isNotEmpty)
+                              //     //         GestureDetector(
+                              //     //           onTap: () {
+                              //     //             Home home = userCont
+                              //     //                 .locationResponseModel
+                              //     //                 .value
+                              //     //                 .home[0];
+                              //     //             cont.tempLatLngWhereTo1 =
+                              //     //                 LatLng(
+                              //     //                     home.latitude ??
+                              //     //                         0,
+                              //     //                     home.longitude ??
+                              //     //                         0);
+                              //     //             cont.tempLocationWhereTo1
+                              //     //                     .text =
+                              //     //                 home.address ?? "";
+                              //     //             cont.selectedLocationDrawRoute();
+                              //     //             isSubmit = false;
+                              //     //             _shouldScaleDown = false;
+                              //     //           },
+                              //     //           child: Column(
+                              //     //             children: [
+                              //     //               Container(
+                              //     //                 height: 40.w,
+                              //     //                 width: 40.w,
+                              //     //                 decoration:
+                              //     //                     BoxDecoration(
+                              //     //                   color: Colors.white,
+                              //     //                   border: Border.all(
+                              //     //                       color: Colors
+                              //     //                           .grey),
+                              //     //                   shape:
+                              //     //                       BoxShape.circle,
+                              //     //                 ),
+                              //     //                 child: Center(
+                              //     //                   child: Image.asset(
+                              //     //                     AppImage.icHome,
+                              //     //                     height: 23.w,
+                              //     //                   ),
+                              //     //                 ),
+                              //     //               ),
+                              //     //               Text(
+                              //     //                 "home".tr,
+                              //     //                 style: TextStyle(
+                              //     //                     color:
+                              //     //                         Colors.black,
+                              //     //                     fontWeight:
+                              //     //                         FontWeight
+                              //     //                             .w500,
+                              //     //                     fontSize: 12.sp),
+                              //     //               ),
+                              //     //             ],
+                              //     //           ),
+                              //     //         ),
+                              //     //       if (userCont
+                              //     //           .locationResponseModel
+                              //     //           .value
+                              //     //           .work
+                              //     //           .isNotEmpty)
+                              //     //         GestureDetector(
+                              //     //           onTap: () {
+                              //     //             Home home = userCont
+                              //     //                 .locationResponseModel
+                              //     //                 .value
+                              //     //                 .work[0];
+                              //     //             cont.tempLatLngWhereTo1 =
+                              //     //                 LatLng(
+                              //     //                     home.latitude ??
+                              //     //                         0,
+                              //     //                     home.longitude ??
+                              //     //                         0);
+                              //     //             cont.tempLocationWhereTo1
+                              //     //                     .text =
+                              //     //                 home.address ?? "";
+                              //     //             cont.selectedLocationDrawRoute();
+                              //     //             isSubmit = false;
+                              //     //             _shouldScaleDown = false;
+                              //     //           },
+                              //     //           child: Column(
+                              //     //             children: [
+                              //     //               Container(
+                              //     //                 height: 40.w,
+                              //     //                 width: 40.w,
+                              //     //                 decoration:
+                              //     //                     BoxDecoration(
+                              //     //                   color: Colors.white,
+                              //     //                   border: Border.all(
+                              //     //                       color: Colors
+                              //     //                           .grey),
+                              //     //                   shape:
+                              //     //                       BoxShape.circle,
+                              //     //                 ),
+                              //     //                 child: Center(
+                              //     //                   child: Image.asset(
+                              //     //                     AppImage.icWork,
+                              //     //                     height: 23.w,
+                              //     //                   ),
+                              //     //                 ),
+                              //     //               ),
+                              //     //               Text(
+                              //     //                 "work".tr,
+                              //     //                 style: TextStyle(
+                              //     //                   color: AppColors.primaryColor,
+                              //     //                   fontWeight:
+                              //     //                       FontWeight.w500,
+                              //     //                   fontSize: 12.sp,
+                              //     //                 ),
+                              //     //               ),
+                              //     //             ],
+                              //     //           ),
+                              //     //         ),
+                              //     //     ],
+                              //     //   ),
+                              //     // SizedBox(height: 5.h),
+                              //     Row(
+                              //       children: [
+                              //         Expanded(
+                              //           child: GestureDetector(
+                              //             onTap: () {
+                              //               Get.to(
+                              //                   () => LocationScreen());
+                              //               isSubmit = false;
+                              //               _shouldScaleDown = false;
+                              //             },
+                              //             child: Container(
+                              //                 // height: 55.h,
+                              //                 // padding:
+                              //                 //     EdgeInsets.symmetric(
+                              //                 //   horizontal: 20.w,
+                              //                 //   vertical: 10.h,
+                              //                 // ),
+                              //                 // alignment:
+                              //                 //     Alignment.center,
+                              //                 // width: double.infinity,
+                              //                 // decoration: BoxDecoration(
+                              //                 //   color: Colors.grey[200],
+                              //                 //   borderRadius:
+                              //                 //       BorderRadius
+                              //                 //           .circular(10.r),
+                              //                 // boxShadow: [
+                              //                 //   BoxShadow(
+                              //                 //     color: AppColors.primaryColor
+                              //                 //         .withOpacity(0.06),
+                              //                 //     offset: Offset(0, 12.h),
+                              //                 //     blurRadius: 10.r,
+                              //                 //   )
+                              //                 // ],
+                              //                 // ),
+                              //                 // child:
+                              //                 // TextField(
+                              //                 //   controller:
+                              //                 //       cont.locationFromTo,
+                              //                 //   style: TextStyle(
+                              //                 //     color: AppColors.primaryColor,
+                              //                 //     fontSize: 14.sp,
+                              //                 //     fontWeight:
+                              //                 //         FontWeight.w400,
+                              //                 //   ),
+                              //                 //   decoration:
+                              //                 //       InputDecoration(
+                              //                 //           hintText:
+                              //                 //               "from_to"
+                              //                 //                   .tr,
+                              //                 //           isDense: true,
+                              //                 //           contentPadding:
+                              //                 //               EdgeInsets
+                              //                 //                   .zero,
+                              //                 //           border:
+                              //                 //               InputBorder
+                              //                 //                   .none,
+                              //                 //           prefixIcon:
+                              //                 //               Icon(
+                              //                 //             Icons
+                              //                 //                 .location_on,
+                              //                 //             color: Colors
+                              //                 //                 .black,
+                              //                 //             size: 25,
+                              //                 //           ),
+                              //                 //           hintStyle:
+                              //                 //               TextStyle(
+                              //                 //             color: Colors
+                              //                 //                 .black,
+                              //                 //             fontSize:
+                              //                 //                 14.sp,
+                              //                 //             fontWeight:
+                              //                 //                 FontWeight
+                              //                 //                     .w500,
+                              //                 //           )),
+                              //                 //   minLines: 1,
+                              //                 //   maxLines: 2,
+                              //                 //   readOnly: true,
+                              //                 //   enabled: false,
+                              //                 // ),
+                              //                 ),
+                              //           ),
+                              //         ),
+                              //         SizedBox(width: 10.w),
+                              //         // GestureDetector(
+                              //         //   onTap: () {
+                              //         //     determinePosition();
+                              //         //   },
+                              //         //   child: Container(
+                              //         //     height: 40.w,
+                              //         //     width: 40.w,
+                              //         //     decoration: BoxDecoration(
+                              //         //         color: Colors.white,
+                              //         //         borderRadius:
+                              //         //             BorderRadius.circular(10.r),
+                              //         //         boxShadow: [
+                              //         //           BoxShadow(
+                              //         //             color: AppColors.primaryColor
+                              //         //                 .withOpacity(0.06),
+                              //         //             offset: Offset(0, 12.h),
+                              //         //             blurRadius: 16.r,
+                              //         //           )
+                              //         //         ]),
+                              //         //     child: Center(
+                              //         //       child: Image.asset(
+                              //         //         AppImage.icGPS,
+                              //         //         width: 25.w,
+                              //         //       ),
+                              //         //     ),
+                              //         //   ),
+                              //         // ),
+                              //       ],
+                              //     ),
+                              //     SizedBox(height: 10.h),
+                              //     Padding(
+                              //       padding: EdgeInsets.only(right: 5),
+                              //       child: GestureDetector(
+                              //         onTap: () {
+                              //           if (cont.userCurrentLocation !=
+                              //               null) {
+                              //             Get.to(() => LocationScreen());
+                              //             isSubmit = false;
+                              //             _shouldScaleDown = false;
+                              //           } else {
+                              //             Get.snackbar("Alert",
+                              //                 "Please wait, your current location found",
+                              //                 backgroundColor: Colors.red
+                              //                     .withOpacity(0.8),
+                              //                 colorText: Colors.white);
+                              //           }
+                              //         },
+                              //         child:  Container(
+                              //           height: 50.h,
+                              //           padding: EdgeInsets.symmetric(
+                              //               horizontal: 5.w,
+                              //               vertical: 10.h),
+                              //           alignment: Alignment.center,
+                              //           width: double.infinity,
+                              //           decoration: BoxDecoration(
+                              //             color: Colors.grey[200],
+                              //             borderRadius:
+                              //             BorderRadius.circular(10.r),
+                              //             // boxShadow: [
+                              //             //   BoxShadow(
+                              //             //     color: AppColors.primaryColor
+                              //             //         .withOpacity(0.06),
+                              //             //     offset: Offset(0, 12.h),
+                              //             //     blurRadius: 10.r,
+                              //             //   )
+                              //             // ],
+                              //           ),
+                              //           child: TextField(
+                              //             controller: cont.locationWhereTo1,
+                              //             textAlign: TextAlign.start,
+                              //             style: TextStyle(
+                              //               color: AppColors.primaryColor,
+                              //               fontSize: 13.sp,
+                              //               fontWeight: FontWeight.w400,
+                              //             ),
+                              //             textAlignVertical:
+                              //             TextAlignVertical.center,
+                              //             decoration: InputDecoration(
+                              //               isDense: true,
+                              //               contentPadding: EdgeInsets.zero,
+                              //               hintText:
+                              //               "enter_destination".tr,
+                              //               prefixIcon: Padding(
+                              //                 padding:
+                              //                 const EdgeInsets.all(5.0),
+                              //                 child: Image.asset(
+                              //                   AppImage.search,
+                              //                   width: 27,
+                              //                   height: 27,
+                              //                   fit: BoxFit.contain,
+                              //                   color:
+                              //                   AppColors.primaryColor,
+                              //                 ),
+                              //               ),
+                              //               hintStyle: TextStyle(
+                              //                   color: Colors.grey.shade400,
+                              //                   fontSize: 15.sp),
+                              //               border: InputBorder.none,
+                              //             ),
+                              //             minLines: 1,
+                              //             maxLines: 2,
+                              //             readOnly: true,
+                              //             enabled: false,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     Get.to(() => LocationScreen());
+                              //     isSubmit = false;
+                              //     _shouldScaleDown = false;
+                              //   },
+                              //   child: Card(
+                              //     child: Container(
+                              //       height: 50.h,
+                              //       padding: EdgeInsets.symmetric(
+                              //           horizontal: 10.w, vertical: 10.h),
+                              //       alignment: Alignment.center,
+                              //       width: double.infinity,
+                              //       decoration: BoxDecoration(
+                              //         color: Colors.white,
+                              //         borderRadius:
+                              //             BorderRadius.circular(10.r),
+                              //         boxShadow: [
+                              //           BoxShadow(
+                              //             color:
+                              //                 Colors.black.withOpacity(0.06),
+                              //             offset: Offset(0, 12.h),
+                              //             blurRadius: 16.r,
+                              //           )
+                              //         ],
+                              //       ),
+                              //       child: TextField(
+                              //         controller: cont.locationWhereTo1,
+                              //         textAlign: TextAlign.start,
+                              //         style: TextStyle(
+                              //           color: AppColors.primaryColor,
+                              //           fontSize: 14.sp,
+                              //           fontWeight: FontWeight.w400,
+                              //         ),
+                              //         textAlignVertical:
+                              //             TextAlignVertical.center,
+                              //         decoration: InputDecoration(
+                              //           isDense: true,
+                              //           contentPadding: EdgeInsets.zero,
+                              //           hintText: "Enter Destination",
+                              //           prefixIcon: Icon(
+                              //             Icons.search_rounded,
+                              //             size: 25,
+                              //           ),
+                              //           hintStyle: TextStyle(
+                              //               color: Colors.grey,
+                              //               fontSize: 12.sp),
+                              //           border: InputBorder.none,
+                              //         ),
+                              //         minLines: 1,
+                              //         maxLines: 2,
+                              //         readOnly: true,
+                              //         enabled: false,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Column(
+                              //   crossAxisAlignment:
+                              //       CrossAxisAlignment.start,
+                              //   children: [
+                              //     Text(
+                              //       'Recent Locations',
+                              //       style: TextStyle(
+                              //           fontWeight: FontWeight.w500,
+                              //           fontSize: 14),
+                              //     ),
+                              //     ListTile(
+                              //       leading:
+                              //           Icon(Icons.watch_later_sharp),
+                              //       title: Text(
+                              //         'Mozilit',
+                              //         style: TextStyle(fontSize: 14),
+                              //       ),
+                              //       subtitle: Text(
+                              //         '49, Shiv Nagar, Block E10, Peer Muchalla, Zirakpur, Punjab',
+                              //         style: TextStyle(fontSize: 12),
+                              //       ),
+                              //     ),
+                              //     Divider(
+                              //       indent: 60,
+                              //     ),
+                              //     ListTile(
+                              //       leading:
+                              //           Icon(Icons.watch_later_sharp),
+                              //       title: Text(
+                              //         'Mozilit',
+                              //         style: TextStyle(fontSize: 14),
+                              //       ),
+                              //       subtitle: Text(
+                              //         '49, Shiv Nagar, Block E10, Peer Muchalla, Zirakpur, Punjab',
+                              //         style: TextStyle(fontSize: 12),
+                              //       ),
+                              //     )
+                              //   ],
+                              // ),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Container(
+                              //   height: 90,
+                              //   width: double.infinity,
+                              //   color: Colors.white,
+                              //   child: Image.asset(
+                              //     AppImage.home_banner,
+                              //     fit: BoxFit.fill,
+                              //   ),
+                              // ),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceAround,
+                              //   children: [
+                              //     InkWell(
+                              //       onTap: () {
+                              //         Get.to(() => YourTripsScreen());
+                              //       },
+                              //       child: Card(
+                              //         shape: RoundedRectangleBorder(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(10)),
+                              //         child: Container(
+                              //             padding: EdgeInsets.all(7),
+                              //             height: 60,
+                              //             width: 80,
+                              //             decoration: BoxDecoration(
+                              //                 color: Colors.white,
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(
+                              //                         10)),
+                              //             child: Column(
+                              //               mainAxisAlignment:
+                              //                   MainAxisAlignment
+                              //                       .spaceAround,
+                              //               children: [
+                              //                 Icon(
+                              //                   Icons.format_align_left,
+                              //                   size: 25,
+                              //                 ),
+                              //                 Text(
+                              //                   'Past Rides',
+                              //                   style:
+                              //                       TextStyle(fontSize: 11),
+                              //                 )
+                              //               ],
+                              //             )),
+                              //       ),
+                              //     ),
+                              //     InkWell(
+                              //       onTap: () {
+                              //         Get.to(() => WalletScreen());
+                              //       },
+                              //       child: Card(
+                              //         shape: RoundedRectangleBorder(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(10)),
+                              //         child: Container(
+                              //             padding: EdgeInsets.all(7),
+                              //             height: 60,
+                              //             width: 80,
+                              //             decoration: BoxDecoration(
+                              //                 color: Colors.white,
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(
+                              //                         10)),
+                              //             child: Column(
+                              //               mainAxisAlignment:
+                              //                   MainAxisAlignment
+                              //                       .spaceAround,
+                              //               children: [
+                              //                 Icon(
+                              //                   Icons.wallet_rounded,
+                              //                   size: 25,
+                              //                 ),
+                              //                 Text(
+                              //                   'Wallet',
+                              //                   style:
+                              //                       TextStyle(fontSize: 12),
+                              //                 )
+                              //               ],
+                              //             )),
+                              //       ),
+                              //     ),
+                              //     InkWell(
+                              //       onTap: () {
+                              //         Get.to(() => ProfilePage());
+                              //       },
+                              //       child: Card(
+                              //         shape: RoundedRectangleBorder(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(10)),
+                              //         child: Container(
+                              //             padding: EdgeInsets.all(7),
+                              //             height: 60,
+                              //             width: 80,
+                              //             decoration: BoxDecoration(
+                              //                 color: Colors.white,
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(
+                              //                         10)),
+                              //             child: Column(
+                              //               mainAxisAlignment:
+                              //                   MainAxisAlignment
+                              //                       .spaceAround,
+                              //               children: [
+                              //                 Icon(
+                              //                   Icons
+                              //                       .account_circle_rounded,
+                              //                   size: 25,
+                              //                 ),
+                              //                 Text(
+                              //                   'Account',
+                              //                   style:
+                              //                       TextStyle(fontSize: 12),
+                              //                 )
+                              //               ],
+                              //             )),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                              SizedBox(
+                                height: 13,
+                              ),
+                            ],
+                          ),
+                        )
                           ],
-                        ));
+                        );
                       },
                     ),
 
