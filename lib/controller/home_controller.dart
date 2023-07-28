@@ -499,6 +499,7 @@ class HomeController extends BaseController {
             if(isRideSelected.value){
               serviceModelList.addAll(texiserviceList);
               print("texiserviceList$texiserviceList");
+              print("ssdnjshdhjwhje==>${isRideSelected.value}");
 
             }else{
               serviceModelList.addAll(deliveryserviceList);
@@ -1428,8 +1429,8 @@ class HomeController extends BaseController {
       target: LatLng(latLng.latitude, latLng.longitude),
       zoom: 18.0,
     );
-
-    Uint8List? markerIcon = await getBytesFromAsset(AppImage.taxi, 60);
+    print("bsdhsbdjs===>${isRideSelected.value}");
+    Uint8List? markerIcon = isRideSelected.value ? await getBytesFromAsset(AppImage.taxi, 60) : await getBytesFromAsset(AppImage.deliveryBike, 150);
 
     int startTime = DateTime.now().millisecondsSinceEpoch;
     LatLng startLatLng = LatLng(0, 0);

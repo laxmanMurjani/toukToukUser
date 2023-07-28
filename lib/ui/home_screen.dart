@@ -124,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen>
   location.Location _location = location.Location.instance;
   String? _mapStyle;
   int countNotification = 0;
+  TextEditingController noteController = TextEditingController();
   // Future<void> getMarkerPosition() async {
   //
   //   double screenWidth = MediaQuery.of(context).size.width *
@@ -807,6 +808,84 @@ class _HomeScreenState extends State<HomeScreen>
 
                                                   ),
                                                 ),
+                                                // InkWell(
+                                                //   onTap: () {
+                                                //   Get.defaultDialog(
+                                                //     barrierDismissible: false,
+                                                //       radius: 70,
+                                                //       contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                                                //       content: Column(children: [
+                                                //         Image.asset(AppImage.addNote, width: 182,height: 141,),
+                                                //         Text("Continue without adding delivery instruction?",
+                                                //         style: TextStyle(fontSize: 24,fontWeight: FontWeight.w700,),
+                                                //         textAlign: TextAlign.center,),
+                                                //         SizedBox(height: 30),
+                                                //         InkWell(
+                                                //           onTap: (){
+                                                //             Get.back();
+                                                //           },
+                                                //           child: Container(alignment: Alignment.center,
+                                                //           width: 286,
+                                                //           height: 58,
+                                                //           decoration: BoxDecoration(
+                                                //             borderRadius: BorderRadius.circular(40),
+                                                //             color: Color(0xFFD9D9D9)
+                                                //           ),
+                                                //             child: Text("Add a note",
+                                                //               style: TextStyle(fontSize: 24,fontWeight: FontWeight.w400,),
+                                                //           )),
+                                                //         ),
+                                                //         SizedBox(height: 22),
+                                                //         InkWell(
+                                                //           onTap: (){
+                                                //
+                                                //           },
+                                                //           child: Container(alignment: Alignment.center,
+                                                //           width: 214,
+                                                //           height: 58,
+                                                //           decoration: BoxDecoration(
+                                                //             borderRadius: BorderRadius.circular(40),
+                                                //             color: Color(0xFF000000)
+                                                //           ),
+                                                //             child: Text("Yes",
+                                                //               style: TextStyle(fontSize: 24,fontWeight: FontWeight.w400,color: Colors.white),
+                                                //           )),
+                                                //         ),
+                                                //         SizedBox(height: 25,)
+                                                //       ]),
+                                                //   //     title: "Continue without adding delivery instruction?",
+                                                //   // titleStyle: TextStyle(fontSize: 26,fontWeight: FontWeight.w700,)
+                                                //   );
+                                                //   },
+                                                //   child: Padding(
+                                                //     padding: const EdgeInsets
+                                                //         .symmetric(
+                                                //         horizontal: 12.0),
+                                                //     child:
+                                                //         countNotification >= 5
+                                                //
+                                                //
+                                                //
+                                                //         ? Image.asset(
+                                                //         AppImage.bell,color: AppColors.white,
+                                                //         height: 30,
+                                                //         width: 30) :
+                                                //
+                                                //     Stack(children:[
+                                                //            Image.asset(
+                                                //                AppImage.bell,color: AppColors.white,
+                                                //                height: 30,
+                                                //                width: 30),
+                                                //       // Container(
+                                                //       //         height: 20,width:20,
+                                                //       //  decoration: BoxDecoration(color: Colors.red,shape:BoxShape.circle),
+                                                //       //   alignment: Alignment.center,
+                                                //       //    child: Text((5 - countNotification).toString(),style:TextStyle(color: AppColors.white),)
+                                                //       // )
+                                                //          ])
+                                                //
+                                                //   ),
+                                                // ),
                                               ],
                                             ),
                                           ],
@@ -3070,7 +3149,8 @@ class _HomeScreenState extends State<HomeScreen>
                                   children: [
                                     Row(
                                       children: [
-                                        InkWell(
+                                      cont.isRideSelected.value ?
+                                      InkWell(
                                           onTap: () {
                                             cont.userUiSelectionType.value =
                                                 UserUiSelectionType.scheduleRide;
@@ -3081,18 +3161,19 @@ class _HomeScreenState extends State<HomeScreen>
                                             child:
                                             // Image.asset(AppImage.time,
                                             //     height: 50, width: 50),
-                                            cont.isRideSelected == true? Icon(
+                                            // cont.isRideSelected == true?
+                                             Icon(
                                               Icons.access_time_rounded,
                                               size: 28.h,
                                             )
-                                                : Image.asset(
-                                              AppImage
-                                                  .parclepakage_icon,
-                                              width: 28.w,
-                                              height: 28.h,
-                                            ),
+                                            //     : Image.asset(
+                                            //   AppImage
+                                            //       .parclepakage_icon,
+                                            //   width: 28.w,
+                                            //   height: 28.h,
+                                            // ),
                                           ),
-                                        ),
+                                        ) : SizedBox(),
                                         // InkWell(
                                         //   onTap: () {
                                         //     // cont.userUiSelectionType.value =
@@ -3436,16 +3517,10 @@ class _HomeScreenState extends State<HomeScreen>
                                                       : "add_task_details"
                                                       .tr,
                                                   style: TextStyle(
-                                                      color: cont
-                                                          .addTaskDetailsController
-                                                          .text
-                                                          .isEmpty
-                                                          ? Color(
-                                                          0x50000000)
-                                                          : Colors.black,
-                                                      fontSize: 12.sp,
+                                                      color: Colors.black,
+                                                      fontSize: 14.sp,
                                                       fontWeight:
-                                                      FontWeight.w600),
+                                                      FontWeight.w400),
                                                 ),
                                               ],
                                             ),
@@ -3799,6 +3874,10 @@ class _HomeScreenState extends State<HomeScreen>
                                           SizedBox(width: 0),
                                           GestureDetector(
                                             onTap: () {
+
+                                              if(cont.isRideSelected.value || noteController.text.isNotEmpty){
+
+
                                               // if(cont.selectedRadioIndex.value == 0){
                                               //   cont.paymentModeRequest("cash");
                                               // } else{
@@ -3859,6 +3938,67 @@ class _HomeScreenState extends State<HomeScreen>
                                                     "book for some one nahi he===>${cont.selectedRadioIndex.value}");
 
                                                 cont.sendRequest();
+                                              }
+                                              }
+                                              else{
+                                                showDeliveryRequestDialog(
+                                                  addANoteButtonFunction: (){
+                                                    Get.back();
+                                                  },
+                                                  yesButtonFunction: (){
+                                                    if (_homeController
+                                                        .isBookSomeOne
+                                                        .value &&
+                                                        _homeController
+                                                            .bookSomeNumber
+                                                            .value
+                                                            .isNotEmpty) {
+                                                      if (_homeController
+                                                          .bookSomeNumber
+                                                          .value
+                                                          .length ==
+                                                          12) {
+                                                        _homeController
+                                                            .sendRequest(params: {
+                                                          "book_someone_name":
+                                                          _homeController
+                                                              .bookSomeName
+                                                              .value
+                                                              .isEmpty
+                                                              ? ""
+                                                              : _homeController
+                                                              .bookSomeName
+                                                              .value,
+                                                          "else_mobile":
+                                                          "+${_homeController.bookSomeNumber.value.isEmpty ? "" : _homeController.bookSomeNumber.value}"
+                                                        });
+                                                        Get.back();
+                                                      } else {
+                                                        _homeController
+                                                            .sendRequest(params: {
+                                                          "book_someone_name":
+                                                          _homeController
+                                                              .bookSomeName
+                                                              .value
+                                                              .isEmpty
+                                                              ? ""
+                                                              : _homeController
+                                                              .bookSomeName
+                                                              .value,
+                                                          "else_mobile":
+                                                          "+91${_homeController.bookSomeNumber.value.isEmpty ? "" : _homeController.bookSomeNumber.value}"
+                                                        });
+                                                        Get.back();
+                                                      }
+                                                    } else {
+                                                      print(
+                                                          "book for some one nahi he===>${cont.selectedRadioIndex.value}");
+
+                                                      cont.sendRequest();
+                                                    }
+                                                    Get.back();
+                                                  }
+                                                );
                                               }
                                             },
                                             child: Container(
@@ -5500,6 +5640,111 @@ class _HomeScreenState extends State<HomeScreen>
     }
   }
 
+
+
+   showDeliveryRequestDialog ({Function? addANoteButtonFunction, Function? yesButtonFunction}){
+    return showDialog(
+        context: context,
+        
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(60),
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 25),
+            content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 20,),
+                  Image.asset(AppImage.addNote, width: 182,height: 141,),
+                  Text("Continue without adding delivery instruction?",
+                    style: TextStyle(fontSize: 22,fontWeight: FontWeight.w700,),
+                    textAlign: TextAlign.center,),
+                  SizedBox(height: 30),
+                  InkWell(
+                    onTap: (){
+                      addANoteButtonFunction!.call();
+                    },
+                    child: Container(alignment: Alignment.center,
+                        width: 286,
+                        height: 58,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Color(0xFFD9D9D9)
+                        ),
+                        child: Text("Add a note",
+                          style: TextStyle(fontSize: 24,fontWeight: FontWeight.w400,),
+                        )),
+                  ),
+                  SizedBox(height: 22),
+                  InkWell(
+                    onTap: (){
+                      yesButtonFunction!.call();
+                    },
+                    child: Container(alignment: Alignment.center,
+                        width: 214,
+                        height: 58,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Color(0xFF000000)
+                        ),
+                        child: Text("Yes",
+                          style: TextStyle(fontSize: 24,fontWeight: FontWeight.w400,color: Colors.white),
+                        )),
+                  ),
+                  SizedBox(height: 25,)
+                ]),
+
+    );});
+
+    // return Get.defaultDialog(
+    //   barrierDismissible: false,
+    //   radius: 70,
+    //   contentPadding: EdgeInsets.symmetric(horizontal: 10),
+    //   content: Column(children: [
+    //     Image.asset(AppImage.addNote, width: 182,height: 141,),
+    //     Text("Continue without adding delivery instruction?",
+    //       style: TextStyle(fontSize: 24,fontWeight: FontWeight.w700,),
+    //       textAlign: TextAlign.center,),
+    //     SizedBox(height: 30),
+    //     InkWell(
+    //       onTap: (){
+    //         addANoteButtonFunction!.call();
+    //       },
+    //       child: Container(alignment: Alignment.center,
+    //           width: 286,
+    //           height: 58,
+    //           decoration: BoxDecoration(
+    //               borderRadius: BorderRadius.circular(40),
+    //               color: Color(0xFFD9D9D9)
+    //           ),
+    //           child: Text("Add a note",
+    //             style: TextStyle(fontSize: 24,fontWeight: FontWeight.w400,),
+    //           )),
+    //     ),
+    //     SizedBox(height: 22),
+    //     InkWell(
+    //       onTap: (){
+    //         yesButtonFunction!.call();
+    //       },
+    //       child: Container(alignment: Alignment.center,
+    //           width: 214,
+    //           height: 58,
+    //           decoration: BoxDecoration(
+    //               borderRadius: BorderRadius.circular(40),
+    //               color: Color(0xFF000000)
+    //           ),
+    //           child: Text("Yes",
+    //             style: TextStyle(fontSize: 24,fontWeight: FontWeight.w400,color: Colors.white),
+    //           )),
+    //     ),
+    //     SizedBox(height: 25,)
+    //   ]),
+    //   //     title: "Continue without adding delivery instruction?",
+    //   // titleStyle: TextStyle(fontSize: 26,fontWeight: FontWeight.w700,)
+    // );
+  }
+
   double _strToDouble({required String s}) {
     double rating = 0;
     try {
@@ -6336,8 +6581,8 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   ShowPopUp(HomeController homeController, String titel) {
-    TextEditingController _noteController = TextEditingController();
-    _noteController.text = homeController.addTaskDetailsController.text;
+
+    noteController.text = homeController.addTaskDetailsController.text;
     Get.dialog(
       // builder: (BuildContext context) {
         AlertDialog(
@@ -6361,7 +6606,7 @@ class _HomeScreenState extends State<HomeScreen>
                       fontWeight: FontWeight.w700),
                 ),
                 TextField(
-                  controller: _noteController,
+                  controller: noteController,
                   keyboardType: TextInputType.multiline,
                   maxLines: 4,
                   decoration: InputDecoration(
@@ -6383,7 +6628,7 @@ class _HomeScreenState extends State<HomeScreen>
                 onTap: () {
                   Get.back();
                   homeController.addTaskDetailsController.text =
-                      _noteController.text;
+                      noteController.text;
                   homeController.showSnack(msg: 'note_added'.tr);
                 },
                 child: Padding(

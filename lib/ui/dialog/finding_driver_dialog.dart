@@ -253,7 +253,7 @@ class _FindingParcleDialogState extends State<FindingParcleDialog> {
                 // ),
                 SizedBox(height: 15.h),
                 Text(
-                  "you_deserve_best_driver".tr,
+                  "You deserve the best, Connecting you with the best ${_homeController.isRideSelected.value ? "taxi.": "delivery rider."}",
                   style:
                   TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
@@ -287,11 +287,16 @@ class _FindingParcleDialogState extends State<FindingParcleDialog> {
                 SizedBox(
                   height: 5,
                 ),
-                Container(
+             _homeController.isRideSelected.value ?   Container(
                     height: 80.h,
                     width: 80.w,
                     child: Image.asset(
-                      AppImage.warehouse_icon,
+                      AppImage.taxiSearch,
+                    )) : Container(
+                    height: 80.h,
+                    width: 80.w,
+                    child: Image.asset(
+                      AppImage.deliveryBoy,
                     )),
                 // SizedBox(
                 //   height: 10,
@@ -325,9 +330,9 @@ class _FindingParcleDialogState extends State<FindingParcleDialog> {
                 // SizedBox(
                 //   height: 13.h,
                 // ),
-                Text("drop_off_by".tr,
-                  style:
-                  TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),),
+                // Text("drop_off_by".tr,
+                //   style:
+                //   TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),),
                 SizedBox(
                   height: 13.h,
                 ),
