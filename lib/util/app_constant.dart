@@ -4,8 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppImage {
   static const String _basePath = "assets/images";
+  static const String _basePathBanner = "assets/banner";
 
   static String logo = "$_basePath/app_logo.png";
+  static String banner1 = "$_basePathBanner/b1.png";
+  static String banner2 = "$_basePathBanner/b2.png";
+  static String banner3 = "$_basePathBanner/b3.png";
+  static String banner4 = "$_basePathBanner/b4.png";
+  static String banner5 = "$_basePathBanner/b5.png";
+  static String banner6 = "$_basePathBanner/b6.png";
+  static String banner7 = "$_basePathBanner/b7.png";
+  static String banner8 = "$_basePathBanner/b8.png";
   static String addNote = "$_basePath/add_note.png";
   static String deliveryBike = "$_basePath/delivery_bike.png";
   static String bannerLogo = "$_basePath/banner_logo.png";
