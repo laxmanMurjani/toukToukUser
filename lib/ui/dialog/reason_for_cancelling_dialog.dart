@@ -134,18 +134,23 @@ class _ReasonForCancellingState extends State<ReasonForCancelling> {
                   Expanded(
                     child: InkWell(
                       onTap: () async {
-                        String? msg = await cont.cancelRequest(
-                            reason: _selectedReason, cancelId: widget.cancelId);
-                        if (msg != null) {
-                          Get.back();
-                          if (widget.cancelId == null)
-                            _baseController.showSnack(msg: msg);
+                        String? msg;
+                        if(_selectedReason != null){
+                          msg  = await cont.cancelRequest(reason: _selectedReason, cancelId: widget.cancelId);
+                          if (msg != null) {
+                            Get.back();
+                            if (widget.cancelId == null)
+                              _baseController.showSnack(msg: msg);
+                          }
+                          setState(() {
+                            isDriverShow = true;
+                          });
+                          await _homeController.getDriverMarkerData(
+                              updateData: () => setState(() {}));
+                        } else {
+                          _baseController.showError(msg: "Please select any one valid reason");
                         }
-                        setState(() {
-                          isDriverShow = true;
-                        });
-                        await _homeController.getDriverMarkerData(
-                            updateData: () => setState(() {}));
+
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 10.h),
