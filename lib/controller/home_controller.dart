@@ -28,7 +28,9 @@ import 'package:etoUser/ui/dialog/invoice_dialog.dart';
 import 'package:etoUser/ui/home_screen.dart';
 import 'package:etoUser/util/app_constant.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_directions_api/google_directions_api.dart' as direction;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -422,6 +424,51 @@ class HomeController extends BaseController {
     }, onError: () {
       log("message   ==>   ERROR");
     });
+
+    late LocationSettings locationSettings;
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      locationSettings = AndroidSettings(
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 0,
+          forceLocationManager: true,
+          intervalDuration: const Duration(seconds: 1),
+          //(Optional) Set foreground notification config to keep the app alive
+          //when going to the background
+          foregroundNotificationConfig: const ForegroundNotificationConfig(
+            notificationText:
+            "ETO Ride Running Background",
+            notificationTitle: "ETO Ride",
+            enableWakeLock: true,
+          )
+      );
+    }
+    else if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.macOS) {
+      locationSettings = AppleSettings(
+        accuracy: LocationAccuracy.high,
+        activityType: ActivityType.automotiveNavigation,
+        distanceFilter: 0,
+        pauseLocationUpdatesAutomatically: true,
+        // Only set to true if our app will be started up in the background.
+        showBackgroundLocationIndicator: false,
+      );
+    } else {
+      locationSettings = LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 0,
+      );
+    }
+
+    StreamSubscription<Position> positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).listen(
+            (Position? position) {
+          print(position == null ? 'Unknown' : 'llllat==>${position.latitude.toString()},lonng==> ${position.longitude.toString()}');
+        });
+
+    positionStream.onData((data) {
+      print( 'llllatssssd==>${data.latitude.toString()},lonng==> ${data.longitude.toString()}');
+
+    });
+
   }
 
 
@@ -1227,7 +1274,7 @@ class HomeController extends BaseController {
 
       params["latitude"] =lat;
       params["longitude"] = long;
-
+      print("ajksn===>${lat} === ${long}");
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
         url: "${ApiUrl.updateLocation}",
@@ -1263,7 +1310,7 @@ class HomeController extends BaseController {
         onSuccess: (Map<String, dynamic> data) {
           // dismissLoader();
           // paymentModeModel.value = paymentModeModelFromJson(jsonEncode(data["response"]));
-           print("ssssss.valssue====>${jsonEncode(data["response"])}");
+          //  print("ssssss.valssue====>${jsonEncode(data["response"])}");
         },
         onError: (ErrorType errorType, String msg) {
           // showError(msg: msg);

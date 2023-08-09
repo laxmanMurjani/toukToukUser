@@ -5634,8 +5634,12 @@ class _HomeScreenState extends State<HomeScreen>
     }
     if (position != null) {
       LatLng latLng = LatLng(position.latitude, position.longitude);
+
+      print("kajsbjabdhs===>${position.latitude}  ${position.longitude}");
       _homeController.tempLatLngFrom = latLng;
       _homeController.userCurrentLocation = latLng;
+
+      _homeController.updateLocation(position.latitude.toString(), position.longitude.toString());
 
       CameraPosition cameraPosition = CameraPosition(
         target: LatLng(latLng.latitude, latLng.longitude),
@@ -5706,6 +5710,7 @@ class _HomeScreenState extends State<HomeScreen>
         if (_homeController.googleMapController != null) {
           _homeController.googleMapController?.setMapStyle("[]");
         }
+        _requestTimer!.cancel();
         print('reaumed status');
         // FlutterOverlayWindow.closeOverlay()
         //     .then((value) => log('STOPPED: alue: $value'));
@@ -5713,6 +5718,13 @@ class _HomeScreenState extends State<HomeScreen>
       case AppLifecycleState.inactive:
         _homeController.isStatusCheck.value = false;
         _homeController.isBackgroundStatusCheck.value = true;
+
+        _requestTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+          determinePosition();
+        });
+        print("sajhsdjjj===>${_homeController.userCurrentLocation!.latitude.toString()} ${_homeController.userCurrentLocation!.longitude.toString()}");
+        _homeController.updateLocation(_homeController.userCurrentLocation!.latitude.toString(), _homeController.userCurrentLocation!.longitude.toString());
+
         // print('statusIsInactive');
         // if (await FlutterOverlayWindow.isActive()) return;
         // await FlutterOverlayWindow.showOverlay(
