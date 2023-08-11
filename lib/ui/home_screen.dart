@@ -210,6 +210,8 @@ class _HomeScreenState extends State<HomeScreen>
       await prefs.setBool('isUserUpdated', true);
     });
 
+    _location.enableBackgroundMode(enable: true);
+
     // initConnectivity();
     //
     // _connectivitySubscription =

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:etoUser/controller/home_controller.dart';
+import 'package:etoUser/main.dart';
+import 'package:etoUser/preference/preference.dart';
 import 'package:etoUser/ui/dialog/update_app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +19,7 @@ import 'package:etoUser/ui/home_screen.dart';
 import 'package:etoUser/util/app_constant.dart';
 import 'package:etoUser/util/common.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -30,65 +33,167 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
   final HomeController _homeController = Get.find();
   GoogleMapController? _controller;
 
+  _showDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            alignment: Alignment.center,
+            title: Text(
+              "Touk touk user would like to collect location data to enable your current location to provide you the service for taxi booking and navigation even when the app is closed or not in use.",
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Database.setSeenLocationAlertDialog();
+                    Get.back();
+                    _userController.setLanguage();
+                    checkPermissionStatus();
+                    _homeController.isStatusCheck.value = true;
 
+
+                    if(!AppString.testing_version_code_check_dialog!){
+                      if(Platform.isAndroid){
+                        if(int.parse(AppString.detectUserAndroidBuildNumber!) < int.parse(AppString.firebaseUserAndroidBuildNumber!) ||
+                            int.parse(AppString.detectUserAndroidVersionCode!) < int.parse(AppString.firebaseUserAndroidVersionCode!)){
+                          _userController.isUpdateApp.value = true;
+                        } else{
+                          _userController.isUpdateApp.value = false;
+                          Timer(const Duration(seconds: 3), () {
+                            // _homeController.getUserLatLong();
+                            if (_userController.userToken.value.accessToken != null) {
+                              _homeController.getUserLatLong();
+                              // _userController.currentUserApi();
+                              // Get.off(()=> HomeScreen());
+                              _userController.getUserProfileData();
+
+                            } else {
+                              Get.off(() => LoginScreen());
+                            }
+                          });
+                        }}
+                      else{
+                        if(int.parse(AppString.detectUserIosBuildNumber!) < int.parse(AppString.firebaseUserIosBuildNumber!) &&
+                            int.parse(AppString.detectUserIosVersionCode!) <= int.parse(AppString.detectUserIosVersionCode!)){
+                          _userController.isUpdateApp.value = true;
+                        } else{
+                          _userController.isUpdateApp.value = false;
+                          Timer(const Duration(seconds: 3), () {
+                            // _homeController.getUserLatLong();
+                            if (_userController.userToken.value.accessToken != null) {
+                              _homeController.getUserLatLong();
+                              // _userController.currentUserApi();
+                              // Get.off(()=> HomeScreen());
+                              _userController.getUserProfileData();
+
+                            } else {
+                              Get.off(() => LoginScreen());
+                            }
+                          });
+                        }
+                      }
+                    }
+                  },
+                  child: Text(
+                    "Ok",
+                    style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500),
+                  ))
+            ],
+          );
+        });
+  }
+
+
+  checkPermissionStatus()async{
+    var status = await Geolocator.checkPermission();
+    if (status == LocationPermission.denied) {
+      Geolocator.requestPermission();
+      // We didn't ask for permission yet or he permission has been denied before but not permanently.
+      print("Permission is denined.");
+    }else if(status == LocationPermission.always){
+      //permission is already granted.
+      location.enableBackgroundMode(enable: true);
+      print("Permission is already granted.");
+    }else if(status  == LocationPermission.deniedForever){
+      //permission is permanently denied.
+      openAppSettings();
+      print("Permission is permanently denied");
+    }
+  }
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     // determinePosition();
     // contactPermissions();
-    super.initState();
-    _userController.setLanguage();
-
-    _homeController.isStatusCheck.value = true;
 
 
-    if(!AppString.testing_version_code_check_dialog!){
-      if(Platform.isAndroid){
-        if(int.parse(AppString.detectUserAndroidBuildNumber!) < int.parse(AppString.firebaseUserAndroidBuildNumber!) ||
-            int.parse(AppString.detectUserAndroidVersionCode!) < int.parse(AppString.firebaseUserAndroidVersionCode!)){
-          _userController.isUpdateApp.value = true;
-        } else{
-          _userController.isUpdateApp.value = false;
-          Timer(const Duration(seconds: 3), () {
-            // _homeController.getUserLatLong();
-            if (_userController.userToken.value.accessToken != null) {
-              _homeController.getUserLatLong();
-              // _userController.currentUserApi();
-              // Get.off(()=> HomeScreen());
-              _userController.getUserProfileData();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final prefs = await SharedPreferences.getInstance();
+      print(
+          "prefs.containsKey(Database.seenOnBoarding)===>${prefs.containsKey(Database.seenOnBoarding)}");
+      if (!prefs.containsKey(Database.seenOnBoarding)) {
+        _showDialog();
+      }
 
-            } else {
-              Get.off(() => LoginScreen());
+      if (prefs.containsKey(Database.seenOnBoarding)) {
+        checkPermissionStatus();
+        _userController.setLanguage();
+
+        _homeController.isStatusCheck.value = true;
+
+
+        if(!AppString.testing_version_code_check_dialog!){
+          if(Platform.isAndroid){
+            if(int.parse(AppString.detectUserAndroidBuildNumber!) < int.parse(AppString.firebaseUserAndroidBuildNumber!) ||
+                int.parse(AppString.detectUserAndroidVersionCode!) < int.parse(AppString.firebaseUserAndroidVersionCode!)){
+              _userController.isUpdateApp.value = true;
+            } else{
+              _userController.isUpdateApp.value = false;
+              Timer(const Duration(seconds: 3), () {
+                // _homeController.getUserLatLong();
+                if (_userController.userToken.value.accessToken != null) {
+                  _homeController.getUserLatLong();
+                  // _userController.currentUserApi();
+                  // Get.off(()=> HomeScreen());
+                  _userController.getUserProfileData();
+
+                } else {
+                  Get.off(() => LoginScreen());
+                }
+              });
+            }}
+          else{
+            if(int.parse(AppString.detectUserIosBuildNumber!) < int.parse(AppString.firebaseUserIosBuildNumber!) &&
+                int.parse(AppString.detectUserIosVersionCode!) <= int.parse(AppString.detectUserIosVersionCode!)){
+              _userController.isUpdateApp.value = true;
+            } else{
+              _userController.isUpdateApp.value = false;
+              Timer(const Duration(seconds: 3), () {
+                // _homeController.getUserLatLong();
+                if (_userController.userToken.value.accessToken != null) {
+                  _homeController.getUserLatLong();
+                  // _userController.currentUserApi();
+                  // Get.off(()=> HomeScreen());
+                  _userController.getUserProfileData();
+
+                } else {
+                  Get.off(() => LoginScreen());
+                }
+              });
             }
-          });
-        }}
-      else{
-        if(int.parse(AppString.detectUserIosBuildNumber!) < int.parse(AppString.firebaseUserIosBuildNumber!) &&
-            int.parse(AppString.detectUserIosVersionCode!) <= int.parse(AppString.detectUserIosVersionCode!)){
-          _userController.isUpdateApp.value = true;
-        } else{
-          _userController.isUpdateApp.value = false;
-          Timer(const Duration(seconds: 3), () {
-            // _homeController.getUserLatLong();
-            if (_userController.userToken.value.accessToken != null) {
-              _homeController.getUserLatLong();
-              // _userController.currentUserApi();
-              // Get.off(()=> HomeScreen());
-              _userController.getUserProfileData();
-
-            } else {
-              Get.off(() => LoginScreen());
-            }
-          });
+          }
         }
       }
-    }
+      _userController.isUserUpdated.value = prefs.containsKey('isUserUpdated');
+    });
 
-
-
-
-  }
+    super.initState();}
 
   // @override
   // void didChangeAppLifecycleState(AppLifecycleState state) {

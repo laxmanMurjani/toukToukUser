@@ -49,43 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
     _userController.clearFormData();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final prefs = await SharedPreferences.getInstance();
-      print(
-          "prefs.containsKey(Database.seenOnBoarding)===>${prefs.containsKey(Database.seenOnBoarding)}");
-      if (!prefs.containsKey(Database.seenOnBoarding)) {
-        _showDialog();
-      }
      _userController.isUserUpdated.value = prefs.containsKey('isUserUpdated');
     });
   }
 
-  _showDialog() {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            alignment: Alignment.center,
-            title: Text(
-              "Touk touk user would like to collect location data to enable your current location to provide you the service for taxi booking and navigation even when the app is closed or not in use.",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Database.setSeenLocationAlertDialog();
-                    Get.back();
-                  },
-                  child: Text(
-                    "Ok",
-                    style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500),
-                  ))
-            ],
-          );
-        });
-  }
+
 
   @override
   Widget build(BuildContext context) {

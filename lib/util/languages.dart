@@ -214,7 +214,7 @@ class Languages extends Translations {
         "enter_destination": "Enter Destination",
         "past": "Past",
         "upcoming": "Upcoming",
-        "touk_touk_credit_balance": "Touk Touk Credit Balance",
+        "touk_touk_credit_balance": "Touk Touk Reward Point",
         "saved_addresses": "Saved Addresses",
         "saved_contacts": "Saved Contacts",
         "change_language": "Change language",

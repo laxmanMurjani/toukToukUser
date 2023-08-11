@@ -92,7 +92,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       margin:
                           EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.21.h,
+                      height: MediaQuery.of(context).size.height * 0.18.h,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -271,7 +271,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       margin:
                           EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.26.h,
+                      height: MediaQuery.of(context).size.height * 0.18.h,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -327,22 +327,22 @@ class _WalletScreenState extends State<WalletScreen> {
                               ],
                             ),
                           ),
-                          Text(
-                            "500 Touk Touk points = 100 ${_userController.userData.value.currency} in your wallet.",
-                            style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            "Ride more with Touk Touk to earn more points.",
-                            style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          // Text(
+                          //   "500 Touk Touk points = 100 ${_userController.userData.value.currency} in your wallet.",
+                          //   style: TextStyle(
+                          //     color: AppColors.primaryColor,
+                          //     fontSize: 13.sp,
+                          //     fontWeight: FontWeight.w500,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   "Ride more with Touk Touk to earn more points.",
+                          //   style: TextStyle(
+                          //     color: AppColors.primaryColor,
+                          //     fontSize: 13.sp,
+                          //     fontWeight: FontWeight.w500,
+                          //   ),
+                          // ),
                           // InkWell(
                           //   onTap: () {},
                           //   child: Container(
