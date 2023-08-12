@@ -141,7 +141,7 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                                 InkWell(
                                   onTap: () {
                                     String s =
-                                        "Hey Checkout this app, ETO Ride \nUser - https://play.google.com/store/apps/details?id=com.touktouktaxi.user\nProvider - https://play.google.com/store/apps/details?id=com.touktouktaxi.driver.\nInstall this app with referral code ${cont.userData.value.referralUniqueId ?? ""}";
+                                        "Hey Checkout this app, Touk Touk \nUser - https://play.google.com/store/apps/details?id=com.touktouktaxi.user\nProvider - https://play.google.com/store/apps/details?id=com.touktouktaxi.driver.\nInstall this app with referral code ${cont.userData.value.referralUniqueId ?? ""}";
                                     FlutterShare.share(
                                         title: "choose_one", text: s);
                                   },
@@ -229,7 +229,7 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                               onTap: () {
                                 print("smdh");
                                 String s =
-                                    "Hey Checkout this app, ETO Ride User - https://play.google.com/store/apps/details?id=com.touktouktaxi.user Provider - https://play.google.com/store/apps/details?id=com.touktouktaxi.driver.\nInstall this app with referral code ${cont.userData.value.referralUniqueId ?? ""}";
+                                    "Hey Checkout this app, Touk Touk User - https://play.google.com/store/apps/details?id=com.touktouktaxi.user Provider - https://play.google.com/store/apps/details?id=com.touktouktaxi.driver.\nInstall this app with referral code ${cont.userData.value.referralUniqueId ?? ""}";
 
                                 openWhatsapp(
                                     context: context,
