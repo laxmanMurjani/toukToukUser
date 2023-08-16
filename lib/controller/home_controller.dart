@@ -773,8 +773,10 @@ class HomeController extends BaseController {
     bool isFromAddress = true,
   }) async {
     try {
-      AutocompleteResponse? addressList =
-          await googlePlace.autocomplete.get(address);
+      AutocompleteResponse? addressList = await googlePlace.autocomplete.get(address,
+        location: LatLon(userCurrentLocation!.latitude, userCurrentLocation!.longitude),
+      radius: 5000,
+      );
       // List<Placemark> placeMarks = [];
       searchAddressList.clear();
       // List<Location> locations = await locationFromAddress(address);

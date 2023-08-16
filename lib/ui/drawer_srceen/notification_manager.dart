@@ -63,65 +63,49 @@ class _NotificationManagerScreenState extends State<NotificationManagerScreen> {
                       AppBoxShadow.defaultShadow(),
                     ],
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10.h),
-                      Text(
-                        "${_notificationModel!.notifyType ?? ""}",
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 1.h,
-                        color: Color(0xffD1D1D1),
-                        margin: EdgeInsets.symmetric(vertical: 5.h),
-                      ),
-                      Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 60.w,
-                              height: 60.w,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey,
-                                  border: Border.all(
-                                      color: Colors.grey, width: 1.2.w)),
-                              child: Container(
-                                width: 50.w,
-                                height: 50.w,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: CustomFadeInImage(
-                                  url: _notificationModel!.image ?? "",
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60.w,
+                          height: 60.w,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey,
+                              border: Border.all(
+                                  color: Colors.grey, width: 1.2.w)),
+                          child: Container(
+                            width: 50.w,
+                            height: 50.w,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
                             ),
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: Text(
-                                "${_notificationModel!.description ?? ""}",
-                                style: TextStyle(
-                                  color: AppColors.primaryColor.withOpacity(0.7),
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            )
-                          ],
+                            child: CustomFadeInImage(
+                              url: _notificationModel!.image ?? "",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
-                      )
-                    ],
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: Text(
+                            "${_notificationModel!.description ?? ""}",
+                            style: TextStyle(
+                              color: AppColors.primaryColor.withOpacity(0.7),
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:etoUser/overlays/messanger_chathead.dart';
 import 'package:etoUser/util/remote_config_service.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -168,16 +167,6 @@ Future<void> main() async {
 
 }
 
-@pragma("vm:entry-point")
-void overlayMain() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MessangerChatHead(),
-    ),
-  );
-}
 
 class MyApp extends StatefulWidget  {
   @override

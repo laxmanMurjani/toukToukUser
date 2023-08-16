@@ -5,7 +5,6 @@ import 'package:etoUser/controller/home_controller.dart';
 import 'package:etoUser/ui/discount/discount_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
 import 'package:etoUser/controller/user_controller.dart';

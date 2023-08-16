@@ -61,7 +61,7 @@ dependencies:
   url_launcher: ^6.1.2
   expand_widget: ^2.1.0
   wakelock: ^0.6.2
-  flutter_overlay_window: ^0.4.3
+#  flutter_overlay_window: ^0.4.3
 
 #  flutter_html:
 #    path: packages/flutter_html-2.2.1
