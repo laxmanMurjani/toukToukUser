@@ -1,19 +1,18 @@
 import 'dart:io';
 
-class ApiUrl {
-  static const String _baseUrl =
-      // 'http://165.22.218.247/public';
-      //'http://165.22.218.247/touk_touktaxi/public';
-      'https://demo.mozilit.com/superAdminLogin/touk_touktaxi/public';
-      //'https://demo.mozilit.com/superAdminLogin/mozilit_official/public';
-      //'https://etoride.etomotors.com';
-  // static const String _baseUrl = 'https://demo.mozilit.com/superAdminLogin/eto_taxi/public';
-  static const String baseImageUrl = _baseUrl + "/";
-  static const String BASE_URL = _baseUrl;
-  static const String termsCondition = "${BASE_URL}/terms";
-  static const String privacyPolicy = "${BASE_URL}/terms";
+import 'package:etoUser/util/app_constant.dart';
 
-  static const String apiBaseUrl = '$_baseUrl/api/user';
+class ApiUrl {
+  static  String? baseUrl;
+      // 'http://104.131.10.45/superAdminLogin/touk_touktaxi/public';
+      // 'https://demo.mozilit.com/superAdminLogin/touk_touktaxi/public';
+
+  static String baseImageUrl = baseUrl! + "/";
+  static String BASE_URL = baseUrl!;
+  static String termsCondition = "${BASE_URL}/terms";
+  static String privacyPolicy = "${BASE_URL}/terms";
+
+  static  String apiBaseUrl = '${baseUrl!}/api/user';
 
   static const String clientId = '10';
       //"2";
@@ -93,5 +92,5 @@ class ApiUrl {
           String paymentMode = "PAYSTACK",
           String? requestId,
           String userType = "user"}) =>
-      "${_baseUrl}/getform?email=$email&amount=$amount&payment_mode=$paymentMode&user_id=$userId&user_type=$userType ${requestId != null ? "&user_request_id=$requestId" : ""}";
+      "${baseUrl}/getform?email=$email&amount=$amount&payment_mode=$paymentMode&user_id=$userId&user_type=$userType ${requestId != null ? "&user_request_id=$requestId" : ""}";
 }

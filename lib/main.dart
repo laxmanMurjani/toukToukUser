@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:etoUser/api/api.dart';
 import 'package:etoUser/util/remote_config_service.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -70,6 +71,7 @@ Future<void> main() async {
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   await RemoteConfigService.setupRemoteConfig();
   AppString.googleMapKey =firebaseRemoteConfig.getString("map_key");
+  ApiUrl.baseUrl =firebaseRemoteConfig.getString("base_url");
   AppString.isForceCancleButtonShow = Platform.isAndroid ? firebaseRemoteConfig.getBool("isUserForceUpdateAndroid") : firebaseRemoteConfig.getBool("isUserForceUpdateIos");
   AppString.firebaseUserAndroidBuildNumber =firebaseRemoteConfig.getString("androidUserBuildNumber");
   AppString.firebaseUserAndroidVersionCode =firebaseRemoteConfig.getString("androidUserVersionCode");
@@ -82,6 +84,7 @@ Future<void> main() async {
     AppString.detectUserAndroidBuildNumber = packageInfo.version.replaceAll(".", "");
     AppString.detectUserAndroidVersionCode = packageInfo.buildNumber;
     print("sdnmdn000===>${AppString.testing_version_code_check_dialog}   ${AppString.detectUserAndroidVersionCode}");
+    print("sdnmdn000===>${ApiUrl.baseUrl}");
   } else {
     AppString.detectUserIosBuildNumber = packageInfo.version.replaceAll(".", "");
     AppString.detectUserIosVersionCode = packageInfo.buildNumber;
