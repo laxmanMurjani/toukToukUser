@@ -476,7 +476,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-        url: ApiUrl.discountList,
+        url: "${ApiUrl.baseUrl}${ApiUrl.discountList}",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           print("ccccccjdcj==>${jsonEncode(data["response"])}");
@@ -506,7 +506,7 @@ class HomeController extends BaseController {
       }
       dio.FormData formData = new dio.FormData.fromMap(params);
       await apiService.postRequest(
-          url: ApiUrl.uploadDiscountImage,
+          url: "${ApiUrl.baseUrl}${ApiUrl.uploadDiscountImage}",
           params: formData,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -529,7 +529,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.services,
+          url: "${ApiUrl.baseUrl}${ApiUrl.services}",
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
             serviceTypeSelectedIndex.value = 0;
@@ -577,7 +577,7 @@ class HomeController extends BaseController {
       // showLoader();
       await apiService.getRequest(
           url:
-              "${ApiUrl.showProviders}?latitude=${userCurrentLocation!.latitude}&longitude=${userCurrentLocation!.longitude}&service=${servicesModel}",
+              "${ApiUrl.baseUrl}${ApiUrl.showProviders}?latitude=${userCurrentLocation!.latitude}&longitude=${userCurrentLocation!.longitude}&service=${servicesModel}",
           onSuccess: (Map<String, dynamic> data) {
             print("ssssssss===>${servicesModel}");
             showDriverLocationList.clear();
@@ -606,7 +606,7 @@ class HomeController extends BaseController {
       // showLoader();
       await apiService.getRequest(
           url:
-              "${ApiUrl.showNearByDriver}?s_latitude=${userCurrentLocation!.latitude}&s_longitude=${userCurrentLocation!.longitude}&service=${servicesModelID}",
+              "${ApiUrl.baseUrl}${ApiUrl.showNearByDriver}?s_latitude=${userCurrentLocation!.latitude}&s_longitude=${userCurrentLocation!.longitude}&service=${servicesModelID}",
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
             // showDriverLocationList.clear();
@@ -1092,7 +1092,7 @@ class HomeController extends BaseController {
       String queryString = Uri(queryParameters: params).query;
       log("message ==>  ApiUrl.fare   ${isRoundTrip.value}  ${jsonEncode(params)}    $queryString   ${Uri.decodeFull(queryString)}");
       await apiService.postRequest(
-        url: "${ApiUrl.fare}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.fare}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
@@ -1187,7 +1187,7 @@ class HomeController extends BaseController {
       String queryString = Uri(queryParameters: params).query;
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
-        url: "${ApiUrl.request}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.request}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
@@ -1252,7 +1252,7 @@ class HomeController extends BaseController {
 
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
-        url: "${ApiUrl.paymentMode}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.paymentMode}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
@@ -1279,7 +1279,7 @@ class HomeController extends BaseController {
       print("ajksn===>${lat} === ${long}");
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
-        url: "${ApiUrl.updateLocation}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.updateLocation}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           // dismissLoader();
@@ -1307,7 +1307,7 @@ class HomeController extends BaseController {
 
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
-        url: "${ApiUrl.onlineStatus}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.onlineStatus}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           // dismissLoader();
@@ -1328,7 +1328,7 @@ class HomeController extends BaseController {
   Future<void> checkRequest() async {
     try {
       await apiService.getRequest(
-        url: ApiUrl.requestCheck,
+        url: "${ApiUrl.baseUrl}${ApiUrl.requestCheck}",
         onSuccess: (Map<String, dynamic> data) {
           try {
             checkRequestResponseModel.value =
@@ -1363,7 +1363,7 @@ class HomeController extends BaseController {
 
       showLoader();
       await apiService.postRequest(
-        url: ApiUrl.requestCancel,
+        url: "${ApiUrl.baseUrl}${ApiUrl.requestCancel}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           print("cancelRequest  ==>  ${jsonEncode(data)}");
@@ -1400,7 +1400,7 @@ class HomeController extends BaseController {
       params["comment"] = comment;
       print("ssssss  ==>  ${jsonEncode(params)}");
       await apiService.postRequest(
-        url: ApiUrl.providerRate,
+        url: "{${ApiUrl.baseUrl}${ApiUrl.providerRate}",
         params: params,
         onSuccess: (Map<String, dynamic> data) async {
           print("providerRate  ==>  ${jsonEncode(data)}");
@@ -1446,7 +1446,7 @@ class HomeController extends BaseController {
       params["user_feedback_for_eto"] = comment;
 
       await apiService.postRequest(
-        url: ApiUrl.etoRate,
+        url: "${ApiUrl.baseUrl}${ApiUrl.etoRate}",
         params: params,
         onSuccess: (Map<String, dynamic> data) async {
           print("providerRate  ==>  ${jsonEncode(data)}");
@@ -1571,7 +1571,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-        url: ApiUrl.trips,
+        url: "${ApiUrl.baseUrl}${ApiUrl.trips}",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           List<TripDataModel> tripList =
@@ -1592,7 +1592,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-        url: ApiUrl.upcomingTrips,
+        url: "${ApiUrl.baseUrl}${ApiUrl.upcomingTrips}",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           List<TripDataModel> tripList =
@@ -1620,7 +1620,7 @@ class HomeController extends BaseController {
       params["request_id"] =
           checkRequestResponseModel.value.data[0].id.toString();
       await apiService.postRequest(
-        url: ApiUrl.updateRequest,
+        url: "${ApiUrl.baseUrl}${ApiUrl.updateRequest}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
@@ -1642,7 +1642,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.userLatLong,
+          url: "${ApiUrl.baseUrl}${ApiUrl.userLatLong}",
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             print('getUserLatlong: ${data["response"]}');
@@ -1687,7 +1687,7 @@ class HomeController extends BaseController {
       params["request_id"] = "$id";
       String queryParams = Uri(queryParameters: params).query;
       await apiService.getRequest(
-        url: "${ApiUrl.tripDetails}?$queryParams",
+        url: "${ApiUrl.baseUrl}${ApiUrl.tripDetails}?$queryParams",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           List<TripDataModel> tripList =
@@ -1712,7 +1712,7 @@ class HomeController extends BaseController {
       params["request_id"] = "$id";
       String queryParams = Uri(queryParameters: params).query;
       await apiService.getRequest(
-        url: "${ApiUrl.upcomingTripDetails}?$queryParams",
+        url: "${ApiUrl.baseUrl}${ApiUrl.upcomingTripDetails}?$queryParams",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           List<TripDataModel> tripList =
@@ -1734,7 +1734,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-        url: "${ApiUrl.reasons}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.reasons}",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           List<Reason> tempReasonList = List<Reason>.from(
@@ -1757,7 +1757,7 @@ class HomeController extends BaseController {
       params["user_id"] = id;
       params["message"] = msg;
       await apiService.postRequest(
-        url: "${ApiUrl.chat}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.chat}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {},
         onError: (ErrorType? errorType, String? msg) {
@@ -1902,7 +1902,7 @@ class HomeController extends BaseController {
       params["dispute_type"] = "user";
 
       await apiService.postRequest(
-        url: ApiUrl.disputeList,
+        url: "${ApiUrl.baseUrl}${ApiUrl.disputeList}",
         params: params,
         onSuccess: (Map<String, dynamic> data) async {
           dismissLoader();
@@ -1938,7 +1938,7 @@ class HomeController extends BaseController {
       params["request_id"] = "${tripDataModel.id ?? "0"}";
 
       await apiService.postRequest(
-          url: ApiUrl.dispute,
+          url: "${ApiUrl.baseUrl}${ApiUrl.dispute}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1969,7 +1969,7 @@ class HomeController extends BaseController {
       params["request_id"] = "${tripDataModel.id ?? "0"}";
 
       await apiService.postRequest(
-          url: ApiUrl.dropItem,
+          url: "${ApiUrl.baseUrl}${ApiUrl.dropItem}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -2001,7 +2001,7 @@ class HomeController extends BaseController {
       params.addAll(addressData);
 
       await apiService.postRequest(
-          url: ApiUrl.extendTrip,
+          url: "${ApiUrl.baseUrl}${ApiUrl.extendTrip}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -2038,7 +2038,7 @@ class HomeController extends BaseController {
       params.addAll(paymentData);
 
       await apiService.postRequest(
-          url: ApiUrl.payment,
+          url: "${ApiUrl.baseUrl}${ApiUrl.payment}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -2067,7 +2067,7 @@ class HomeController extends BaseController {
       params["user_id"] = "${_userController.userData.value.id ?? "0"}";
 
       await apiService.postRequest(
-          url: ApiUrl.showContact,
+          url: "${ApiUrl.baseUrl}${ApiUrl.showContact}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -2104,7 +2104,7 @@ class HomeController extends BaseController {
       params["mobile"] = "${number ?? ""}";
 
       await apiService.postRequest(
-          url: ApiUrl.addSaveContactList,
+          url: "${ApiUrl.baseUrl}${ApiUrl.addSaveContactList}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -2150,7 +2150,7 @@ class HomeController extends BaseController {
       print("mobile===>${number}");
       print("contact_id===>${contactId}");
       await apiService.postRequest(
-          url: "${ApiUrl.editSaveContactList}/${contactId}",
+          url: "${ApiUrl.baseUrl}${ApiUrl.editSaveContactList}/${contactId}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -2191,7 +2191,7 @@ class HomeController extends BaseController {
       // params["contact_id"] = "${contactId ?? ""}";
 
       await apiService.postRequest(
-          url: "${ApiUrl.deleteSaveContactList}/$contactId",
+          url: "${ApiUrl.baseUrl}${ApiUrl.deleteSaveContactList}/$contactId",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();

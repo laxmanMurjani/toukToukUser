@@ -38,7 +38,7 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen> {
         text: "terms_condition".tr,
       ),
       body: WebView(
-        initialUrl: ApiUrl.termsCondition,
+        initialUrl: "${ApiUrl.baseUrl}${ApiUrl.termsCondition}",
         onPageFinished: (s) {
           _baseController.dismissLoader();
         },

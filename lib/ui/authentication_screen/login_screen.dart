@@ -3,6 +3,7 @@ import 'dart:io';
 // import 'com.facebook.FacebookSdk';
 // import 'com.facebook.appevents.AppEventsLogger';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:etoUser/api/api.dart';
 // import 'package:country_code_picker/country_localizations.dart';
 import 'package:etoUser/controller/user_controller.dart';
 import 'package:etoUser/enum/error_type.dart';
@@ -14,6 +15,8 @@ import 'package:etoUser/ui/widget/custom_button.dart';
 import 'package:etoUser/ui/widget/custom_text_filed.dart';
 import 'package:etoUser/ui/widget/no_internet_widget.dart';
 import 'package:etoUser/util/app_constant.dart';
+import 'package:etoUser/util/remote_config_service.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -50,6 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final prefs = await SharedPreferences.getInstance();
      _userController.isUserUpdated.value = prefs.containsKey('isUserUpdated');
+      FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
+      await RemoteConfigService.setupRemoteConfig();
+      ApiUrl.baseUrlLebanon =firebaseRemoteConfig.getString("second_base_url");
+      ApiUrl.baseUrlNigeria =firebaseRemoteConfig.getString("base_url_nigeria");
     });
   }
 
@@ -196,7 +203,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             children: [
                               CountryCodePicker(
-                                onChanged: (s) {cont.countryCode = s.toString();},
+                                onChanged: (s) {cont.countryCode = s.toString();
+                                  setState(() {
+
+                                  });},
                                 textStyle: TextStyle(
                                   color: AppColors.primaryColor,
                                   fontWeight: FontWeight.w500,
@@ -266,6 +276,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 18.h),
                   InkWell(
                     onTap: () {
+                    if(cont.countryCode == "+961" || cont.countryCode == "+91"){
+                        setState(() {
+                          ApiUrl.baseUrl = "${ApiUrl.baseUrlLebanon}/api/user";
+                          // ApiUrl.apiBaseUrl = '${ApiUrl.baseUrl}/api/user';
+                        });
+                        print("cwdhjshd  ${ApiUrl.baseUrl}");
+                      }else if(cont.countryCode == "+234"){
+                        setState(() {
+                          ApiUrl.baseUrl = "${ApiUrl.baseUrlNigeria}/api/user";
+                          // ApiUrl.apiBaseUrl ='${ApiUrl.baseUrl}/api/user';
+                        });
+                        print("cwdhjshd  ${ApiUrl.baseUrl}");
+                      } else{
+                        print("1111111111111");
+                        Get.snackbar("Alert", "This service not available in this country",
+                            backgroundColor: Colors.redAccent.withOpacity(0.8),
+                            colorText: Colors.white);
+                      }
                       // print('xyz ${GetStorage().read('isUserUpdated')}');
                       // Get.to(()=> NewRegistrationScreen());
                       print('ccode:${cont.countryCode}');
@@ -292,13 +320,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           cont.countryCode == '+961') || cont.phoneNumberController.text.length ==
                           10 && cont.countryCode != '+961') {
                         print('passed');
-                        sendOtp(cont);
+                        sendOtp();
                         // cont.sendOtp(params: params);
                         return;
                       }
-                      Get.snackbar("Alert", "Please enter a valid mobile number",
-                          backgroundColor: Colors.redAccent.withOpacity(0.8),
-                          colorText: Colors.white);
+                      // Get.snackbar("Alert", "Please enter a valid mobile number",
+                      //     backgroundColor: Colors.redAccent.withOpacity(0.8),
+                      //     colorText: Colors.white);
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -715,62 +743,63 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  sendOtp(cont) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
-    var millis = await prefs.getInt('sendOtpTimestamp');
-    print('millis ${millis}');
-
-    if(millis != null){
-      // Assuming you have the original time and a timestamp in milliseconds
-      int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
-      int? timestamp = millis;
-
-// Create DateTime objects from the timestamps
-      DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
-      DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-
-// Calculate the difference in minutes
-      Duration difference = timestampDateTime.difference(originalDateTime);
-      print("ddddd===>${difference}");
-      int differenceInMinutes = difference.inMinutes * (-1);
-
-// Print the result
-      print('Difference in minutes: $differenceInMinutes');
-
-      if(prefs.containsKey('sendOtpCounter') && differenceInMinutes >= 59){
-        await prefs.remove('sendOtpTimestamp');
-        await prefs.remove('sendOtpCounter');
-        print("dbc===L>${differenceInMinutes >= 59}");
-
-      }
-      // Get.snackbar('Alert', "'Retry after 6 hours'",
-      //     backgroundColor: Colors.red.withOpacity(0.8),
-      //     colorText: Colors.white);
-    }
-
-    cont.resendOtpCounter.value ++;
-
-    // cont.resendOtpCounter.value = prefs.getBool(key)
-
-    if(prefs.containsKey('sendOtpCounter')){
-      Get.snackbar('Alert', "'Retry after 6 hours'",
-          backgroundColor: Colors.red.withOpacity(0.8),
-          colorText: Colors.white);
-      //print("dbc===L>${differenceInMinutes >= 59}");
-    }else{
-      print('counterValue: ${cont.resendOtpCounter.value}');
-      if(cont.resendOtpCounter.value<=2){
-        cont.sendOtp(params: params);
-      }else{
-
-        Get.snackbar('Alert', "'Retry after 6 hours'",
-            backgroundColor: Colors.red.withOpacity(0.8),
-            colorText: Colors.white);
-        print('currentTime${DateTime.now().millisecondsSinceEpoch}');
-        await prefs.setBool('sendOtpCounter', true);
-        await prefs.setInt('sendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
-      }
-    }
+  sendOtp() async {
+    _userController.sendOtp(params: params);
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+//     var millis = await prefs.getInt('sendOtpTimestamp');
+//     print('millis ${millis}');
+//
+//     if(millis != null){
+//       // Assuming you have the original time and a timestamp in milliseconds
+//       int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
+//       int? timestamp = millis;
+//
+// // Create DateTime objects from the timestamps
+//       DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
+//       DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+//
+// // Calculate the difference in minutes
+//       Duration difference = timestampDateTime.difference(originalDateTime);
+//       print("ddddd===>${difference}");
+//       int differenceInMinutes = difference.inMinutes * (-1);
+//
+// // Print the result
+//       print('Difference in minutes: $differenceInMinutes');
+//
+//       if(prefs.containsKey('sendOtpCounter') && differenceInMinutes >= 59){
+//         await prefs.remove('sendOtpTimestamp');
+//         await prefs.remove('sendOtpCounter');
+//         print("dbc===L>${differenceInMinutes >= 59}");
+//
+//       }
+//       // Get.snackbar('Alert', "'Retry after 6 hours'",
+//       //     backgroundColor: Colors.red.withOpacity(0.8),
+//       //     colorText: Colors.white);
+//     }
+//
+//     cont.resendOtpCounter.value ++;
+//
+//     // cont.resendOtpCounter.value = prefs.getBool(key)
+//
+//     if(prefs.containsKey('sendOtpCounter')){
+//       Get.snackbar('Alert', "'Retry after 6 hours'",
+//           backgroundColor: Colors.red.withOpacity(0.8),
+//           colorText: Colors.white);
+//       //print("dbc===L>${differenceInMinutes >= 59}");
+//     }else{
+//       print('counterValue: ${cont.resendOtpCounter.value}');
+//       if(cont.resendOtpCounter.value<=2){
+//         cont.sendOtp(params: params);
+//       }else{
+//
+//         Get.snackbar('Alert', "'Retry after 6 hours'",
+//             backgroundColor: Colors.red.withOpacity(0.8),
+//             colorText: Colors.white);
+//         print('currentTime${DateTime.now().millisecondsSinceEpoch}');
+//         await prefs.setBool('sendOtpCounter', true);
+//         await prefs.setInt('sendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+//       }
+//     }
   }
 }

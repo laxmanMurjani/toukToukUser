@@ -59,7 +59,7 @@ class _ShowQrDialogState extends State<ShowQrDialog> {
                       ),
                       CustomFadeInImage(
                         url:
-                            "${ApiUrl.BASE_URL}/${_userController.userData.value.qrcodeUrl ?? ""}",
+                            "${ApiUrl.baseUrl}/${_userController.userData.value.qrcodeUrl ?? ""}",
                         width: 200.w,
                         height: 200.w,
                       fit: BoxFit.cover,

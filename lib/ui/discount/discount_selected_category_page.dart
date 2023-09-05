@@ -63,7 +63,7 @@ class _DiscountSelectedCategoryPageState extends State<DiscountSelectedCategoryP
                   height: 120,width: 120,
                   child:  CustomFadeInImage(
                     url:
-                    "${ApiUrl.baseImageUrl}storage/${argumentVal.image}",
+                    "${ApiUrl.baseUrl}/storage/${argumentVal.image}",
                     fit: BoxFit.cover,
                     placeHolder:
                     AppImage.icUserPlaceholder,

@@ -160,7 +160,7 @@ print('ll: ${_homeController.checkRequestResponseModel.value.data[0].id}');
                     boxShadow: [AppBoxShadow.defaultShadow()]),
                 child:data[0] == null
                     ? Image.asset(AppImage.profilePic) : CustomFadeInImage(
-                  url: "${ApiUrl.baseImageUrl}${data[0]}",
+                  url: "${ApiUrl.baseUrl}/${data[0]}",
                   fit: BoxFit.contain,
                 ),
               ),

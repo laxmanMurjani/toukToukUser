@@ -71,7 +71,8 @@ Future<void> main() async {
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   await RemoteConfigService.setupRemoteConfig();
   AppString.googleMapKey =firebaseRemoteConfig.getString("map_key");
-  ApiUrl.baseUrl =firebaseRemoteConfig.getString("base_url");
+  ApiUrl.baseUrlLebanon =firebaseRemoteConfig.getString("second_base_url");
+  ApiUrl.baseUrlNigeria =firebaseRemoteConfig.getString("base_url_nigeria");
   AppString.isForceCancleButtonShow = Platform.isAndroid ? firebaseRemoteConfig.getBool("isUserForceUpdateAndroid") : firebaseRemoteConfig.getBool("isUserForceUpdateIos");
   AppString.firebaseUserAndroidBuildNumber =firebaseRemoteConfig.getString("androidUserBuildNumber");
   AppString.firebaseUserAndroidVersionCode =firebaseRemoteConfig.getString("androidUserVersionCode");
@@ -84,7 +85,7 @@ Future<void> main() async {
     AppString.detectUserAndroidBuildNumber = packageInfo.version.replaceAll(".", "");
     AppString.detectUserAndroidVersionCode = packageInfo.buildNumber;
     print("sdnmdn000===>${AppString.testing_version_code_check_dialog}   ${AppString.detectUserAndroidVersionCode}");
-    print("sdnmdn000===>${ApiUrl.baseUrl}");
+    print("sdnmdn000===>${ApiUrl.baseUrlLebanon}   ${ApiUrl.baseUrlNigeria}  ${ApiUrl.baseUrl}");
   } else {
     AppString.detectUserIosBuildNumber = packageInfo.version.replaceAll(".", "");
     AppString.detectUserIosVersionCode = packageInfo.buildNumber;

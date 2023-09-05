@@ -62,8 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           String? profileUrl;
           if (cont.userData.value.picture != null) {
             profileUrl =
-                "${ApiUrl.baseImageUrl}${cont.userData.value.picture ?? ""}";
-            print("obtsss====>${"${ApiUrl.baseImageUrl}${cont.userData.value.picture ?? ""}"}");
+                "${ApiUrl.baseUrl}/${cont.userData.value.picture ?? ""}";
+            print("obtsss====>${"${ApiUrl.baseUrl}/${cont.userData.value.picture ?? ""}"}");
           }
           return SingleChildScrollView(
             child: Column(

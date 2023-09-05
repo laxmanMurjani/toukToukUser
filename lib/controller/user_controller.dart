@@ -325,7 +325,7 @@ class UserController extends BaseController {
         params["email"] = emailController.text==''? null : emailController.text;
 
         await apiService.postRequest(
-          url: ApiUrl.signUp,
+          url: "${ApiUrl.baseUrl}${ApiUrl.signUp}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             Map<String, dynamic> para = Map();
@@ -403,7 +403,7 @@ class UserController extends BaseController {
       params["mobile"] = phoneNumberController.text;
 
       await apiService.postRequest(
-          url: ApiUrl.login,
+          url: "${ApiUrl.baseUrl}${ApiUrl.login}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -447,7 +447,7 @@ class UserController extends BaseController {
       }
       print("googleParam====>${jsonEncode(params)}");
       await apiService.postRequest(
-          url: ApiUrl.googleLogin,
+          url:"${ApiUrl.baseUrl}${ApiUrl.googleLogin}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -494,7 +494,7 @@ class UserController extends BaseController {
       }
 
       await apiService.postRequest(
-          url: ApiUrl.appleLogin,
+          url: "${ApiUrl.baseUrl}${ApiUrl. appleLogin}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -537,7 +537,7 @@ class UserController extends BaseController {
       }
 
       await apiService.postRequest(
-          url: ApiUrl.facebookLogin,
+          url: "${ApiUrl.baseUrl}${ApiUrl.facebookLogin}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -569,9 +569,9 @@ class UserController extends BaseController {
       params["mobile"] = phoneNumberController.text;
       params["country_code"] = countryCode;
       params["device_token"] = token;
-
+      print("basesyh===>${ApiUrl.sendOtp}");
       await apiService.postRequest(
-          url: ApiUrl.sendOtp,
+          url: "${ApiUrl.baseUrl}${ApiUrl.sendOtp}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -604,7 +604,7 @@ class UserController extends BaseController {
       params["country_code"] = countryCode;
       print("checkParameter===>${jsonEncode(params)}");
       await apiService.postRequest(
-          url: ApiUrl.sendOtpWithAuth,
+          url: "${ApiUrl.baseUrl}${ApiUrl.sendOtpWithAuth}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -637,7 +637,7 @@ class UserController extends BaseController {
       params["country_code"] = countryCode;
       print("checkParameter===>${jsonEncode(params)}");
       await apiService.postRequest(
-          url: ApiUrl.sendOtpWithAuth,
+          url: "${ApiUrl.baseUrl}${ApiUrl.sendOtpWithAuth}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -676,7 +676,7 @@ class UserController extends BaseController {
       print('bodysss ${params}');
 
       await apiService.postRequest(
-          url: ApiUrl.verifyOTP,
+          url: "${ApiUrl.baseUrl}${ApiUrl.verifyOTP}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -721,7 +721,7 @@ class UserController extends BaseController {
       print('bodysss ${params}');
 
       await apiService.postRequest(
-          url: ApiUrl.verifyOtpWithAuth,
+          url: "${ApiUrl.baseUrl}${ApiUrl.verifyOtpWithAuth}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -774,7 +774,7 @@ class UserController extends BaseController {
       print('bodysss ${params}');
 
       await apiService.postRequest(
-          url: ApiUrl.verifyOtpWithAuth,
+          url: "${ApiUrl.baseUrl}${ApiUrl.verifyOtpWithAuth}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -830,7 +830,7 @@ class UserController extends BaseController {
       print('bodysss ${params}');
 
       await apiService.postRequest(
-          url: ApiUrl.verifyOTP,
+          url: "${ApiUrl.baseUrl}${ApiUrl.verifyOTP}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -872,7 +872,7 @@ class UserController extends BaseController {
       params["country_code"] = countryCode;
       params["device_token"] = token;
       await apiService.postRequest(
-          url: ApiUrl.sendOTPProfile,
+          url: "${ApiUrl.baseUrl}${ApiUrl.sendOTPProfile}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -911,7 +911,7 @@ class UserController extends BaseController {
       print('bodysss ${params}');
 
       await apiService.postRequest(
-          url: ApiUrl.verifyOTPProfile,
+          url: "${ApiUrl.baseUrl}${ApiUrl.verifyOTPProfile}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
@@ -956,7 +956,7 @@ class UserController extends BaseController {
       params["email"] = emailController.text;
 
       await apiService.postRequest(
-          url: ApiUrl.forgotPassword,
+          url: "${ApiUrl.baseUrl}${ApiUrl.forgotPassword}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             showSnack(msg: data["response"]["message"]);
@@ -982,7 +982,7 @@ class UserController extends BaseController {
       showLoader();
 
       await apiService.postRequest(
-          url: ApiUrl.resetPassword,
+          url: "${ApiUrl.baseUrl}${ApiUrl.resetPassword}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
             clearFormData();
@@ -1004,7 +1004,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.userDetails,
+          url: "${ApiUrl.baseUrl}${ApiUrl.userDetails}",
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             userData.value = UserDetailModel.fromJson(data["response"]);
@@ -1028,7 +1028,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.userDetails,
+          url: "${ApiUrl.baseUrl}${ApiUrl.userDetails}",
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             userData.value = UserDetailModel.fromJson(data["response"]);
@@ -1101,7 +1101,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.userDetails,
+          url: "${ApiUrl.baseUrl}${ApiUrl.userDetails}",
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             userData.value = UserDetailModel.fromJson(data["response"]);
@@ -1133,7 +1133,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.promoCodesList,
+          url: "${ApiUrl.baseUrl}${ApiUrl.promoCodesList}",
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
             promoCodeList.clear();
@@ -1155,7 +1155,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.notifications,
+          url: "${ApiUrl.baseUrl}${ApiUrl.notifications}",
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
             notificationManagerList.clear();
@@ -1181,7 +1181,7 @@ class UserController extends BaseController {
     try {
       // showLoader();
       await apiService.getRequest(
-          url: ApiUrl.notifications,
+          url: "${ApiUrl.baseUrl}${ApiUrl.notifications}",
           onSuccess: (Map<String, dynamic> data) async {
             // dismissLoader();
             notificationManagerList.clear();
@@ -1212,7 +1212,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.passBook,
+          url: "${ApiUrl.baseUrl}${ApiUrl.passBook}",
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
             walletTransationModel.value =
@@ -1238,7 +1238,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-          url: ApiUrl.help,
+          url: "${ApiUrl.baseUrl}${ApiUrl.help}",
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             helpResponseModel.value =
@@ -1259,7 +1259,7 @@ class UserController extends BaseController {
     try {
       // showLoader();
       await apiService.getRequest(
-          url: ApiUrl.location,
+          url: "${ApiUrl.baseUrl}${ApiUrl.location}",
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             locationResponseModel.value =
@@ -1280,7 +1280,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.deleteRequest(
-          url: ApiUrl.location + "/$id",
+          url: "${ApiUrl.baseUrl}${ApiUrl.location}" + "/$id",
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             showSnack(msg: "${data["response"]["message"]}");
@@ -1299,7 +1299,7 @@ class UserController extends BaseController {
     try {
       showLoader();
       await apiService.postRequest(
-          url: ApiUrl.location,
+          url: "${ApiUrl.baseUrl}${ApiUrl.location}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1347,7 +1347,7 @@ class UserController extends BaseController {
       }
       dio.FormData formData = new dio.FormData.fromMap(params);
       await apiService.postRequest(
-          url: ApiUrl.updateProfile,
+          url: "${ApiUrl.baseUrl}${ApiUrl.updateProfile}",
           params: formData,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1405,7 +1405,7 @@ class UserController extends BaseController {
       params["password_confirmation"] = conPasswordController.text;
 
       await apiService.postRequest(
-          url: ApiUrl.changePassword,
+          url: "${ApiUrl.baseUrl}${ApiUrl.changePassword}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1443,7 +1443,7 @@ class UserController extends BaseController {
 
       dio.FormData formData = new dio.FormData.fromMap(params);
       await apiService.postRequest(
-          url: ApiUrl.createCard,
+          url: "${ApiUrl.baseUrl}${ApiUrl.createCard}",
           params: formData,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1465,7 +1465,7 @@ class UserController extends BaseController {
       showLoader();
 
       await apiService.getRequest(
-          url: "${ApiUrl.cardList}/${userData.value.stripeCustId ?? ""}",
+          url: "${ApiUrl.baseUrl}${ApiUrl.cardList}/${userData.value.stripeCustId ?? ""}",
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             cardList.clear();
@@ -1492,7 +1492,7 @@ class UserController extends BaseController {
       params["amount"] = "${money}";
       params["customer_id"] = userData.value.stripeCustId ?? "";
       await apiService.postRequest(
-          url: "${ApiUrl.walletAdd}",
+          url: "${ApiUrl.baseUrl}${ApiUrl.walletAdd}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1556,7 +1556,7 @@ class UserController extends BaseController {
       params["device_token"] = token!;
       params["userStatusCheck"] = "Background";
       await apiService.postRequest(
-          url: ApiUrl.logout,
+          url: "${ApiUrl.baseUrl}${ApiUrl.logout}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1588,7 +1588,7 @@ class UserController extends BaseController {
       params["type"] = "user";
 
       await apiService.postRequest(
-          url: ApiUrl.giveFeedback,
+          url: "${ApiUrl.baseUrl}${ApiUrl.giveFeedback}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1679,7 +1679,7 @@ class UserController extends BaseController {
       Map<String, dynamic> params = {};
       params["id"] = userData.value.id;
       await apiService.postRequest(
-          url: ApiUrl.deleteAccount,
+          url: "${ApiUrl.baseUrl}${ApiUrl.deleteAccount}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             await logout();

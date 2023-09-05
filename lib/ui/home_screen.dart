@@ -500,7 +500,7 @@ class _HomeScreenState extends State<HomeScreen>
                                           ? Image.asset(AppImage.profilePic)
                                           : CustomFadeInImage(
                                               url:
-                                                  "${ApiUrl.baseImageUrl}${userCont.userData.value.picture}",
+                                                  "${ApiUrl.baseUrl}/${userCont.userData.value.picture}",
                                               fit: BoxFit.cover,
                                               placeHolder:
                                                   AppImage.icUserPlaceholder,
@@ -649,7 +649,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                         Get.to(() =>
                                                             ProfileScreen());
                                                         print(
-                                                            "checkP===>${'${ApiUrl.baseImageUrl}${_userController.userData.value.picture}'}");
+                                                            "checkP===>${'${ApiUrl.baseUrl}/${_userController.userData.value.picture}'}");
                                                       },
                                                       child: Stack(
                                                         children: [
@@ -695,14 +695,14 @@ class _HomeScreenState extends State<HomeScreen>
                                                                 radius: 25,
                                                                 backgroundImage:
                                                                 NetworkImage(
-                                                                  '${ApiUrl.baseImageUrl}${_userController.userData.value.picture}',
+                                                                  "${ApiUrl.baseUrl}/${_userController.userData.value.picture}",
                                                                 ),
                                                                 backgroundColor:
                                                                 AppColors
                                                                     .white,
                                                                 // child: CustomFadeInImage(
                                                                 //     url:
-                                                                //         '${ApiUrl.baseImageUrl}${_userController.userData.value.picture}',
+                                                                //         '${ApiUrl.baseUrl}\${_userController.userData.value.picture}',
                                                                 //     fit: BoxFit
                                                                 //         .contain,
                                                                 //     placeHolder:
@@ -4986,7 +4986,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                       AppImage.profilePic)
                                                       : CustomFadeInImage(
                                                     url:
-                                                    "${ApiUrl.baseImageUrl}${cont.checkRequestResponseModel.value.data[0].provider?.avatar}",
+                                                    "${ApiUrl.baseUrl}/${cont.checkRequestResponseModel.value.data[0].provider?.avatar}",
                                                     fit: BoxFit.contain,
                                                     placeHolder:
                                                     AppImage.logoMain,

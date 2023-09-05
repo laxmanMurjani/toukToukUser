@@ -180,7 +180,7 @@ class _LocationScreenState extends State<LocationScreen>
             String? profileUrl;
             if (userCont.userData.value.picture != null) {
               profileUrl =
-              "${ApiUrl.baseImageUrl}${userCont.userData.value.picture ?? ""}";
+              "${ApiUrl.baseUrl}/${userCont.userData.value.picture ?? ""}";
             }
             return Container(
               height: MediaQuery.of(context).size.height,

@@ -126,7 +126,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             borderRadius: BorderRadius.circular(10.h)),
                         child: CustomFadeInImage(
                           url:
-                              "${ApiUrl.baseImageUrl}${cont.userData.value.picture ?? ""}",
+                              "${ApiUrl.baseUrl}/${cont.userData.value.picture ?? ""}",
                           fit: BoxFit.cover,
                           // placeHolderWidget: Center(
                           //   child: Icon(

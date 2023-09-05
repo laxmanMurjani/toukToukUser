@@ -110,7 +110,7 @@ class _DiscountListPageState extends State<DiscountListPage> {
                                 child:
                                 CustomFadeInImage(
                                   url:
-                                  "${ApiUrl.baseImageUrl}storage/${homeCont.discountList[index].image}",
+                                  "${ApiUrl.baseUrl}/storage/${homeCont.discountList[index].image}",
                                   fit: BoxFit.cover,
                                   placeHolder:
                                   AppImage.icUserPlaceholder,
@@ -164,7 +164,7 @@ class _DiscountListPageState extends State<DiscountListPage> {
                                 child:
                                 CustomFadeInImage(
                                   url:
-                                  "${ApiUrl.baseImageUrl}storage/${homeCont.discountList[index].image}",
+                                  "${ApiUrl.baseUrl}/storage/${homeCont.discountList[index].image}",
                                   fit: BoxFit.cover,
                                   placeHolder:
                                   AppImage.icUserPlaceholder,
@@ -218,7 +218,7 @@ class _DiscountListPageState extends State<DiscountListPage> {
                                 child:
                                 CustomFadeInImage(
                                   url:
-                                  "${ApiUrl.baseImageUrl}storage/${homeCont.discountList[index].image}",
+                                  "${ApiUrl.baseUrl}/storage/${homeCont.discountList[index].image}",
                                   fit: BoxFit.cover,
                                   placeHolder:
                                   AppImage.icUserPlaceholder,
@@ -274,7 +274,7 @@ class _DiscountListPageState extends State<DiscountListPage> {
                                    child:
                                    CustomFadeInImage(
                                      url:
-                                     "${ApiUrl.baseImageUrl}storage/${homeCont.discountList[index].image}",
+                                     "${ApiUrl.baseUrl}/storage/${homeCont.discountList[index].image}",
                                      fit: BoxFit.cover,
                                      placeHolder:
                                      AppImage.icUserPlaceholder,

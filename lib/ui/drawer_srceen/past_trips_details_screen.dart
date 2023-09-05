@@ -163,7 +163,7 @@ class _PastTripDetailsScreenState extends State<PastTripDetailsScreen> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(85),
                             child: CustomFadeInImage(
-                              url: "${ApiUrl.baseImageUrl}${tripDataModel.provider?.avatar}" ??
+                              url: "${ApiUrl.baseUrl}/${tripDataModel.provider?.avatar}" ??
                                   "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png",
                               height: 50.w,
                               width: 50.w,

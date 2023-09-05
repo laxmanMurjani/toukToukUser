@@ -511,12 +511,12 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                                     print(
                                         "payment.payable===>${payment.payable}");
                                     print(
-                                        "toll_price${ApiUrl.baseImageUrl + "razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"}");
+                                        "toll_price${ApiUrl.baseUrl! + "/razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"}");
                                     Get.to(
                                             () => PaymentWebViewScreen(
                                             isWallet: false,
                                             url:
-                                            "${ApiUrl.baseImageUrl}razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"),
+                                            "${ApiUrl.baseUrl}/razorpay_online_payment?payment_mood=online&amount=${payment.payable}&user_id=${userCont.userData.value.id}&user_request_id=${cont.checkRequestResponseModel.value.data.first.id}"),
                                         preventDuplicates: false);
                                     if (paid == 1) {
                                       print("paidddd");

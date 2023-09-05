@@ -129,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     shape: BoxShape.circle),
                                 child: CustomFadeInImage(
                                   url:
-                                      "${ApiUrl.baseImageUrl}${_userController.userData.value.picture ?? ""}",
+                                      "${ApiUrl.baseUrl}/${_userController.userData.value.picture ?? ""}",
                                   fit: BoxFit.cover,
                                   placeHolder: AppImage.icUserPlaceholder,
                                 ),
@@ -196,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 shape: BoxShape.circle),
                             child: CustomFadeInImage(
                               url:
-                                  "${ApiUrl.baseImageUrl}${_userController.userData.value.picture ?? ""}",
+                                  "${ApiUrl.baseUrl}/${_userController.userData.value.picture ?? ""}",
                               fit: BoxFit.cover,
                               placeHolder: AppImage.icUserPlaceholder,
                             ),

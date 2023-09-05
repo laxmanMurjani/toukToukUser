@@ -251,7 +251,7 @@ class _RatingDialogState extends State<RatingDialog> {
                                   AppImage.profilePic)
                                   : CustomFadeInImage(
                                 url:
-                                "${ApiUrl.baseImageUrl}${cont.checkRequestResponseModel.value.data[0].provider?.avatar}",
+                                "${ApiUrl.baseUrl}/${cont.checkRequestResponseModel.value.data[0].provider?.avatar}",
                                 placeHolder:
                                 AppImage.logoMain,
                                 fit: BoxFit.contain,
