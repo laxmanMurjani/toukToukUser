@@ -320,7 +320,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           cont.countryCode == '+961') || cont.phoneNumberController.text.length ==
                           10 && cont.countryCode != '+961') {
                         print('passed');
-                        sendOtp();
+                        sendOtp(cont);
                         // cont.sendOtp(params: params);
                         return;
                       }
@@ -743,63 +743,62 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  sendOtp() async {
-    _userController.sendOtp(params: params);
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
-//     var millis = await prefs.getInt('sendOtpTimestamp');
-//     print('millis ${millis}');
-//
-//     if(millis != null){
-//       // Assuming you have the original time and a timestamp in milliseconds
-//       int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
-//       int? timestamp = millis;
-//
-// // Create DateTime objects from the timestamps
-//       DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
-//       DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-//
-// // Calculate the difference in minutes
-//       Duration difference = timestampDateTime.difference(originalDateTime);
-//       print("ddddd===>${difference}");
-//       int differenceInMinutes = difference.inMinutes * (-1);
-//
-// // Print the result
-//       print('Difference in minutes: $differenceInMinutes');
-//
-//       if(prefs.containsKey('sendOtpCounter') && differenceInMinutes >= 59){
-//         await prefs.remove('sendOtpTimestamp');
-//         await prefs.remove('sendOtpCounter');
-//         print("dbc===L>${differenceInMinutes >= 59}");
-//
-//       }
-//       // Get.snackbar('Alert', "'Retry after 6 hours'",
-//       //     backgroundColor: Colors.red.withOpacity(0.8),
-//       //     colorText: Colors.white);
-//     }
-//
-//     cont.resendOtpCounter.value ++;
-//
-//     // cont.resendOtpCounter.value = prefs.getBool(key)
-//
-//     if(prefs.containsKey('sendOtpCounter')){
-//       Get.snackbar('Alert', "'Retry after 6 hours'",
-//           backgroundColor: Colors.red.withOpacity(0.8),
-//           colorText: Colors.white);
-//       //print("dbc===L>${differenceInMinutes >= 59}");
-//     }else{
-//       print('counterValue: ${cont.resendOtpCounter.value}');
-//       if(cont.resendOtpCounter.value<=2){
-//         cont.sendOtp(params: params);
-//       }else{
-//
-//         Get.snackbar('Alert', "'Retry after 6 hours'",
-//             backgroundColor: Colors.red.withOpacity(0.8),
-//             colorText: Colors.white);
-//         print('currentTime${DateTime.now().millisecondsSinceEpoch}');
-//         await prefs.setBool('sendOtpCounter', true);
-//         await prefs.setInt('sendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
-//       }
-//     }
+  sendOtp(cont) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+    var millis = await prefs.getInt('sendOtpTimestamp');
+    print('millis ${millis}');
+
+    if(millis != null){
+      // Assuming you have the original time and a timestamp in milliseconds
+      int originalTimestamp = DateTime.now().millisecondsSinceEpoch;
+      int? timestamp = millis;
+
+// Create DateTime objects from the timestamps
+      DateTime originalDateTime = DateTime.fromMillisecondsSinceEpoch(originalTimestamp);
+      DateTime timestampDateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+// Calculate the difference in minutes
+      Duration difference = timestampDateTime.difference(originalDateTime);
+      print("ddddd===>${difference}");
+      int differenceInMinutes = difference.inMinutes * (-1);
+
+// Print the result
+      print('Difference in minutes: $differenceInMinutes');
+
+      if(prefs.containsKey('sendOtpCounter') && differenceInMinutes >= 59){
+        await prefs.remove('sendOtpTimestamp');
+        await prefs.remove('sendOtpCounter');
+        print("dbc===L>${differenceInMinutes >= 59}");
+
+      }
+      // Get.snackbar('Alert', "'Retry after 6 hours'",
+      //     backgroundColor: Colors.red.withOpacity(0.8),
+      //     colorText: Colors.white);
+    }
+
+    cont.resendOtpCounter.value ++;
+
+    // cont.resendOtpCounter.value = prefs.getBool(key)
+
+    if(prefs.containsKey('sendOtpCounter')){
+      Get.snackbar('Alert', "'Retry after 6 hours'",
+          backgroundColor: Colors.red.withOpacity(0.8),
+          colorText: Colors.white);
+      //print("dbc===L>${differenceInMinutes >= 59}");
+    }else{
+      print('counterValue: ${cont.resendOtpCounter.value}');
+      if(cont.resendOtpCounter.value<=2){
+        cont.sendOtp(params: params);
+      }else{
+
+        Get.snackbar('Alert', "'Retry after 6 hours'",
+            backgroundColor: Colors.red.withOpacity(0.8),
+            colorText: Colors.white);
+        print('currentTime${DateTime.now().millisecondsSinceEpoch}');
+        await prefs.setBool('sendOtpCounter', true);
+        await prefs.setInt('sendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
+      }
+    }
   }
 }

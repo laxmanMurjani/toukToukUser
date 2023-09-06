@@ -405,8 +405,10 @@ class UserController extends BaseController {
       await apiService.postRequest(
           url: "${ApiUrl.baseUrl}${ApiUrl.login}",
           params: params,
-          onSuccess: (Map<String, dynamic> data) {
+          onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString("base_url", ApiUrl.baseUrl!);
             userToken.value =
                 loginResponseModelFromJson(jsonEncode(data["response"]));
             userToken.refresh();
@@ -561,7 +563,6 @@ class UserController extends BaseController {
 
   Future<void> sendOtp({required Map<String, dynamic> params}) async {
     removeUnFocusManager();
-
     try {
       showLoader();
       String? token = await FirebaseMessaging.instance.getToken();
@@ -573,14 +574,18 @@ class UserController extends BaseController {
       await apiService.postRequest(
           url: "${ApiUrl.baseUrl}${ApiUrl.sendOtp}",
           params: params,
-          onSuccess: (Map<String, dynamic> data) {
+          onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
             params["otp"] = data["response"]["otp"];
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString("base_url", ApiUrl.baseUrl!);
             Get.to(
                 () => OtpScreen(
                       params: params,
                     ),
                 arguments: [phoneNumberController.text, countryCode]);
+            print("fdfdf ===> ${prefs.getString("base_url")}");
+            // print("fdfdf ===> ${prefs.containsKey("base_url")}");
           },
           onError: (ErrorType errorType, String msg) {
             print('object12 ${msg}');
@@ -1550,6 +1555,7 @@ class UserController extends BaseController {
   Future<void> logout() async {
     try {
       showLoader();
+      final prefs = await SharedPreferences.getInstance();
       String? token = await FirebaseMessaging.instance.getToken();
       Map<String, String> params = {};
       params["id"] = "${userData.value.id}";
@@ -1563,6 +1569,7 @@ class UserController extends BaseController {
             userToken.value = LoginResponseModel();
             userData.value = UserDetailModel();
             await _userDetails.logoutUser();
+            prefs.remove("base_url");
             // Get.offAll(() => SignInUpScreen());
             Get.offAll(() => LoginScreen());
             log("messagessss   ==>  successfully logout");

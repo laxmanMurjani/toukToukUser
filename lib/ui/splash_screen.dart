@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:etoUser/api/api.dart';
 import 'package:etoUser/controller/home_controller.dart';
 import 'package:etoUser/main.dart';
 import 'package:etoUser/preference/preference.dart';
@@ -46,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
             ),
             actions: [
               TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Database.setSeenLocationAlertDialog();
                     Get.back();
                     _userController.setLanguage();
@@ -55,6 +56,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
 
 
                     if(!AppString.testing_version_code_check_dialog!){
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
                       if(Platform.isAndroid){
                         if(int.parse(AppString.detectUserAndroidBuildNumber!) < int.parse(AppString.firebaseUserAndroidBuildNumber!) ||
                             int.parse(AppString.detectUserAndroidVersionCode!) < int.parse(AppString.firebaseUserAndroidVersionCode!)){
@@ -64,6 +66,11 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
                           Timer(const Duration(seconds: 3), () {
                             // _homeController.getUserLatLong();
                             if (_userController.userToken.value.accessToken != null) {
+                              if(prefs.containsKey("base_url")){
+                                setState(() {
+                                  ApiUrl.baseUrl = prefs.getString("base_url");
+                                });
+                              }
                               _homeController.getUserLatLong();
                               // _userController.currentUserApi();
                               // Get.off(()=> HomeScreen());
@@ -83,6 +90,11 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
                           Timer(const Duration(seconds: 3), () {
                             // _homeController.getUserLatLong();
                             if (_userController.userToken.value.accessToken != null) {
+                              if(prefs.containsKey("base_url")){
+                                setState(() {
+                                  ApiUrl.baseUrl = prefs.getString("base_url");
+                                });
+                              }
                               _homeController.getUserLatLong();
                               // _userController.currentUserApi();
                               // Get.off(()=> HomeScreen());
@@ -131,10 +143,9 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     WidgetsBinding.instance.addObserver(this);
     // determinePosition();
     // contactPermissions();
-
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final prefs = await SharedPreferences.getInstance();
+      // prefs.containsKey("base_url");
       print(
           "prefs.containsKey(Database.seenOnBoarding)===>${prefs.containsKey(Database.seenOnBoarding)}");
       if (!prefs.containsKey(Database.seenOnBoarding)) {
@@ -158,6 +169,11 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
               Timer(const Duration(seconds: 3), () {
                 // _homeController.getUserLatLong();
                 if (_userController.userToken.value.accessToken != null) {
+                  if(prefs.containsKey("base_url")){
+                    setState(() {
+                      ApiUrl.baseUrl = prefs.getString("base_url");
+                    });
+                  }
                   _homeController.getUserLatLong();
                   // _userController.currentUserApi();
                   // Get.off(()=> HomeScreen());
@@ -177,6 +193,11 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
               Timer(const Duration(seconds: 3), () {
                 // _homeController.getUserLatLong();
                 if (_userController.userToken.value.accessToken != null) {
+                  if(prefs.containsKey("base_url")){
+                    setState(() {
+                      ApiUrl.baseUrl = prefs.getString("base_url");
+                    });
+                  }
                   _homeController.getUserLatLong();
                   // _userController.currentUserApi();
                   // Get.off(()=> HomeScreen());
