@@ -79,6 +79,7 @@ class UserController extends BaseController {
   RxString facebookAuthToken = ''.obs;
   RxBool isUserUpdated = false.obs;
   RxBool isUpdateApp = false.obs;
+  RxBool isLogout = false.obs;
   RxInt resendOtpCounter = 0.obs;
 
 
@@ -684,6 +685,7 @@ class UserController extends BaseController {
           url: "${ApiUrl.baseUrl}${ApiUrl.verifyOTP}",
           params: params,
           onSuccess: (Map<String, dynamic> data) {
+            isLogout.value = false;
             dismissLoader();
             print("vvvvvvv===>${data["response"]["token_type"]}");
             userToken.value = LoginResponseModel(
@@ -1570,6 +1572,7 @@ class UserController extends BaseController {
             userData.value = UserDetailModel();
             await _userDetails.logoutUser();
             prefs.remove("base_url");
+            isLogout.value = true;
             // Get.offAll(() => SignInUpScreen());
             Get.offAll(() => LoginScreen());
             log("messagessss   ==>  successfully logout");

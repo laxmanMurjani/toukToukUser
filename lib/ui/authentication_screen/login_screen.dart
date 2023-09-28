@@ -276,18 +276,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 18.h),
                   InkWell(
                     onTap: () {
+
                     if(cont.countryCode == "+961" || cont.countryCode == "+91"){
                         setState(() {
                           ApiUrl.baseUrl = "${ApiUrl.baseUrlLebanon}/api/user";
                           // ApiUrl.apiBaseUrl = '${ApiUrl.baseUrl}/api/user';
                         });
-                        print("cwdhjshd  ${ApiUrl.baseUrl}");
+
                       }else if(cont.countryCode == "+234"){
+                      print("cwdhjshd  ${ApiUrl.baseUrl}");
                         setState(() {
                           ApiUrl.baseUrl = "${ApiUrl.baseUrlNigeria}/api/user";
                           // ApiUrl.apiBaseUrl ='${ApiUrl.baseUrl}/api/user';
                         });
-                        print("cwdhjshd  ${ApiUrl.baseUrl}");
+                        print("cwdhjshdsss  ${ApiUrl.baseUrl}");
                       } else{
                         print("1111111111111");
                         Get.snackbar("Alert", "This service not available in this country",
@@ -313,17 +315,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         //     msg:
                         //         "Please enter valid 10 digit mobile number");
                         return;
-                      } else if (((cont.phoneNumberController.text.length ==
-                          6 || cont.phoneNumberController.text.length ==
-                          8 || cont.phoneNumberController.text.length ==
-                          7) &&
-                          cont.countryCode == '+961') || cont.phoneNumberController.text.length ==
-                          10 && cont.countryCode != '+961') {
-                        print('passed');
+                      }
+                      // else if (((cont.phoneNumberController.text.length ==
+                      //     6 || cont.phoneNumberController.text.length ==
+                      //     8 || cont.phoneNumberController.text.length ==
+                      //     7) &&
+                      //     cont.countryCode == '+961') || cont.phoneNumberController.text.length ==
+                      //     10 && cont.countryCode != '+961') {
+                      //   print('passed');
                         sendOtp(cont);
                         // cont.sendOtp(params: params);
-                        return;
-                      }
+                      //   return;
+                      // }
                       // Get.snackbar("Alert", "Please enter a valid mobile number",
                       //     backgroundColor: Colors.redAccent.withOpacity(0.8),
                       //     colorText: Colors.white);
@@ -748,7 +751,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // await prefs.setInt('resendOtpTimestamp', DateTime.now().millisecondsSinceEpoch);
     var millis = await prefs.getInt('sendOtpTimestamp');
     print('millis ${millis}');
-
+    cont.sendOtp(params: params);
     if(millis != null){
       // Assuming you have the original time and a timestamp in milliseconds
       int originalTimestamp = DateTime.now().millisecondsSinceEpoch;

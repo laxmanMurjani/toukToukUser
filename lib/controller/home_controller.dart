@@ -728,9 +728,9 @@ class HomeController extends BaseController {
       // });
       markers = temo;
 
-    if(isMounting){
-      updateData!.call();
-    }
+    // if(isMounting){
+    //   updateData!.call();
+    // }
   }
 
   Future<List<Placemark>> getLocationAddress(
@@ -1277,6 +1277,7 @@ class HomeController extends BaseController {
       params["latitude"] =lat;
       params["longitude"] = long;
       print("ajksn===>${lat} === ${long}");
+      print("ajksn===>sss   ${_userController.isLogout.value}");
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
         url: "${ApiUrl.baseUrl}${ApiUrl.updateLocation}",
@@ -1400,7 +1401,7 @@ class HomeController extends BaseController {
       params["comment"] = comment;
       print("ssssss  ==>  ${jsonEncode(params)}");
       await apiService.postRequest(
-        url: "{${ApiUrl.baseUrl}${ApiUrl.providerRate}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.providerRate}",
         params: params,
         onSuccess: (Map<String, dynamic> data) async {
           print("providerRate  ==>  ${jsonEncode(data)}");

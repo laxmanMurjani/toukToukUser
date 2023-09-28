@@ -246,7 +246,10 @@ class _HomeScreenState extends State<HomeScreen>
      });
 
     _requestTimer = Timer.periodic(Duration(seconds: 3), (_) async {
-      await _homeController.checkRequest();
+      if(!_userController.isLogout.value){
+        await _homeController.checkRequest();
+      }
+
 
       Future.delayed(
         Duration(seconds: 0),
@@ -254,28 +257,35 @@ class _HomeScreenState extends State<HomeScreen>
           print( "{xsks==> ${_homeController.isStatusCheck.value}");
           print( "xsks==> ${_homeController.isBackgroundStatusCheck.value}");
 
-          if (_homeController.userCurrentLocation != null) {
-            _homeController.updateLocation(
+          if(!_userController.isLogout.value){
+            if (_homeController.userCurrentLocation != null) {
+              print("sdbj===>}");
+              _homeController.updateLocation(
                 _homeController.userCurrentLocation!.latitude.toString(),
                 _homeController.userCurrentLocation!.longitude.toString(),
-                 );
-          }
-          if (_homeController.userCurrentLocation != null) {
-            print("checkEnter");
-            // if (_homeController.showDriverLocationList.isNotEmpty) {
-            await _homeController.getDriversLocationData(() => setState(() {}),servicesModel:_homeController.serviceModelList.isEmpty ? "1" : _homeController.serviceModelList.first.id.toString());
-            print("0000===>${_homeController.showDriverLocationList.length}");
-            // }
-
-            Future.delayed(Duration(seconds: 10),() async{
-              await _homeController.getDriverMarkerData(
-                  updateData: () => setState(() {}));
-            },);
-            if (_homeController.showDriverLocationList.isNotEmpty) {
-              await _homeController.getNearDriverTimeData();
+              );
             }
-            //}
           }
+
+          if(!_userController.isLogout.value){
+            if (_homeController.userCurrentLocation != null) {
+              print("checkEnter");
+              // if (_homeController.showDriverLocationList.isNotEmpty) {
+              await _homeController.getDriversLocationData(() => setState(() {}),servicesModel:_homeController.serviceModelList.isEmpty ? "1" : _homeController.serviceModelList.first.id.toString());
+              print("0000===>${_homeController.showDriverLocationList.length}");
+              // }
+
+              Future.delayed(Duration(seconds: 10),() async{
+                await _homeController.getDriverMarkerData(
+                    updateData: () => setState(() {}));
+              },);
+              if (_homeController.showDriverLocationList.isNotEmpty) {
+                await _homeController.getNearDriverTimeData();
+              }
+              //}
+            }
+          }
+
 
           // if (_homeController.showDriverLocationList.isEmpty) {
           // Timer.periodic(Duration(seconds: 40), (_) async {
@@ -350,7 +360,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     });
 
-    checkOnlineStatus = Timer.periodic(Duration(seconds: 1), (_) async {
+    checkOnlineStatus = Timer.periodic(Duration(seconds: 2), (_) async {
        _homeController.onlineStatusCheck(_homeController.isStatusCheck.value ? "Online" : _homeController.isBackgroundStatusCheck.value ?"Background" : "Offline"); });
 
   }
@@ -5640,8 +5650,10 @@ class _HomeScreenState extends State<HomeScreen>
       print("kajsbjabdhs===>${position.latitude}  ${position.longitude}");
       _homeController.tempLatLngFrom = latLng;
       _homeController.userCurrentLocation = latLng;
+      if(!_userController.isLogout.value){
+        _homeController.updateLocation(position.latitude.toString(), position.longitude.toString());
+      }
 
-      _homeController.updateLocation(position.latitude.toString(), position.longitude.toString());
 
       CameraPosition cameraPosition = CameraPosition(
         target: LatLng(latLng.latitude, latLng.longitude),
@@ -5694,7 +5706,10 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _requestTimer?.cancel();
+    _requestTimer!.cancel();
+    print("ndjsbdjdb=1==>${_requestTimer}");
+    // _requestTimer = null;
+    print("ndjsbdjdb===>${_requestTimer}");
     _requestTimerForNotification?.cancel();
     checkOnlineStatus?.cancel();
     // _connectivitySubscription.cancel();
@@ -5725,7 +5740,12 @@ class _HomeScreenState extends State<HomeScreen>
           determinePosition();
         });
         print("sajhsdjjj===>${_homeController.userCurrentLocation!.latitude.toString()} ${_homeController.userCurrentLocation!.longitude.toString()}");
-        _homeController.updateLocation(_homeController.userCurrentLocation!.latitude.toString(), _homeController.userCurrentLocation!.longitude.toString());
+        print("sbdjsjjkjkk===>${_homeController.isStatusCheck.value}");
+        print("sbdjsjjkjkk===>${AppLifecycleState.inactive}");
+       if(AppLifecycleState.inactive == true){
+         print("sbdjsjjkjkk===>${_userController.isLogout.value}");
+         _homeController.updateLocation(_homeController.userCurrentLocation!.latitude.toString(), _homeController.userCurrentLocation!.longitude.toString());
+       }
 
         // print('statusIsInactive');
         // if (await FlutterOverlayWindow.isActive()) return;
