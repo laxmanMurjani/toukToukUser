@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -224,6 +225,8 @@ class _HomeScreenState extends State<HomeScreen>
     //     await FlutterOverlayWindow.requestPermission();
     //   }
     // },);
+
+
 
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
@@ -1617,8 +1620,8 @@ class _HomeScreenState extends State<HomeScreen>
                                       .isEmpty &&
                                   userCont.locationResponseModel.value.others
                                       .isEmpty)
-                              ? 0.4 //0.38
-                              : 0.47, //0.38,
+                              ? 0.313 //0.38
+                              : 0.38, //0.38,
                                // ? 0.46 //0.38
                               //: 0.53, //0.38,
                       minChildSize:
@@ -1627,8 +1630,8 @@ class _HomeScreenState extends State<HomeScreen>
                                       .isEmpty &&
                                   userCont.locationResponseModel.value.others
                                       .isEmpty)
-                              ? 0.4 //0.38
-                              : 0.47, //0.38,
+                              ? 0.3 //0.38
+                              : 0.38, //0.38,
                               // ? 0.46 //0.38
                               // : 0.53, //0.38,
                       maxChildSize: .6,
@@ -1668,8 +1671,8 @@ class _HomeScreenState extends State<HomeScreen>
                                       .isEmpty &&
                                   userCont.locationResponseModel.value
                                       .others.isEmpty)
-                              ? MediaQuery.of(context).size.height * 0.34 //0.3
-                              : MediaQuery.of(context).size.height * 0.41, //0.3,
+                              ? MediaQuery.of(context).size.height * 0.25 //0.3
+                              : MediaQuery.of(context).size.height * 0.32, //0.3,
                         // ? MediaQuery.of(context).size.height * 0.4 //0.3
                         //       : MediaQuery.of(context).size.height * 0.47, //0.3,
                           decoration: BoxDecoration(
@@ -1891,207 +1894,207 @@ class _HomeScreenState extends State<HomeScreen>
                               SizedBox(height: 10,),
 
 
-                        Padding(
-                              padding: EdgeInsets.only(right: 20,left: 20,),
-                              child: GestureDetector(
-                                onTap: () {
-                                  cont.isRideSelected.value = true;
-                                  if (cont.userCurrentLocation !=
-                                      null) {
-                                    Get.to(() => LocationScreen(
-                                      isRideLocationUpdate: false,
-                                    ));
-                                    isSubmit = false;
-                                    _shouldScaleDown = false;
-                                  } else {
-                                    Get.snackbar("Alert",
-                                        "Please wait, your current location found",
-                                        backgroundColor: Colors.red
-                                            .withOpacity(0.8),
-                                        colorText: Colors.white);
-                                  }
-                                },
-                                child:  Container(
-                                  height: 50.h,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 5.w,
-                                      vertical: 10.h),
-                                  alignment: Alignment.center,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    borderRadius:
-                                    BorderRadius.circular(10.r),
-                                    // boxShadow: [
-                                    //   BoxShadow(
-                                    //     color: AppColors.primaryColor
-                                    //         .withOpacity(0.06),
-                                    //     offset: Offset(0, 12.h),
-                                    //     blurRadius: 10.r,
-                                    //   )
-                                    // ],
-                                  ),
-                                  child: TextField(
-                                    controller: cont.locationWhereTo1,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      color: AppColors.primaryColor,
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    textAlignVertical:
-                                    TextAlignVertical.center,
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.zero,
-                                      hintText:
-                                      "enter_destination".tr,
-                                      prefixIcon: Padding(
-                                        padding:
-                                        const EdgeInsets.all(5.0),
-                                        child: Image.asset(
-                                          AppImage.search,
-                                          width: 27,
-                                          height: 27,
-                                          fit: BoxFit.contain,
-                                          color:
-                                          AppColors.primaryColor,
-                                        ),
+                        // Padding(
+                        //       padding: EdgeInsets.only(right: 20,left: 20,),
+                        //       child: GestureDetector(
+                        //         onTap: () {
+                        //           cont.isRideSelected.value = true;
+                        //           if (cont.userCurrentLocation !=
+                        //               null) {
+                        //             Get.to(() => LocationScreen(
+                        //               isRideLocationUpdate: false,
+                        //             ));
+                        //             isSubmit = false;
+                        //             _shouldScaleDown = false;
+                        //           } else {
+                        //             Get.snackbar("Alert",
+                        //                 "Please wait, your current location found",
+                        //                 backgroundColor: Colors.red
+                        //                     .withOpacity(0.8),
+                        //                 colorText: Colors.white);
+                        //           }
+                        //         },
+                        //         child:  Container(
+                        //           height: 50.h,
+                        //           padding: EdgeInsets.symmetric(
+                        //               horizontal: 5.w,
+                        //               vertical: 10.h),
+                        //           alignment: Alignment.center,
+                        //           width: double.infinity,
+                        //           decoration: BoxDecoration(
+                        //             color: Colors.grey[200],
+                        //             borderRadius:
+                        //             BorderRadius.circular(10.r),
+                        //             // boxShadow: [
+                        //             //   BoxShadow(
+                        //             //     color: AppColors.primaryColor
+                        //             //         .withOpacity(0.06),
+                        //             //     offset: Offset(0, 12.h),
+                        //             //     blurRadius: 10.r,
+                        //             //   )
+                        //             // ],
+                        //           ),
+                        //           child: TextField(
+                        //             controller: cont.locationWhereTo1,
+                        //             textAlign: TextAlign.start,
+                        //             style: TextStyle(
+                        //               color: AppColors.primaryColor,
+                        //               fontSize: 13.sp,
+                        //               fontWeight: FontWeight.w400,
+                        //             ),
+                        //             textAlignVertical:
+                        //             TextAlignVertical.center,
+                        //             decoration: InputDecoration(
+                        //               isDense: true,
+                        //               contentPadding: EdgeInsets.zero,
+                        //               hintText:
+                        //               "enter_destination".tr,
+                        //               prefixIcon: Padding(
+                        //                 padding:
+                        //                 const EdgeInsets.all(5.0),
+                        //                 child: Image.asset(
+                        //                   AppImage.search,
+                        //                   width: 27,
+                        //                   height: 27,
+                        //                   fit: BoxFit.contain,
+                        //                   color:
+                        //                   AppColors.primaryColor,
+                        //                 ),
+                        //               ),
+                        //               hintStyle: TextStyle(
+                        //                   color: Colors.grey.shade400,
+                        //                   fontSize: 15.sp),
+                        //               border: InputBorder.none,
+                        //             ),
+                        //             minLines: 1,
+                        //             maxLines: 2,
+                        //             readOnly: true,
+                        //             enabled: false,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+
+
+
+
+
+                               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
+                                InkWell(
+                                  onTap: () {
+                                    print('tap other');
+                                    cont.isRideSelected.value = true;
+
+                                    Get.to(
+                                          () => LocationScreen(
+                                        isRideLocationUpdate: false,
                                       ),
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey.shade400,
-                                          fontSize: 15.sp),
-                                      border: InputBorder.none,
-                                    ),
-                                    minLines: 1,
-                                    maxLines: 2,
-                                    readOnly: true,
-                                    enabled: false,
+                                    );
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.r)),
+                                    child: Container(
+                                        padding: EdgeInsets.all(7),
+                                        height: 84.h,
+                                        width: 101.w,
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color:
+                                                  Color(0x25000000),
+                                                  offset: Offset(0, 4.h),
+                                                  blurRadius: 2),
+                                            ],
+                                            color: Colors.white,
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                                10)),
+                                        child: Image.asset(
+                                          AppImage.taxiLogo,
+                                          height: 47.h,
+                                          width: 38.w,
+                                          // Icons.home,
+                                        )),
                                   ),
                                 ),
-                              ),
-                            ),
+                                InkWell(
+                                  onTap: () {
+                                    print('tap other');
+                                    cont.isRideSelected.value = false;
 
-
-
-
-
-                              // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
-                              //   InkWell(
-                              //     onTap: () {
-                              //       print('tap other');
-                              //       cont.isRideSelected.value = true;
-                              //
-                              //       Get.to(
-                              //             () => LocationScreen(
-                              //           isRideLocationUpdate: false,
-                              //         ),
-                              //       );
-                              //     },
-                              //     child: Card(
-                              //       shape: RoundedRectangleBorder(
-                              //           borderRadius:
-                              //           BorderRadius.circular(10.r)),
-                              //       child: Container(
-                              //           padding: EdgeInsets.all(7),
-                              //           height: 84.h,
-                              //           width: 101.w,
-                              //           decoration: BoxDecoration(
-                              //               boxShadow: [
-                              //                 BoxShadow(
-                              //                     color:
-                              //                     Color(0x25000000),
-                              //                     offset: Offset(0, 4.h),
-                              //                     blurRadius: 2),
-                              //               ],
-                              //               color: Colors.white,
-                              //               borderRadius:
-                              //               BorderRadius.circular(
-                              //                   10)),
-                              //           child: Image.asset(
-                              //             AppImage.taxiLogo,
-                              //             height: 47.h,
-                              //             width: 38.w,
-                              //             // Icons.home,
-                              //           )),
-                              //     ),
-                              //   ),
-                              //   // InkWell(
-                              //   //   onTap: () {
-                              //   //     print('tap other');
-                              //   //     cont.isRideSelected.value = false;
-                              //   //
-                              //   //     Get.to(
-                              //   //           () => LocationScreen(
-                              //   //         isRideLocationUpdate: false,
-                              //   //       ),
-                              //   //     );
-                              //   //   },
-                              //   //   child: Card(
-                              //   //     shape: RoundedRectangleBorder(
-                              //   //         borderRadius:
-                              //   //         BorderRadius.circular(10.r)),
-                              //   //     child: Container(
-                              //   //         padding: EdgeInsets.fromLTRB(
-                              //   //             7, 15, 7, 7),
-                              //   //         height: 84.h,
-                              //   //         width: 101.w,
-                              //   //         decoration: BoxDecoration(
-                              //   //             boxShadow: [
-                              //   //               BoxShadow(
-                              //   //                   color:
-                              //   //                   Color(0x25000000),
-                              //   //                   offset: Offset(0, 4.h),
-                              //   //                   blurRadius: 2),
-                              //   //             ],
-                              //   //             color: Colors.white,
-                              //   //             borderRadius:
-                              //   //             BorderRadius.circular(
-                              //   //                 10.r)),
-                              //   //         child: Image.asset(
-                              //   //           AppImage.deliveryLogo,
-                              //   //           height: 38.h,
-                              //   //           width: 47.w,
-                              //   //           // Icons.home,
-                              //   //         )),
-                              //   //   ),
-                              //   // ),
-                              // ],),
-                              SizedBox(height: 10,),
-                              Row(
-                                children: [
-                                  SizedBox(width: 20,),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        'Ride with special\ndiscounts in Touk Touk'.tr,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: AppColors.primaryColor,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16),
+                                    Get.to(
+                                          () => LocationScreen(
+                                        isRideLocationUpdate: false,
                                       ),
-                                      SizedBox(height: 5,),
-                                      SizedBox(
-                                        width: 175,
-                                        // height: 45,
-                                        child: CustomButton(textColor: Colors.white,
-                                        bgColor: Colors.black,
-                                          text: "Apply Now",onTap: (){
-                                          Get.to(DiscountListPage());
-                                          },),
-                                      )
-                                    ],
+                                    );
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.r)),
+                                    child: Container(
+                                        padding: EdgeInsets.fromLTRB(
+                                            7, 15, 7, 7),
+                                        height: 84.h,
+                                        width: 101.w,
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color:
+                                                  Color(0x25000000),
+                                                  offset: Offset(0, 4.h),
+                                                  blurRadius: 2),
+                                            ],
+                                            color: Colors.white,
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                                10.r)),
+                                        child: Image.asset(
+                                          AppImage.deliveryLogo,
+                                          height: 38.h,
+                                          width: 47.w,
+                                          // Icons.home,
+                                        )),
                                   ),
-                                  Image.asset(
-                                    AppImage.bannerLogo,
-                                    height: 100.h,
-                                    width: 172.w,
-                                    fit: BoxFit.contain,
-                                    // Icons.home,
-                                  )
-                                ],
-                              ),
+                                ),
+                              ],),
+                              SizedBox(height: 10,),
+                              // Row(
+                              //   children: [
+                              //     SizedBox(width: 20,),
+                              //     Column(
+                              //       children: [
+                              //         Text(
+                              //           'Ride with special\ndiscounts in Touk Touk'.tr,
+                              //           textAlign: TextAlign.center,
+                              //           style: TextStyle(
+                              //               color: AppColors.primaryColor,
+                              //               fontWeight: FontWeight.w700,
+                              //               fontSize: 16),
+                              //         ),
+                              //         SizedBox(height: 5,),
+                              //         SizedBox(
+                              //           width: 175,
+                              //           // height: 45,
+                              //           child: CustomButton(textColor: Colors.white,
+                              //           bgColor: Colors.black,
+                              //             text: "Apply Now",onTap: (){
+                              //             Get.to(DiscountListPage());
+                              //             },),
+                              //         )
+                              //       ],
+                              //     ),
+                              //     Image.asset(
+                              //       AppImage.bannerLogo,
+                              //       height: 100.h,
+                              //       width: 172.w,
+                              //       fit: BoxFit.contain,
+                              //       // Icons.home,
+                              //     )
+                              //   ],
+                              // ),
 
 
                               SizedBox(
@@ -3199,12 +3202,19 @@ class _HomeScreenState extends State<HomeScreen>
                                       ),
                                       SizedBox(height: 5.h),
                                       GestureDetector(
-                                        onTap: () {
+                                        onTap: () async {
                                           cont.isBaseFareSelect.value = true;
                                           print("isSubmit==>$isSubmit");
                                           setState(() {
                                             isSubmit = true;
                                           });
+                                          if(Platform.isIOS){
+                                            PermissionStatus permissionStatus = await _getContactPermission();
+                                            Get.snackbar("Alert", "Permission status ==> ${permissionStatus.isGranted} || ${permissionStatus}",
+                                                backgroundColor: Colors.redAccent.withOpacity(0.8),
+                                                colorText: Colors.white);
+                                          }
+
                                         },
                                         child: Container(
                                           margin: EdgeInsets.symmetric(
@@ -4052,64 +4062,64 @@ class _HomeScreenState extends State<HomeScreen>
                                               }
                                               }
                                               else{
-                                                // showDeliveryRequestDialog(
-                                                //   addANoteButtonFunction: (){
-                                                //     Get.back();
-                                                //   },
-                                                //   yesButtonFunction: (){
-                                                //     if (_homeController
-                                                //         .isBookSomeOne
-                                                //         .value &&
-                                                //         _homeController
-                                                //             .bookSomeNumber
-                                                //             .value
-                                                //             .isNotEmpty) {
-                                                //       if (_homeController
-                                                //           .bookSomeNumber
-                                                //           .value
-                                                //           .length ==
-                                                //           12) {
-                                                //         _homeController
-                                                //             .sendRequest(params: {
-                                                //           "book_someone_name":
-                                                //           _homeController
-                                                //               .bookSomeName
-                                                //               .value
-                                                //               .isEmpty
-                                                //               ? ""
-                                                //               : _homeController
-                                                //               .bookSomeName
-                                                //               .value,
-                                                //           "else_mobile":
-                                                //           "+${_homeController.bookSomeNumber.value.isEmpty ? "" : _homeController.bookSomeNumber.value}"
-                                                //         });
-                                                //         Get.back();
-                                                //       } else {
-                                                //         _homeController
-                                                //             .sendRequest(params: {
-                                                //           "book_someone_name":
-                                                //           _homeController
-                                                //               .bookSomeName
-                                                //               .value
-                                                //               .isEmpty
-                                                //               ? ""
-                                                //               : _homeController
-                                                //               .bookSomeName
-                                                //               .value,
-                                                //           "else_mobile":
-                                                //           "+91${_homeController.bookSomeNumber.value.isEmpty ? "" : _homeController.bookSomeNumber.value}"
-                                                //         });
-                                                //         Get.back();
-                                                //       }
-                                                //     } else {
-                                                //       print(
-                                                //           "book for some one nahi he===>${cont.selectedRadioIndex.value}");
-                                                //
-                                                //       cont.sendRequest();
-                                                //     }
-                                                //     Get.back();
-                                                //   }
-                                                // );
+                                                showDeliveryRequestDialog(
+                                                  addANoteButtonFunction: (){
+                                                    Get.back();
+                                                  },
+                                                  yesButtonFunction: (){
+                                                    if (_homeController
+                                                        .isBookSomeOne
+                                                        .value &&
+                                                        _homeController
+                                                            .bookSomeNumber
+                                                            .value
+                                                            .isNotEmpty) {
+                                                      if (_homeController
+                                                          .bookSomeNumber
+                                                          .value
+                                                          .length ==
+                                                          12) {
+                                                        _homeController
+                                                            .sendRequest(params: {
+                                                          "book_someone_name":
+                                                          _homeController
+                                                              .bookSomeName
+                                                              .value
+                                                              .isEmpty
+                                                              ? ""
+                                                              : _homeController
+                                                              .bookSomeName
+                                                              .value,
+                                                          "else_mobile":
+                                                          "+${_homeController.bookSomeNumber.value.isEmpty ? "" : _homeController.bookSomeNumber.value}"
+                                                        });
+                                                        Get.back();
+                                                      } else {
+                                                        _homeController
+                                                            .sendRequest(params: {
+                                                          "book_someone_name":
+                                                          _homeController
+                                                              .bookSomeName
+                                                              .value
+                                                              .isEmpty
+                                                              ? ""
+                                                              : _homeController
+                                                              .bookSomeName
+                                                              .value,
+                                                          "else_mobile":
+                                                          "+91${_homeController.bookSomeNumber.value.isEmpty ? "" : _homeController.bookSomeNumber.value}"
+                                                        });
+                                                        Get.back();
+                                                      }
+                                                    } else {
+                                                      print(
+                                                          "book for some one nahi he===>${cont.selectedRadioIndex.value}");
+
+                                                      cont.sendRequest();
+                                                    }
+                                                    Get.back();
+                                                  }
+                                                );
                                               }
                                             },
                                             child: Container(
