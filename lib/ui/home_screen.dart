@@ -3208,12 +3208,12 @@ class _HomeScreenState extends State<HomeScreen>
                                           setState(() {
                                             isSubmit = true;
                                           });
-                                          if(Platform.isIOS){
-                                            PermissionStatus permissionStatus = await _getContactPermission();
-                                            Get.snackbar("Alert", "Permission status ==> ${permissionStatus.isGranted} || ${permissionStatus}",
-                                                backgroundColor: Colors.redAccent.withOpacity(0.8),
-                                                colorText: Colors.white);
-                                          }
+                                          // if(Platform.isIOS){
+                                          //   PermissionStatus permissionStatus = await _getContactPermission();
+                                          //   Get.snackbar("Alert", "Permission status ==> ${permissionStatus.isGranted} || ${permissionStatus}",
+                                          //       backgroundColor: Colors.redAccent.withOpacity(0.8),
+                                          //       colorText: Colors.white);
+                                          // }
 
                                         },
                                         child: Container(
